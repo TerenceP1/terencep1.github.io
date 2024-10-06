@@ -1,1 +1,15 @@
-
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script>
+      let mxs=0;
+      function cb(loc) {
+        let spd=loc.coords.speed;
+        if (spd>mxs){
+          document.getElememtById("mxs").innerText="max speed: "+mxs;
+        }
+        document.getElementById("spd").innerText="speed: "+spd;
+      }
+    </script>
+  </head>
+</html>
