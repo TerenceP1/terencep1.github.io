@@ -19,3 +19,8 @@ function fastExpMod(base, exp, mod) {// parameters are BinInts
   }
   return res;
 }
+
+function probP(prm, base){
+  // Does a Miller-Rabin test for a given base and number
+  
+}
