@@ -29,4 +29,7 @@ function probP(prm, rounds){
     s++;
     d/=2;
   }
+  for (let a=2;a<rounds+2;a++){
+    let x=fastExpMod(a,d,prm);
+  }
 }
