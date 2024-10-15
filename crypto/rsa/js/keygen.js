@@ -20,7 +20,10 @@ function fastExpMod(base, exp, mod) {// parameters are BinInts
   return res;
 }
 
-function probP(prm, base){
+function probP(prm, rounds){
   // Does a Miller-Rabin test for a given base and number
+  // Decompose n-1 into d*2^s
+  let n1=n-1;
+  let binN=n1.toString(2);
   
 }
