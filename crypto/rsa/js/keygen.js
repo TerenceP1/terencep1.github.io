@@ -31,5 +31,14 @@ function probP(prm, rounds){
   }
   for (let a=2;a<rounds+2;a++){
     let x=fastExpMod(a,d,prm);
+    if (x==1){
+      continue;
+    }
+    else if (x==prm-1){
+      continue;
+    }
+    else {
+      
+    }
   }
 }
