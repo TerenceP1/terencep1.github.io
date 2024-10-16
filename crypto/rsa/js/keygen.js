@@ -40,8 +40,12 @@ function probP(prm, rounds){
     else {
       let comp=true;
       for (let i=0;i<s-1;i++) {
-        
+        x=(x*x)%prm;
+        if (x==n-1){break;}
+        if (x==1){return false;
       }
+      if (comp){continue;}
     }
   }
+  return true;
 }
