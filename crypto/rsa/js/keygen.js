@@ -38,7 +38,10 @@ function probP(prm, rounds){
       continue;
     }
     else {
-      
+      let comp=true;
+      for (let i=0;i<s-1;i++) {
+        
+      }
     }
   }
 }
