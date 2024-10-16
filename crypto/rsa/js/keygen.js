@@ -52,8 +52,10 @@ function probP(prm, rounds){
 
 
 function genPrm() {
-  let res=0;
+  let res=0n;
+  let mlt=0x100;
   do {
-    
+    let tmp=new UInt8Array(256);
+    crypto.getRandomValues(tmp);
   }while (probP(res,40));
 }
