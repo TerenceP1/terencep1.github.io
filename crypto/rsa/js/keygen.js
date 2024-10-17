@@ -8,13 +8,13 @@ function fastExpMod(base, exp, mod) {// parameters are BinInts
   let expBinStr=exp.toString(2);
   // Implimentation:
   let res=BigInt(1);
-  let mlt=1;
+  let mlt=1n;
   for (let i=expBinStr.length-1;i>=0;i--){
     if (expBinStr[i]==="1"){
       res*=mlt;
       res%=mod;
     }
-    mlt*=2;
+    mlt*=2n;
     mlt%=mod;
   }
   return res;
@@ -23,26 +23,26 @@ function fastExpMod(base, exp, mod) {// parameters are BinInts
 function probP(prm, rounds){
   // Does a Miller-Rabin test for a given base and number
   // Decompose n-1 into d*2^s
-  let d=n-1;
-  let s=0;
-  while (d%2==0){
+  let d=prm-1n;
+  let s=0n;
+  while (d%2n==0n){
     s++;
-    d/=2;
+    d/=2n;
   }
   for (let a=2;a<rounds+2;a++){
-    let x=fastExpMod(a,d,prm);
-    if (x==1){
+    let x=fastExpMod(BigInt(a),d,prm);
+    if (x==1n){
       continue;
     }
-    else if (x==prm-1){
+    else if (x==prm-1n){
       continue;
     }
     else {
       let comp=true;
-      for (let i=0;i<s-1;i++) {
+      for (let i=0;i<Number(s)-1;i++) {
         x=(x*x)%prm;
-        if (x==n-1){break;}
-        if (x==1){return false;}
+        if (x==n-1n){break;}
+        if (x==1n){return false;}
       }
       if (comp){continue;}
     }
@@ -53,14 +53,14 @@ function probP(prm, rounds){
 
 function genPrm() {
   let res=0n;
-  let mlt=0x100;
+  let mlt=0x100n;
   do {
     res=0n;
     let tmp=new UInt8Array(256);
     crypto.getRandomValues(tmp);
     for (let i=0;i<256;i++){
       res*=mlt;
-      res+=tmp[i];
+      res+=BigInt(tmp[i]);
     }
   }while (probP(res,40));
   return res;
