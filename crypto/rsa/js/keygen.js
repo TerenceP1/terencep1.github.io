@@ -59,6 +59,7 @@ function genPrm() {
   let res=0n;
   let mlt=0x100n;
   do {
+    postMessage(res+" is NOT prime."); 
     res=0n;
     let tmp=new Uint8Array(256);
     crypto.getRandomValues(tmp);
@@ -66,6 +67,8 @@ function genPrm() {
       res*=mlt;
       res+=BigInt(tmp[i]);
     }
+    postMessage("Testing if "+res+" is prime."); 
   }while (probP(res,40));
+  postMessage(res+" is prime!!!"); 
   return res;
 }
