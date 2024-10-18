@@ -3,9 +3,13 @@
   <head>
   </head>
   <body>
+    <h1>A prime should appear in a few minutes:</h1>
     <p id="a"></p>
     <script>
-      let worker=new Worker("/crypto/rsa/js/keyhen.js");
+      let worker=new Worker("/crypto/rsa/js/keygen.js");
+      worker.onmessage=function(res){document.getElememtById("a").innerText=res;};
+      worker.postMessage("postMessage(genPrm());");
+      
     </script>
   </body>
 </html>
