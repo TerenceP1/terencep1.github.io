@@ -27,10 +27,13 @@ function probP(prm, rounds){
   // Decompose n-1 into d*2^s
   let d=prm-1n;
   let s=0n;
+  postMessage("starting pow2");
   while (d%2n==0n){
     s++;
     d/=2n;
   }
+  postMessage("decompsed.");
+  if (x==1n||x==prm-1n){return false;}
   for (let a=2;a<rounds+2;a++){
     let x=fastExpMod(BigInt(a),d,prm);
     if (x==1n){
