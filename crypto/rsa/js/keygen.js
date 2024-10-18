@@ -1,4 +1,6 @@
-// Open source RSA keygen software for web browsers
+// Open source RSA keygen software for web workers
+
+self.onmessage=function(code){eval(code);};
 
 // Generate 2048 bit prime number:
 
