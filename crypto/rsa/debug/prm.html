@@ -10,6 +10,7 @@
       worker.onmessage=function(res){document.getElememtById("a").innerText=res;};
       worker.onerror=function(err){alert("an error has occered");alert("error: "+err.data);};
       worker.postMessage("postMessage(probP(97n,40));");
+      document.getElementById("a").innerText="nothing running! (an error has occered)";
       alert("startup!");
     </script>
   </body>
