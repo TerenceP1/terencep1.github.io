@@ -4,6 +4,9 @@
   </head>
   <body>
     <h1>12345678A prime should appear in a few minutes:</h1>
+    <label>Code to execute: </label>
+    <input id="code" type="text">
+    <button onclick="worker.postMessage(document.getElememtById("code").value);">Run code!</button>
     <p id="a"></p>
     <p id="err">Error log:<br></p>
     <script>
