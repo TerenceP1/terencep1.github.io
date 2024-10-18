@@ -41,7 +41,7 @@ function probP(prm, rounds){
       let comp=true;
       for (let i=0;i<Number(s)-1;i++) {
         x=(x*x)%prm;
-        if (x==n-1n){break;}
+        if (x==prm-1n){break;}
         if (x==1n){return false;}
       }
       if (comp){continue;}
@@ -56,7 +56,7 @@ function genPrm() {
   let mlt=0x100n;
   do {
     res=0n;
-    let tmp=new UInt8Array(256);
+    let tmp=new Uint8Array(256);
     crypto.getRandomValues(tmp);
     for (let i=0;i<256;i++){
       res*=mlt;
