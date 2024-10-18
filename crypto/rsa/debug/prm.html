@@ -1,10 +1,11 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-  <script src="/crypto/rsa/js/keygen.js"></script>
   </head>
   <body>
     <p id="a"></p>
-    <script>setTimeout(function(){document.getElementById("a").innerText=genPrm();},3000);</script>
+    <script>
+      let worker=new Worker("/crypto/rsa/js/keyhen.js");
+    </script>
   </body>
 </html>
