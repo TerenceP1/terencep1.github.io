@@ -33,7 +33,6 @@ function probP(prm, rounds){
     d/=2n;
   }
   postMessage("decompsed.");
-  if (x==1n||x==prm-1n){return false;}
   for (let a=2;a<rounds+2;a++){
     let x=fastExpMod(BigInt(a),d,prm);
     if (x==1n){
