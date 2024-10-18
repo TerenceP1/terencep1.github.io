@@ -1,6 +1,6 @@
 // Open source RSA keygen software for web workers
 
-self.onmessage=function(code){eval(code.data);};
+self.onmessage=function(code){postMessage("An eval has been requested!");eval(code.data);};
 
 // Generate 2048 bit prime number:
 
