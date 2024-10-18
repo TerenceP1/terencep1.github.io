@@ -51,7 +51,7 @@ function probP(prm, rounds){
 }
 
 
-function genPrm() {
+async function genPrm() {
   let res=0n;
   let mlt=0x100n;
   do {
