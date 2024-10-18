@@ -8,7 +8,7 @@
     <script>
       let worker=new Worker("/crypto/rsa/js/keygen.js");
       worker.onmessage=function(res){document.getElememtById("a").innerText=res;};
-      worker.onerror=function(err){alert("error: "+err.data);};
+      worker.onerror=function(err){alert("an error has occered");alert("error: "+err.data);};
       worker.postMessage("postMessage(probP(97n,40));");
       alert("startup!");
     </script>
