@@ -8,7 +8,7 @@
     <script>
       let worker=new Worker("/crypto/rsa/js/keygen.js");
       worker.onmessage=function(res){document.getElememtById("a").innerText=res;};
-      worker.postMessage("postMessage(genPrm());");
+      worker.postMessage("postMessage(probP(97n,40));");
       
     </script>
   </body>
