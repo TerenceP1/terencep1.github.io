@@ -61,8 +61,8 @@ function genPrm() {
   let amt=0;
   do {
     amt++;
-    if (amt%10==0){
-      postMessage(amt+" primes tested!");
+    if (amt%50==0){
+      postMessage(amt+" primes tested!!!");
     res=0n;
     let tmp=new Uint8Array(256);
     crypto.getRandomValues(tmp);
