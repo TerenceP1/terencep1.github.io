@@ -5,7 +5,7 @@
   <body>
     <h1>12345678A prime should appear in a few minutes:</h1>
     <p id="a"></p>
-    <p id="err">Error log:\n</p>
+    <p id="err">Error log:<br></p>
     <script>
       let worker=new Worker("/crypto/rsa/js/keygen.js");
       worker.onmessage=function(res){document.getElememtById("a").innerText=res.data;};
