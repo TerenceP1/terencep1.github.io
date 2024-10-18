@@ -5,10 +5,11 @@
   <body>
     <h1>12345678A prime should appear in a few minutes:</h1>
     <p id="a"></p>
+    <p id="err">Error log:\n</p>
     <script>
       let worker=new Worker("/crypto/rsa/js/keygen.js");
       worker.onmessage=function(res){document.getElememtById("a").innerText=res.data;};
-      worker.onerror=function(err){alert("an error has occered");alert("error: "+err.message);};
+      worker.onerror=function(err){document.getElementById("err").innerText+="Error on line "+err.lineno+": "+err.message+"\n";};
       worker.postMessage("postMessage(probP(97n,40));");
       document.getElementById("a").innerText="nothing running! (an error has occered)";
       alert("startup!");
