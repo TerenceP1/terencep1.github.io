@@ -36,7 +36,8 @@ function probP(prm, rounds){
   }
   //postMessage("decompsed.");
   for (let a=2;a<rounds+2;a++){
-    let x=fastExpMod(BigInt(2+Math.floor(Math.random()*(Number(bigIntMin(prm,1000000000n))-4))),d,prm);
+    let nmt=BigInt(2+Math.floor(Math.random()*(Number(bigIntMin(prm,1000000000n))-4)));
+    let x=fastExpMod(nmt,d,prm);
     if (x==1n){
       continue;
     }
@@ -44,13 +45,16 @@ function probP(prm, rounds){
       continue;
     }
     else {
+      postMessage("Testing a="+a+", prm="+prm+": x="+x+"...");
       let comp=true;
       for (let i=0;i<Number(s)-1;i++) {
         x=(x*x)%prm;
+        postMessage("|-Testing x="+x+"...");
         if (x==prm-1n){comp=false;break;}
-        if (x==1n){postMessage("Reached 1");return false;}
+        if (x==1n){postMessage("||-Reached 1");return false;}
       }
-      if (comp){postMessage("Never reached prm-1");return false;}
+      if (comp){postMessage("||-Never reached prm-1");return false;}
+      postMessage("|-Pass!");
     }
   }
   return true;
