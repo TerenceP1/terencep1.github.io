@@ -25,6 +25,7 @@ function fastExpMod(base, exp, mod) {// parameters are BinInts
 function probP(prm, rounds){
   // Does a Miller-Rabin test for a given base and number
   // Decompose n-1 into d*2^s
+  let bigIntMin = (...args) => args.reduce((m, e) => e < m ? e : m);
   let d=prm-1n;
   let s=0n;
   //postMessage("starting pow2");
@@ -34,7 +35,7 @@ function probP(prm, rounds){
   }
   //postMessage("decompsed.");
   for (let a=2;a<rounds+2;a++){
-    let x=fastExpMod(BigInt(2+Math.floor(Math.random()*(prm-4))),d,prm);
+    let x=fastExpMod(BigInt(2+Math.floor(Math.random()*(Number(BigIntMin(prm,1000000000n))-4))),d,prm);
     if (x==1n){
       continue;
     }
