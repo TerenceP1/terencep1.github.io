@@ -16,7 +16,7 @@ function fastExpMod(base, exp, mod) {// parameters are BinInts
       res*=mlt;
       res%=mod;
     }
-    mlt*=base;
+    mlt*=mlt;
     mlt%=mod;
   }
   return res;
