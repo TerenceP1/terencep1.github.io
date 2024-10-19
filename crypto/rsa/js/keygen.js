@@ -35,17 +35,22 @@ function probP(prm, rounds){
     d/=2n;
   }
   //postMessage("decompsed.");
-  for (let a=2;a<rounds+2;a++){
+  for (let a=0;a<rounds;a++){
     let nmt=BigInt(2+Math.floor(Math.random()*(Number(bigIntMin(prm,1000000000n))-4)));
     let x=fastExpMod(nmt,d,prm);
+    postMessage("Testing a="+a+", prm="+prm+": x="+x+", s="+s+", d="+d+"...");
     if (x==1n){
+      postMessage("x is 1");
       continue;
     }
     else if (x==prm-1n){
+      postMessage("x is prm-1");
       continue;
     }
+    else if (s==1n){
+      postMessage("s is 1");
+    }
     else {
-      postMessage("Testing a="+a+", prm="+prm+": x="+x+", s="+s+", d="+d+"...");
       let comp=true;
       for (let i=0;i<Number(s)-1;i++) {
         x=(x*x)%prm;
