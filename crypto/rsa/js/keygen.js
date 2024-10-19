@@ -25,6 +25,7 @@ function fastExpMod(base, exp, mod) {// parameters are BinInts
 function probP(prm, rounds){
   // Does a Miller-Rabin test for a given base and number
   // Decompose n-1 into d*2^s
+  if (prm%2n==0){return false;}
   let bigIntMin = (...args) => args.reduce((m, e) => e < m ? e : m);
   let d=prm-1n;
   let s=0n;
