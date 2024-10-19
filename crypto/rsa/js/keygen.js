@@ -25,45 +25,45 @@ function fastExpMod(base, exp, mod) {// parameters are BinInts
 function probP(prm, rounds){
   // Does a Miller-Rabin test for a given base and number
   // Decompose n-1 into d*2^s
-  if (prm%2n==0){postMessage("Divisable by 2");
+  if (prm%2n==0){//postMessage("Divisable by 2");
                  return false;}
   let bigIntMin = (...args) => args.reduce((m, e) => e < m ? e : m);
   let d=prm-1n;
   let s=0n;
-  postMessage("starting pow2");
+  //postMessage("starting pow2");
   while (d%2n==0n){
     s++;
     d/=2n;
   }
-  postMessage("decompsed.");
+  //postMessage("decompsed.");
   for (let a=0;a<rounds;a++){
     let nmt=BigInt(2+Math.floor(Math.random()*(Number(bigIntMin(prm,1000000000n))-4)));
     let x=fastExpMod(nmt,d,prm);
-    postMessage("Testing a="+nmt+", prm="+prm+": x="+x+", s="+s+", d="+d+"...");
+    //postMessage("Testing a="+nmt+", prm="+prm+": x="+x+", s="+s+", d="+d+"...");
     if (x==1n){
-      postMessage("x is 1");
+      //postMessage("x is 1");
       continue;
     }
     else if (x==prm-1n){
-      postMessage("x is prm-1");
+      //postMessage("x is prm-1");
       continue;
     }
     else if (s==1n){
-      postMessage("s is 1");
+      //postMessage("s is 1");
       return false;
     }
     else {
       let comp=true;
       for (let i=0;i<Number(s)-1;i++) {
         x=(x*x)%prm;
-        postMessage("|-Testing x="+x+"...");
+        //postMessage("|-Testing x="+x+"...");
         if (x==prm-1n){comp=false;break;}
-        if (x==1n){postMessage("||-Reached 1");
+        if (x==1n){//postMessage("||-Reached 1");
                    return false;}
       }
-      if (comp){postMessage("||-Never reached prm-1");
+      if (comp){//postMessage("||-Never reached prm-1");
                 return false;}
-      postMessage("|-Pass!");
+      //postMessage("|-Pass!");
     }
   }
   return true;
