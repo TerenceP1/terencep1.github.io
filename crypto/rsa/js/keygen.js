@@ -10,13 +10,13 @@ function fastExpMod(base, exp, mod) {// parameters are BinInts
   let expBinStr=exp.toString(2);
   // Implimentation:
   let res=BigInt(1);
-  let mlt=1n;
+  let mlt=base;
   for (let i=expBinStr.length-1;i>=0;i--){
     if (expBinStr[i]==="1"){
       res*=mlt;
       res%=mod;
     }
-    mlt*=2n;
+    mlt*=base;
     mlt%=mod;
   }
   return res;
@@ -71,7 +71,7 @@ function genPrm() {
       res*=mlt;
       res+=BigInt(tmp[i]);
     }
-  }while (probP(res,40));
+  }while (!probP(res,40));
   postMessage(res+" is prime!!!"); 
   return res;
 }
