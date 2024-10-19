@@ -46,10 +46,10 @@ function probP(prm, rounds){
       let comp=true;
       for (let i=0;i<Number(s)-1;i++) {
         x=(x*x)%prm;
-        if (x==prm-1n){break;}
+        if (x==prm-1n){comp=false;break;}
         if (x==1n){return false;}
       }
-      if (comp){continue;}
+      if (comp){return false;}
     }
   }
   return true;
