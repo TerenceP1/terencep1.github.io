@@ -50,6 +50,7 @@ function probP(prm, rounds){
     }
     else if (s==1n){
       postMessage("s is 1");
+      return false;
     }
     else {
       let comp=true;
