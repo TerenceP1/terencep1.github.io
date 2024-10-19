@@ -39,7 +39,7 @@ function probP(prm, rounds){
   for (let a=0;a<rounds;a++){
     let nmt=BigInt(2+Math.floor(Math.random()*(Number(bigIntMin(prm,1000000000n))-4)));
     let x=fastExpMod(nmt,d,prm);
-    postMessage("Testing a="+a+", prm="+prm+": x="+x+", s="+s+", d="+d+"...");
+    postMessage("Testing a="+nmt+", prm="+prm+": x="+x+", s="+s+", d="+d+"...");
     if (x==1n){
       postMessage("x is 1");
       continue;
