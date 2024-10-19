@@ -45,7 +45,7 @@ function probP(prm, rounds){
       continue;
     }
     else {
-      postMessage("Testing a="+a+", prm="+prm+": x="+x+"...");
+      postMessage("Testing a="+a+", prm="+prm+": x="+x+", s="+s+", d="+d+"...");
       let comp=true;
       for (let i=0;i<Number(s)-1;i++) {
         x=(x*x)%prm;
