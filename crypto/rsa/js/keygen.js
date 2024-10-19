@@ -35,7 +35,7 @@ function probP(prm, rounds){
   }
   //postMessage("decompsed.");
   for (let a=2;a<rounds+2;a++){
-    let x=fastExpMod(BigInt(2+Math.floor(Math.random()*(Number(BigIntMin(prm,1000000000n))-4))),d,prm);
+    let x=fastExpMod(BigInt(2+Math.floor(Math.random()*(Number(bigIntMin(prm,1000000000n))-4))),d,prm);
     if (x==1n){
       continue;
     }
