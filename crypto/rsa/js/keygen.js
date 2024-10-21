@@ -120,6 +120,18 @@ function mkHex(num,len){
   return res;
 }
 
+function gcd(a,b){
+  while (a!=b){
+    if (a>b){
+      a%=b;
+    }
+    else{
+      b%=a;
+    }
+  }
+  return a;
+}
+
 // Keygen:
 function keygen(){
   postMessage("Generating 2 primes. This may take a few seconds to a few minutes based on how fast your device is...");
