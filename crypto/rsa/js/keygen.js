@@ -132,6 +132,8 @@ function gcd(a,b){
   return a;
 }
 
+function lcm(a,b){return a*b/gcd(a,b);}
+
 // Keygen:
 function keygen(){
   postMessage("Generating 2 primes. This may take a few seconds to a few minutes based on how fast your device is...");
