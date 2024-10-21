@@ -120,5 +120,10 @@ function mkHex(num,len){
 
 // Keygen:
 function keygen(){
-  
+  postMessage("Generating 2 primes. This may take a few seconds to a few minutes based on how fast your device is...");
+  let pr1=genPrm();
+  let pr2=genPrm();
+  postMessage("Making keys...");
+  let mlt=pr1*pr2;
+  postMessage("Your public key is (anyone can see it): "+mkHex(mlt,1024));
 }
