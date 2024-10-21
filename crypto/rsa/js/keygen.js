@@ -108,3 +108,8 @@ function euAlg(base, mod){// Parameters are all BigInt s
   }
   return res;
 }
+
+// Convert BigInt to hex
+function mkHex(num,len){
+  
+}
