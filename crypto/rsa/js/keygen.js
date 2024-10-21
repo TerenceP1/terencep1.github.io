@@ -117,3 +117,8 @@ function mkHex(num,len){
   }
   return res;
 }
+
+// Keygen:
+function keygen(){
+  
+}
