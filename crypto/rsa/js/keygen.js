@@ -111,5 +111,9 @@ function euAlg(base, mod){// Parameters are all BigInt s
 
 // Convert BigInt to hex
 function mkHex(num,len){
-  
+  let res=num.toString(16);
+  while (res.length<len){
+    res="0"+res;
+  }
+  return res;
 }
