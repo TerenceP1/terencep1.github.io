@@ -98,5 +98,13 @@ function euAlg(base, mod){// Parameters are all BigInt s
   while (mdLst[mdLst.length-1]>1n){
     mdLst.push(mdLst[mdLst.length-2]%mdLst[mdLst.length-1]);
   }
-  
+  let res=0n;
+  for (let i=mdLst.length-2;i>=0;i--){
+    res=(1n-mdLst[i]*res)/mdLst[i+1];
+  }
+  res%=mod;
+  if (res<0n){
+    res+=mod;
+  }
+  return res;
 }
