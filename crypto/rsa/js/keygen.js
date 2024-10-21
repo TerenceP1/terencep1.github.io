@@ -98,6 +98,7 @@ function euAlg(base, mod){// Parameters are all BigInt s
   while (mdLst[mdLst.length-1]>1n){
     mdLst.push(mdLst[mdLst.length-2]%mdLst[mdLst.length-1]);
   }
+  postMessage("Mod operation complete");
   let res=0n;
   for (let i=mdLst.length-2;i>=0;i--){
     res=(1n-mdLst[i]*res)/mdLst[i+1];
@@ -106,6 +107,7 @@ function euAlg(base, mod){// Parameters are all BigInt s
   if (res<0n){
     res+=mod;
   }
+  postMessage("Your private key should appear at any moment...");
   return res;
 }
 
