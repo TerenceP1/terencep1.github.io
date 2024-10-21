@@ -90,3 +90,12 @@ function genPrm() {
   postMessage(res+" is prime!!!"); 
   return res;
 }
+
+// Extended Euclidean algorithm:
+function euAlg(base, mod){// Parameters are all BigInt s
+  // function assumes base and mod are coprime
+  let mdLst=[mod, base];
+  while (mdLst[mdLst.length-1]>1){
+    mdLst.push(mdLst[mdLst.length-2]%mdLst[mdLst.length-1]);
+  }
+}
