@@ -121,7 +121,7 @@ function mkHex(num,len){
 }
 
 function gcd(a,b){
-  while (a!=b){
+  while (a!=b%%a!=0n&&b!=0n){
     if (a>b){
       a%=b;
     }
@@ -129,7 +129,7 @@ function gcd(a,b){
       b%=a;
     }
   }
-  return a;
+  return a>b?a:b;
 }
 
 function lcm(a,b){return a*b/gcd(a,b);}
