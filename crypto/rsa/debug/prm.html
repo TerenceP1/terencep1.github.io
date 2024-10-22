@@ -13,7 +13,7 @@
       let worker=new Worker("/crypto/rsa/js/keygen.js");
       worker.onmessage=function(res){document.getElementById("a").innerText+=res.data+"\n";};
       worker.onerror=function(err){document.getElementById("err").innerText+="Error on line "+err.lineno+": "+err.message+"\n";};
-      worker.postMessage("postMessage(probP(97n,40));");
+      worker.postMessage("keygen();");
       document.getElementById("a").innerText="Message log (should not be empty):\n";
       alert("startup!");
     </script>
