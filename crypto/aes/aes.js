@@ -258,6 +258,9 @@ let sbox=[
   0xbb,
   0x16,
 ];
+let isbox=[];
+for (let i=0;i<256;i++){isbox.push(0);}
+for (let i=0;i<256;i++){isbox[sbox[i]]=i;}
 
 function aes(
   inp, // Uint8Array length 16 representing input
