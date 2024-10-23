@@ -262,6 +262,15 @@ let isbox=[];
 for (let i=0;i<256;i++){isbox.push(0);}
 for (let i=0;i<256;i++){isbox[sbox[i]]=i;}
 
+// Helpers (states are always arrays of arrays):
+function SubBytes(state){
+  for (let i=0;i<4;i++){
+    for (let j=0;j<4;j++){
+      state[i][j]=sbox[state[i][j]];
+    }
+  }
+}
+
 function aes(
   inp, // Uint8Array length 16 representing input
   key, // Uint8Array length 32 representing key
