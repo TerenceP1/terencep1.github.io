@@ -290,6 +290,10 @@ function ShiftRows(state){
   }
 }
 
+function MixColumns(state){
+  
+}
+
 function aes(
   inp, // Uint8Array length 16 representing input
   key, // Uint8Array length 32 representing key
