@@ -293,11 +293,13 @@ function ShiftRows(state){
 function MixColumns(state){
   for (let i=0;i<4;i++){
     let tmp=[0,0,0,0];
-    tmp[i]=
-      (2*state[0][i])^
-      (3*state[1][i])^
+    tmp[0]=
+      ((2*state[0][i])%256)^
+      ((3*state[1][i])%256)^
       state[2][i]^
       state[3][i];
+    //tmp[1]=
+      
   }
 }
 
