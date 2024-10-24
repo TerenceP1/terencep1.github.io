@@ -298,7 +298,11 @@ function MixColumns(state){
       ((3*state[1][i])%256)^
       state[2][i]^
       state[3][i];
-    //tmp[1]=
+    tmp[1]=
+      state[0][i]^
+      ((2*state[1][i])%256)^
+      ((3*state[2][i])%256)^
+      state[3][i];
       
   }
 }
