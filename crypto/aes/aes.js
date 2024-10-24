@@ -313,6 +313,9 @@ function MixColumns(state){
       state[1][i]^
       state[2][i]^
       ((2*state[3][i])%256);
+    for (let j=0;j<4;j++){
+      state[j][i]=tmp[j];
+    }
   }
 }
 
