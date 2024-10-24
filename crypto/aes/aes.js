@@ -271,6 +271,25 @@ function SubBytes(state){
   }
 }
 
+function ShiftRows(state){
+  let res=[
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0]
+  ];
+  for (let i=0;i<4;i++){
+    for (let j=0;j<4;j++){
+      res[i][(j+4-i)%4]=state[i][j];
+    }
+  }
+  for (let i=0;i<4;i++){
+    for (let j=0;j<4;j++){
+      state[i][j]=res[i][j];
+    }
+  }
+}
+
 function aes(
   inp, // Uint8Array length 16 representing input
   key, // Uint8Array length 32 representing key
