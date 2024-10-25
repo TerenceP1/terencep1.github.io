@@ -327,9 +327,11 @@ function MixColumns(state){
 // Helpers for key expansion:
 
 function SubWord(wd){
+  let res=[0,0,0,0];
   for (let i=0;i<4;i++){
-    wd[i]=sbox[wd[i]];
+    res[i]=sbox[wd[i]];
   }
+  return res;
 }
 
 function RotWord(wd){
@@ -338,7 +340,7 @@ function RotWord(wd){
   tmp[1]=wd[2];
   tmp[2]=wd[3];
   tmp[3]=wd[0];
-  for (let i=0;i<4;i++){wd[i]=tmp[i];}
+  return tmp;
 }
 
 function _xorWord(a,b){
@@ -353,7 +355,15 @@ function _xorWord(a,b){
 function KeyExpansion(key, w){
   let Nk=8;
   let i=0;
+  let temp=[0,0,0,0];
   while (i<Nk){
+    w[i]=[key[4*i],key[4*i+1],key[4*i+2],key[4*i+3]];
+    i++;
+  }
+  while (i<36){
+    temp=JSON.parse(JSON.stringify(w[i-1]));
+    if (i%Nk==0){
+      temp=_xorWord(SubWord(RotWord(temp)),ReplaceMe);
   }
 }
 
