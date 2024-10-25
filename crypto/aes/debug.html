@@ -6,7 +6,17 @@
   <body>
     <h1>Welcome to the aes.js debugger!</h1>
     <label>Enter code here: </label>
+    <script>
+      let worker=new Worker("/crypto/aes/aes.js");
+      worker.onmessage=function(dat){
+        document.getElementById("log").innerText+=dat.data;
+      }
+      worker.onerror=function(err){
+        document.getElementById("err").innerText+=
+          "An error occered in \""+err.filename+"\" on line "+err.lineno+": "+err.message+"\n";
+    </script>
     <input id="code" type="text">
+    <button onclick="worker.postMessage(document.getElementById('code').value);">Run code!</button>
     <p id="log">Message log:<br></p>
     <p id="err">Error log:<br></p>
   </body>
