@@ -356,6 +356,19 @@ function KeyExpansion(key, w){
   let Nk=8;
   let i=0;
   let temp=[0,0,0,0];
+  let Rcon=[
+    [0,0,0,0],
+    [0x1,0,0,0],
+    [0x2,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0]
+    ];
   while (i<Nk){
     w[i]=[key[4*i],key[4*i+1],key[4*i+2],key[4*i+3]];
     i++;
@@ -363,7 +376,7 @@ function KeyExpansion(key, w){
   while (i<36){
     temp=JSON.parse(JSON.stringify(w[i-1]));
     if (i%Nk==0){
-      temp=_xorWord(SubWord(RotWord(temp)),ReplaceMe);
+      temp=_xorWord(SubWord(RotWord(temp)),[();
   }
 }
 
