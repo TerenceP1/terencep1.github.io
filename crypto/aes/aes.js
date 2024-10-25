@@ -341,6 +341,22 @@ function RotWord(wd){
   for (let i=0;i<4;i++){wd[i]=tmp[i];}
 }
 
+function _xorWord(a,b){
+  // xors two words:
+  return [a[0]^b[0],
+          a[1]^b[1],
+          a[2]^b[2],
+          a[3]^b[3]
+          ];
+}
+
+function KeyExpansion(key, w){
+  let Nk=8;
+  let i=0;
+  while (i<Nk){
+  }
+}
+
 function aes(
   inp, // Uint8Array length 16 representing input
   key, // Uint8Array length 32 representing key
