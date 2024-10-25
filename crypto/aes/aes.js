@@ -1,5 +1,10 @@
 // Web worker that implements AES256
 
+self.onmessage=function(evt){
+  postMessage("An eval has been requested!");
+  eval(evt.data);
+}
+
 let sbox=[
   0x63,
   0x7c,
