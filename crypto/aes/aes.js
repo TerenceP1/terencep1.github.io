@@ -319,6 +319,14 @@ function MixColumns(state){
   }
 }
 
+// Helpers for key expansion:
+
+function SubWord(wd){
+  for (let i=0;i<4;i++){
+    wd[i]=sbox[wd[i]];
+  }
+}
+
 function aes(
   inp, // Uint8Array length 16 representing input
   key, // Uint8Array length 32 representing key
