@@ -327,6 +327,15 @@ function SubWord(wd){
   }
 }
 
+function RotWord(wd){
+  let tmp=[0,0,0,0];
+  tmp[0]=wd[1];
+  tmp[1]=wd[2];
+  tmp[2]=wd[3];
+  tmp[3]=wd[0];
+  for (let i=0;i<4;i++){wd[i]=tmp[i];}
+}
+
 function aes(
   inp, // Uint8Array length 16 representing input
   key, // Uint8Array length 32 representing key
