@@ -390,4 +390,18 @@ function aes(
   inp, // Uint8Array length 16 representing input
   key, // Uint8Array length 32 representing key
   mode // false if decryting, true if encrypting
-){}
+){
+  if (mode){
+    let state=[
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0]
+    ];
+    for (let i=0;i<4;i++){
+      for (let j=0;j<4;j++){
+        state[i][j]=inp[i+4*j];
+      }
+    }
+  }
+}
