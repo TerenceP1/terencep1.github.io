@@ -373,7 +373,7 @@ function KeyExpansion(key, w){
     w[i]=[key[4*i],key[4*i+1],key[4*i+2],key[4*i+3]];
     i++;
   }
-  while (i<36){
+  while (i<60){
     temp=JSON.parse(JSON.stringify(w[i-1]));
     if (i%Nk==0){
       temp=_xorWord(SubWord(RotWord(temp)),Rcon[i/Nk]);
@@ -403,5 +403,8 @@ function aes(
         state[i][j]=inp[i+4*j];
       }
     }
+    let w=[];
+    for (let i=0;i<60;i++){w.push([0,0,0,0]);}
+    KeyExpansion(key,w);
   }
 }
