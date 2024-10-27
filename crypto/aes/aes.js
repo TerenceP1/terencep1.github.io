@@ -386,6 +386,14 @@ function KeyExpansion(key, w){
   }
 }
 
+function AddRoundKey(state, w, ind){
+  for (let i=0;i<4;i++){
+    for (let j=0;j<4;j++){
+      state[j][i]^=w[ind+i][j];
+    }
+  }
+}
+
 function aes(
   inp, // Uint8Array length 16 representing input
   key, // Uint8Array length 32 representing key
@@ -406,5 +414,8 @@ function aes(
     let w=[];
     for (let i=0;i<60;i++){w.push([0,0,0,0]);}
     KeyExpansion(key,w);
+    AddRoundKey(state,w,0);
+    for (let round=1;round<14;round++){
+    }
   }
 }
