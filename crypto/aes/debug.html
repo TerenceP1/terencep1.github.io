@@ -7,7 +7,7 @@
     <h1>Welcome to the aes.js debugger!</h1>
     <label>Enter code here: </label>
     <script>
-      let worker=new Worker("/crypto/aes/aes.js");
+      let worker=new Worker("/crypto/aes/aes.js?lala="+Math.random());
       worker.onmessage=function(dat){
         document.getElementById("log").innerText+=dat.data+"\n";
       }
