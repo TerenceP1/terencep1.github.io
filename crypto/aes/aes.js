@@ -508,7 +508,18 @@ function aes(
     for (let round=13;round>0;round--){
       InvShiftRows(state);
       InvSubBytes(state);
-      //AddRoundKey
+      AddRoundKey(state,w,round*4);
+      InvMixColumns(state);
     }
+    InvShiftRows(state);
+    InvSubBytes(state);
+    AddRoundKey(state,w,0);
+    let res=Uint8Array(16);
+    for (let i=0;i<4;i++){
+      for (let j=0;j<4;j++){
+        res[4*i+j]=state[i][j];
+      }
+    }
+    return res;
   }
 }
