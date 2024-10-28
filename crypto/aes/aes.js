@@ -340,24 +340,24 @@ function MixColumns(state){
     let tmp=[0,0,0,0];
     tmp[0]=
       _mlt(state[0][i],2)^
-      _mlt(state[0][i],3)^
+      _mlt(state[1][i],3)^
       state[2][i]^
       state[3][i];
     tmp[1]=
       state[0][i]^
-      ((2*state[1][i])%256)^
-      ((3*state[2][i])%256)^
+      _mlt(state[1][i],2)^
+      _mlt(state[2][i],3)^
       state[3][i];
     tmp[2]=
       state[0][i]^
       state[1][i]^
-      ((2*state[2][i])%256)^
-      ((3*state[3][i])%256);
+      _mlt(state[2][i],2)^
+      _mlt(state[3][i],3);
     tmp[3]=
-      ((3*state[0][i])%256)^
+      _mlt(state[0][i],2)^
       state[1][i]^
       state[2][i]^
-      ((2*state[3][i])%256);
+      _mlt(state[0][i],3);
     for (let j=0;j<4;j++){
       state[j][i]=tmp[j];
     }
