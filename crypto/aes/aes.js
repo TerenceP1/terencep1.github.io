@@ -474,7 +474,7 @@ function aes(
     AddRoundKey(state,w,0);
     for (let round=1;round<14;round++){
       SubBytes(state);
-      ShiftBytes(state);
+      ShiftRows(state);
       MixColumns(state);
       AddRoundKey(state,w,round*4);
     }
