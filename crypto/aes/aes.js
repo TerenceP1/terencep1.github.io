@@ -277,6 +277,7 @@ function _mlt(a,b){
     let reduce=(a&0x80)>0;
     a=(a<<1)&0xff;
     if (reduce){a^=0x1b;}
+    b>>=1;
   }
   return res;
 }
@@ -368,25 +369,25 @@ function InvMixColumns(state){
   for (let i=0;i<4;i++){
     let tmp=[0,0,0,0];
     tmp[0]=
-      ((0xe*state[0][i])%256)^
-      ((0xb*state[1][i])%256)^
-      ((0xd*state[2][i])%256)^
-      ((0x9*state[3][i])%256);
+      _mlt(state[0][i],0)^
+      _mlt(state[1][i],0)^
+      _mlt(state[2][i],0)^
+      _mlt(state[3][i],0);
     tmp[1]=
-      ((0x9*state[0][i])%256)^
-      ((0xe*state[1][i])%256)^
-      ((0xb*state[2][i])%256)^
-      ((0xd*state[3][i])%256);
+      _mlt(state[0][i],0)^
+      _mlt(state[1][i],0)^
+      _mlt(state[2][i],0)^
+      _mlt(state[3][i],0);
     tmp[2]=
-      ((0xd*state[0][i])%256)^
-      ((0x9*state[1][i])%256)^
-      ((0xe*state[2][i])%256)^
-      ((0xb*state[3][i])%256);
+      _mlt(state[0][i],0)^
+      _mlt(state[1][i],0)^
+      _mlt(state[2][i],0)^
+      _mlt(state[3][i],0);
     tmp[3]=
-      ((0xb*state[0][i])%256)^
-      ((0xd*state[1][i])%256)^
-      ((0x9*state[2][i])%256)^
-      ((0xe*state[3][i])%256);
+      _mlt(state[0][i],0)^
+      _mlt(state[1][i],0)^
+      _mlt(state[2][i],0)^
+      _mlt(state[3][i],0);
     for (let j=0;j<4;j++){
       state[j][i]=tmp[j];
     }
