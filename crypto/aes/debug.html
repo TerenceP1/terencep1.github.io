@@ -16,7 +16,7 @@
           "An error occered in \""+err.filename+"\" on line "+err.lineno+": "+err.message+"\n";
       }
     </script>
-    <textarea id="code" type="text">
+    <textarea id="code"></textarea>
     <button onclick="worker.postMessage(document.getElementById('code').value);">Run code!</button>
     <p id="log">Message log:<br></p>
     <p id="err">Error log:<br></p>
