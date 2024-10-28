@@ -481,7 +481,7 @@ function aes(
     SubBytes(state);
     ShiftRows(state);
     AddRoundKey(state,w,56);
-    let res=Uint8Array(16);
+    let res=new Uint8Array(16);
     for (let i=0;i<4;i++){
       for (let j=0;j<4;j++){
         res[4*i+j]=state[i][j];
@@ -514,7 +514,7 @@ function aes(
     InvShiftRows(state);
     InvSubBytes(state);
     AddRoundKey(state,w,0);
-    let res=Uint8Array(16);
+    let res=new Uint8Array(16);
     for (let i=0;i<4;i++){
       for (let j=0;j<4;j++){
         res[4*i+j]=state[i][j];
