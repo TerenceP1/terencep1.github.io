@@ -295,6 +295,25 @@ function ShiftRows(state){
   }
 }
 
+function InvShiftRows(state){
+  let res=[
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0]
+  ];
+  for (let i=0;i<4;i++){
+    for (let j=0;j<4;j++){
+      res[i][(j+i)%4]=state[i][j];
+    }
+  }
+  for (let i=0;i<4;i++){
+    for (let j=0;j<4;j++){
+      state[i][j]=res[i][j];
+    }
+  }
+}
+
 function MixColumns(state){
   for (let i=0;i<4;i++){
     let tmp=[0,0,0,0];
