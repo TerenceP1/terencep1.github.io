@@ -268,6 +268,19 @@ for (let i=0;i<256;i++){isbox.push(0);}
 for (let i=0;i<256;i++){isbox[sbox[i]]=i;}
 
 // Helpers (states are always arrays of arrays):
+
+function _mlt(a,b){
+  // Multiply a and b in GF(2^8)
+  let res=0;
+  for (let i=0;i<8;i++){
+    if (b&1){res^=a;}
+    let reduce=(a&0x80)>0;
+    a=(a<<1)&0xff;
+    if (reduce){a^=0x1b;}
+  }
+  return res;
+}
+
 function SubBytes(state){
   for (let i=0;i<4;i++){
     for (let j=0;j<4;j++){
@@ -326,8 +339,8 @@ function MixColumns(state){
   for (let i=0;i<4;i++){
     let tmp=[0,0,0,0];
     tmp[0]=
-      ((2*state[0][i])%256)^
-      ((3*state[1][i])%256)^
+      _mlt(state[0][i],2)^
+      _mlt(state[0][i],3)^
       state[2][i]^
       state[3][i];
     tmp[1]=
