@@ -416,6 +416,20 @@ function aes(
     KeyExpansion(key,w);
     AddRoundKey(state,w,0);
     for (let round=1;round<14;round++){
+      SubBytes(state);
+      ShiftBytes(state);
+      MixColumns(state);
+      AddRoundKey(state,w,round*4);
     }
+    SubBytes(state);
+    ShiftRows(state);
+    AddRoundKey(state,w,56);
+    let res=Uint8Array(16);
+    for (let i=0;i<4;i++){
+      for (let j=0;j<4;j++){
+        res[4*i+j]=state[i][j];
+      }
+    }
+    return res;
   }
 }
