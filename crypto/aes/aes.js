@@ -276,6 +276,14 @@ function SubBytes(state){
   }
 }
 
+function InvSubBytes(state){
+  for (let i=0;i<4;i++){
+    for (let j=0;j<4;j++){
+      state[i][j]=isbox[state[i][j]];
+    }
+  }
+}
+
 function ShiftRows(state){
   let res=[
     [0,0,0,0],
