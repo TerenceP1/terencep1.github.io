@@ -351,6 +351,36 @@ function MixColumns(state){
   }
 }
 
+function InvMixColumns(state){
+  for (let i=0;i<4;i++){
+    let tmp=[0,0,0,0];
+    tmp[0]=
+      ((0xe*state[0][i])%256)^
+      ((0xb*state[1][i])%256)^
+      ((0xd*state[2][i])%256)^
+      ((0x9*state[3][i])%256);
+    tmp[1]=
+      ((0x9*state[0][i])%256)^
+      ((0xe*state[1][i])%256)^
+      ((0xb*state[2][i])%256)^
+      ((0xd*state[3][i])%256);
+    tmp[2]=
+      ((0xd*state[0][i])%256)^
+      ((0x9*state[1][i])%256)^
+      ((0xe*state[2][i])%256)^
+      ((0xb*state[3][i])%256);
+    tmp[3]=
+      ((0xb*state[0][i])%256)^
+      ((0xd*state[1][i])%256)^
+      ((0x9*state[2][i])%256)^
+      ((0xe*state[3][i])%256);
+    for (let j=0;j<4;j++){
+      state[j][i]=tmp[j];
+    }
+  }
+}
+
+
 // Helpers for key expansion:
 
 function SubWord(wd){
