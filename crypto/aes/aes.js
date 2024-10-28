@@ -489,4 +489,26 @@ function aes(
     }
     return res;
   }
+  else{
+    let state=[
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0],
+      [0,0,0,0]
+    ];
+    for (let i=0;i<4;i++){
+      for (let j=0;j<4;j++){
+        state[i][j]=inp[i+4*j];
+      }
+    }
+    let w=[];
+    for (let i=0;i<60;i++){w.push([0,0,0,0]);}
+    KeyExpansion(key,w);
+    AddRoundKey(state,w,56);
+    for (let round=13;round>0;round--){
+      InvShiftRows(state);
+      InvSubBytes(state);
+      //AddRoundKey
+    }
+  }
 }
