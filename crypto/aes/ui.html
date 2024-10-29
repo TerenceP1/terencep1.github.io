@@ -8,12 +8,19 @@
       let worker=new Worker("/crypto/aes/aes.js");
     </script>
     <h1>Welcome to the AES machine!</h1>
+    <label>Key: </label>
     <input id="key" type="text">
+    <br>
     <button onclick="nkey=new Uint8Array(32);
       crypto.getRandomValues(nkey);
       for (let i=0;i<32;i++){
         document.getElementById('key').value+=('00'+nkey[i].toString(16)).slice(-2);
       }
       ">Generate random key</button>
+    <label>Secret message:</label>
+    <textarea id="plaintext"></textarea>
+    <br>
+    <label>Encrypted message:</label>
+    <textarea id="cyphered"></textarea>
   </body>
 </html>
