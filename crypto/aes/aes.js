@@ -282,7 +282,7 @@ function _mlt(a,b){
   return res;
 }
 
-function SubBytes(state){
+function SubBytes(state){// Unit tested
   for (let i=0;i<4;i++){
     for (let j=0;j<4;j++){
       state[i][j]=sbox[state[i][j]];
@@ -290,7 +290,7 @@ function SubBytes(state){
   }
 }
 
-function InvSubBytes(state){
+function InvSubBytes(state){// Unit tested
   for (let i=0;i<4;i++){
     for (let j=0;j<4;j++){
       state[i][j]=isbox[state[i][j]];
@@ -317,7 +317,7 @@ function ShiftRows(state){// Unit tested
   }
 }
 
-function InvShiftRows(state){// Not unit tested
+function InvShiftRows(state){// Unit tested
   let res=[
     [0,0,0,0],
     [0,0,0,0],
@@ -336,7 +336,7 @@ function InvShiftRows(state){// Not unit tested
   }
 }
 
-function MixColumns(state){// Unit test failed
+function MixColumns(state){// Unit tested
   for (let i=0;i<4;i++){
     let tmp=[0,0,0,0];
     tmp[0]=
@@ -365,7 +365,7 @@ function MixColumns(state){// Unit test failed
   }
 }
 
-function InvMixColumns(state){// Unit test failed
+function InvMixColumns(state){// Unit tested
   for (let i=0;i<4;i++){
     let tmp=[0,0,0,0];
     tmp[0]=
