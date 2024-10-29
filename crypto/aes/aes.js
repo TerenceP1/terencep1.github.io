@@ -298,7 +298,7 @@ function InvSubBytes(state){
   }
 }
 
-function ShiftRows(state){
+function ShiftRows(state){// Unit tested
   let res=[
     [0,0,0,0],
     [0,0,0,0],
@@ -317,7 +317,7 @@ function ShiftRows(state){
   }
 }
 
-function InvShiftRows(state){
+function InvShiftRows(state){// Not unit tested
   let res=[
     [0,0,0,0],
     [0,0,0,0],
@@ -336,7 +336,7 @@ function InvShiftRows(state){
   }
 }
 
-function MixColumns(state){
+function MixColumns(state){// Unit test failed
   for (let i=0;i<4;i++){
     let tmp=[0,0,0,0];
     tmp[0]=
@@ -365,29 +365,29 @@ function MixColumns(state){
   }
 }
 
-function InvMixColumns(state){
+function InvMixColumns(state){// Unit test failed
   for (let i=0;i<4;i++){
     let tmp=[0,0,0,0];
     tmp[0]=
-      _mlt(state[0][i],0)^
-      _mlt(state[1][i],0)^
-      _mlt(state[2][i],0)^
-      _mlt(state[3][i],0);
+      _mlt(state[0][i],0xe)^
+      _mlt(state[1][i],0xb)^
+      _mlt(state[2][i],0xd)^
+      _mlt(state[3][i],0x9);
     tmp[1]=
-      _mlt(state[0][i],0)^
-      _mlt(state[1][i],0)^
-      _mlt(state[2][i],0)^
-      _mlt(state[3][i],0);
+      _mlt(state[0][i],0x9)^
+      _mlt(state[1][i],0xe)^
+      _mlt(state[2][i],0xb)^
+      _mlt(state[3][i],0xd);
     tmp[2]=
-      _mlt(state[0][i],0)^
-      _mlt(state[1][i],0)^
-      _mlt(state[2][i],0)^
-      _mlt(state[3][i],0);
+      _mlt(state[0][i],0xd)^
+      _mlt(state[1][i],0x9)^
+      _mlt(state[2][i],0xe)^
+      _mlt(state[3][i],0xb);
     tmp[3]=
-      _mlt(state[0][i],0)^
-      _mlt(state[1][i],0)^
-      _mlt(state[2][i],0)^
-      _mlt(state[3][i],0);
+      _mlt(state[0][i],0xb)^
+      _mlt(state[1][i],0xd)^
+      _mlt(state[2][i],0x9)^
+      _mlt(state[3][i],0xe);
     for (let j=0;j<4;j++){
       state[j][i]=tmp[j];
     }
@@ -397,7 +397,7 @@ function InvMixColumns(state){
 
 // Helpers for key expansion:
 
-function SubWord(wd){
+function SubWord(wd){// Unit tested
   let res=[0,0,0,0];
   for (let i=0;i<4;i++){
     res[i]=sbox[wd[i]];
@@ -405,7 +405,7 @@ function SubWord(wd){
   return res;
 }
 
-function RotWord(wd){
+function RotWord(wd){// Unit tested
   let tmp=[0,0,0,0];
   tmp[0]=wd[1];
   tmp[1]=wd[2];
