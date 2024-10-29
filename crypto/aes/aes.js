@@ -355,10 +355,10 @@ function MixColumns(state){// Unit tested
       _mlt(state[2][i],2)^
       _mlt(state[3][i],3);
     tmp[3]=
-      _mlt(state[0][i],2)^
+      _mlt(state[0][i],3)^
       state[1][i]^
       state[2][i]^
-      _mlt(state[3][i],3);
+      _mlt(state[3][i],2);
     for (let j=0;j<4;j++){
       state[j][i]=tmp[j];
     }
