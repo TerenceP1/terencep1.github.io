@@ -358,7 +358,7 @@ function MixColumns(state){// Unit test failed
       _mlt(state[0][i],2)^
       state[1][i]^
       state[2][i]^
-      _mlt(state[0][i],3);
+      _mlt(state[3][i],3);
     for (let j=0;j<4;j++){
       state[j][i]=tmp[j];
     }
