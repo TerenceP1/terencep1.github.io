@@ -4,6 +4,12 @@
   </head>
   <body>
     <h1>Welcome to the AES machine!</h1>
-    
+    <input id="key" type="text">
+    <button onclick="let nkey=new Uint8Array(32);
+      crypto.getRandomValues(nkey);
+      for (let i=0;i<32;i++){
+        document.getElementById('key').value+=('00'+nkey[i].toString(16)).slice(-2);
+      }
+      ">Generate random key</button>
   </body>
 </html>
