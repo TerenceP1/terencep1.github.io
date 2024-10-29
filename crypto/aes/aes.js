@@ -498,7 +498,7 @@ function aes(
     let res=new Uint8Array(16);
     for (let i=0;i<4;i++){
       for (let j=0;j<4;j++){
-        res[4*i+j]=state[i][j];
+        res[i+4*j]=state[i][j];
       }
     }
     return res;
@@ -531,7 +531,7 @@ function aes(
     let res=new Uint8Array(16);
     for (let i=0;i<4;i++){
       for (let j=0;j<4;j++){
-        res[4*i+j]=state[i][j];
+        res[i+4*j]=state[i][j];
       }
     }
     return res;
