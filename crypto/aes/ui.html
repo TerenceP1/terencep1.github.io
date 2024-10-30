@@ -54,7 +54,12 @@ for (let i=0;i<32;i++){
   keyArr[i]=Number(keyIn[i]);
 }
 // Convert and encrypt:
-encRes=""+3-(plainIn.length%4);
+encRes=""+7-(plainIn.length%8);
+for (let i=0;i<Math.ceil(plainIn.length/4);i++){
+  let tmp=Uint8Array(16);
+  for (let j=0;j<16;j++){
+    if (j+i*4>=plainIn){
+      tmp[
           `
         );
       }
