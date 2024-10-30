@@ -27,7 +27,7 @@
     <script>
       // Text will be interpreted as UTF16.
       // Cyphertext layout:
-      // First byte: length of padding
+      // First byte: length of padding times 2 in bytes
       // Rest of data: hexadecimal form of output arrays merged together
       let plain=document.getElementById("plaintext");
       let cy=document.getElementById("cyphered");
@@ -46,14 +46,15 @@
       function cypher(){
         worker.postMessage(
           "plainIn="+plain.innerText+
-          ";\nkeyIn="+key.value
+          ";\nkeyIn="+key.value+
           `;
 // Convert key to Uint8Array
-let keyArr=new Uint8Array(32);
+keyArr=new Uint8Array(32);
 for (let i=0;i<32;i++){
   keyArr[i]=Number(keyIn[i]);
 }
-
+// Convert and encrypt:
+encRes=""+3-(plainIn.length%4);
           `
         );
       }
