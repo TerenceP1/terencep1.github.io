@@ -25,6 +25,10 @@
     <label>Encrypted message:</label>
     <textarea id="cyphered"></textarea>
     <script>
+      // Text will be interpreted as UTF16.
+      // Cyphertext layout:
+      // First byte: length of padding
+      // Rest of data: hexadecimal form of output arrays merged together
       let plain=document.getElementById("plaintext");
       let cy=document.getElementById("cyphered");
     </script>
