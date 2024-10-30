@@ -31,6 +31,7 @@
       // Rest of data: hexadecimal form of output arrays merged together
       let plain=document.getElementById("plaintext");
       let cy=document.getElementById("cyphered");
+      let key=document.getElementById("key");
       worker.onmessage=function(msg){
         let ms=msg.data;
         if (ms.area!==undefined){
@@ -45,8 +46,9 @@
       function cypher(){
         worker.postMessage(
           "let plainIn="+plain.innerText+
+          ";\nlet keyIn="+key.value
           `;
-          // Convert text to Uint8Array s
+          // Convert key to Uint8Array;
           `
         );
       }
