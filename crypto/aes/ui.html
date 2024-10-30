@@ -31,6 +31,17 @@
       // Rest of data: hexadecimal form of output arrays merged together
       let plain=document.getElementById("plaintext");
       let cy=document.getElementById("cyphered");
+      worker.onmessage=function(msg){
+        let ms=msg.data;
+        if (ms.area!==undefined){
+          if (ms.area){
+            cy.innerText=ms.dat;
+          }
+          else{
+            plain.innerText=ms.dat;
+          }
+        }
+      }
     </script>
   </body>
 </html>
