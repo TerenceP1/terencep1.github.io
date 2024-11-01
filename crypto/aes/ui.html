@@ -33,6 +33,7 @@
       let cy=document.getElementById("cyphered");
       let key=document.getElementById("key");
       worker.onmessage=function(msg){
+        alert(msg.data);
         let ms=msg.data;
         if (ms.area!==undefined){
           if (ms.area){
@@ -78,6 +79,6 @@ postMessage({area:true,dat:encRes});
         );
       }
     </script>
-    <button onclick="cypher();">Clickme to encrypt the message</button>
+    <button onclick="cypher();">Click me to encrypt the message</button>
   </body>
 </html>
