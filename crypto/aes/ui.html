@@ -44,6 +44,9 @@
           }
         }
       }
+      worker.onerror=function(err){
+        alert("A "+err.error+" occered on line "+err.lineno+" col "+err.colno+": "+err.message+" ("+err.filename+")";
+      }
       function cypher(){
         worker.postMessage(
           "plainIn="+plain.innerText+
