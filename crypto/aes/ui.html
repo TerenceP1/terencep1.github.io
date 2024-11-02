@@ -52,7 +52,7 @@
           "plainIn=\""+plain.innerText+
           "\";\nkeyIn=\""+key.value+
           `\";
-postMessage("it appears you want to encrypt "+plainIn);
+postMessage("it appears you want to encrypt the following message: "+plainIn);
 // Convert key to Uint8Array
 keyArr=new Uint8Array(32);
 for (let i=0;i<32;i++){
