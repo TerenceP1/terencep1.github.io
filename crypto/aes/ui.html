@@ -49,7 +49,7 @@
       }
       function cypher(){
         worker.postMessage(
-          "plainIn=\""+plain.innerText+
+          "plainIn=\""+plain.value+
           "\";\nkeyIn=\""+key.value+
           `\";
 postMessage("it appears you want to encrypt the following message: "+plainIn);
