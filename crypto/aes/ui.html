@@ -49,9 +49,9 @@
       }
       function cypher(){
         worker.postMessage(
-          "plainIn="+plain.innerText+
-          ";\nkeyIn="+key.value+
-          `;
+          "plainIn=\""+plain.innerText+
+          "\";\nkeyIn=\""+key.value+
+          `\";
 // Convert key to Uint8Array
 keyArr=new Uint8Array(32);
 for (let i=0;i<32;i++){
