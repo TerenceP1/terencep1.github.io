@@ -76,6 +76,7 @@ for (let i=0;i<Math.ceil(plainIn.length/4);i++){
   enc=aes(tmp,keyArr,true);
   for (let j=0;j<16;j++){tmp2+=("00"+enc[j].toString(16)).slice(-2);}
   encRes+=("0000000000000000"+tmp2).slice(-16);
+  postMessage("tmp2 of "+tmp2);
 }
 postMessage({area:true,dat:encRes});
           `
