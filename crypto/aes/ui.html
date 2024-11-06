@@ -112,6 +112,7 @@ for (let i=0;i<(plainIn.length-1)/16;i++){
 }
 encRes=encRes.substr(0,encRes.length-pad);
 postMessage({area:false,dat:encRes});
+postMessage("message is "+encRes);
           `
         );
       }
