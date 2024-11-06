@@ -106,7 +106,7 @@ for (let i=0;i<(plainIn.length-1)/16;i++){
   }
   tmp2="";
   enc=aes(tmp,keyArr,false);
-  for (let j=0;j<8;j++){tmp2+=String.fromCharCode(enc[j*2]+(enc[j*2+1]<<8));}
+  for (let j=0;j<8;j++){tmp2+=String.fromCharCode(enc[j*2]^(enc[j*2+1]<<8));}
   encRes+=tmp2;
   //postMessage("tmp2 of "+tmp2);
 }
