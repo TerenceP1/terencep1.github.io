@@ -59,7 +59,7 @@ for (let i=0;i<32;i++){
   keyArr[i]=Number("0x"+keyIn[i]);
 }
 // Convert and encrypt:
-encRes=""+(7-(plainIn.length%8));
+encRes=""+((8-(plainIn.length%8))%8);
 for (let i=0;i<Math.ceil(plainIn.length/4);i++){
   //postMessage("encryption round "+i);
   let tmp=new Uint8Array(16);
@@ -86,9 +86,9 @@ postMessage({area:true,dat:encRes});
       }
       function decypher(){
         worker.postMessage(
-          "plainIn=\""+cy.value+
-          "\";\nkeyIn=\""+key.value+
-          `";
+          "plainIn="+JSON.stringify(cy.value)+
+          ";\nkeyIn="+JSON.stringify(key.value)+
+          `;
 postMessage("it appears you want to decrypt the following message: "+plainIn);
 // Convert key to Uint8Array
 keyArr=new Uint8Array(32);
