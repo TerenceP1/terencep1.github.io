@@ -84,6 +84,37 @@ postMessage({area:true,dat:encRes});
           `
         );
       }
+      function decypher(){
+        worker.postMessage(
+          "plainIn=\""+cy.value+
+          "\";\nkeyIn=\""+key.value+
+          `";
+postMessage("it appears you want to decrypt the following message: "+plainIn);
+// Convert key to Uint8Array
+keyArr=new Uint8Array(32);
+for (let i=0;i<32;i++){
+  keyArr[i]=Number(keyIn[i]);
+}
+// Convert and decrypt:
+encRes="";
+pad=Number(plainIn[0]);
+for (let i=0;i<(plainIn.length-1)/16;i++){
+  postMessage("encryption round "+i);
+  let tmp=new Uint8Array(16);
+  for (let j=0;j<16;j++){
+    tmp[j]=Number("0x"+plainIn[i*16+j+1]);
+  }
+  tmp2="";
+  enc=aes(tmp,keyArr,false);
+  for (let j=0;j<8;j++){tmp2+=String.fromCharCode(tmp[j*2]+(tmp[j*2+1]<<8));}
+  encRes+=tmp2;
+  postMessage("tmp2 of "+tmp2);
+}
+encRes.splice(-pad);
+postMessage({area:true,dat:encRes});
+          `
+        );
+      }
     </script>
     <button onclick="cypher();">Click me to encrypt the message</button>
   </body>
