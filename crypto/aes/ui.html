@@ -50,7 +50,7 @@
       function cypher(){
         worker.postMessage(
           "plainIn="+JSON.stringify(plain.value)+
-          ";\nkeyIn=\""+JSON.stringify(key.value)+
+          ";\nkeyIn="+JSON.stringify(key.value)+
           `;
 postMessage("it appears you want to encrypt the following message: "+plainIn);
 // Convert key to Uint8Array
