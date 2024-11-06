@@ -61,7 +61,7 @@ for (let i=0;i<32;i++){
 // Convert and encrypt:
 encRes=""+(7-(plainIn.length%8));
 for (let i=0;i<Math.ceil(plainIn.length/4);i++){
-  postMessage("encryption round "+i);
+  //postMessage("encryption round "+i);
   let tmp=new Uint8Array(16);
   for (let j=0;j<8;j++){
     if (j+i*8<plainIn.length){
@@ -78,7 +78,7 @@ for (let i=0;i<Math.ceil(plainIn.length/4);i++){
   enc=aes(tmp,keyArr,true);
   for (let j=0;j<16;j++){tmp2+=("00"+enc[j].toString(16)).slice(-2);}
   encRes+=("0000000000000000"+tmp2).slice(-16);
-  postMessage("tmp2 of "+tmp2);
+  //postMessage("tmp2 of "+tmp2);
 }
 postMessage({area:true,dat:encRes});
           `
@@ -99,7 +99,7 @@ for (let i=0;i<32;i++){
 encRes="";
 pad=Number(plainIn[0]);
 for (let i=0;i<(plainIn.length-1)/16;i++){
-  postMessage("encryption round "+i);
+  //postMessage("encryption round "+i);
   let tmp=new Uint8Array(16);
   for (let j=0;j<16;j++){
     tmp[j]=Number("0x"+plainIn[i*16+j+1]);
@@ -108,7 +108,7 @@ for (let i=0;i<(plainIn.length-1)/16;i++){
   enc=aes(tmp,keyArr,false);
   for (let j=0;j<8;j++){tmp2+=String.fromCharCode(tmp[j*2]+(tmp[j*2+1]<<8));}
   encRes+=tmp2;
-  postMessage("tmp2 of "+tmp2);
+  //postMessage("tmp2 of "+tmp2);
 }
 encRes=encRes.substr(0,encRes.length-pad);
 postMessage({area:false,dat:encRes});
