@@ -11,8 +11,11 @@
     <h3>Encrypt keys make by the <a href=/crypto/aes/ui">AES machine</a> here:</h3>
     <label>Enter public key here: </label>
     <input id="pub">
-    <label>Enter private key here: </label>
+    <br>
+    <label>Enter private key here (secret): </label>
     <input id="prv">
+    <br>
+    <button onclick="worker.postMessage('keygen();');">Generate key pairs.</button>
     <p id="a"></p>
     <p id="err">Error log:<br></p>
     <script>
