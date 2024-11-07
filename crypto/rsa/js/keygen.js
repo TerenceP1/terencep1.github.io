@@ -160,7 +160,7 @@ function denc(aesK, key){
         BigInt("0x"+aesK),
         BigInt("0x"+key.substr(1024,1024)),
         BigInt("0x"+key.substr(0,1024))).toString(16)
-    ).substr(-1024)
+    ).substr(-64)
 });
 }
   
