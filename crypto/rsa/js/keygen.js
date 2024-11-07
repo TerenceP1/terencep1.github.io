@@ -148,5 +148,11 @@ function keygen(){
   postMessage({reg:"prv",val:mkHex(mlt,1024)+mkHex(prv,1024)});
 }
 
-//function enc(aesK, key){
+function enc(aesK, key){
+  postMessage({reg:"eaes",val:fastExpMod(BigInt("0x"+aesK),0x10001n,BigInt("0x"+key))});
+}
+
+function denc(aesK, key){
+  postMessage({reg:"aes",val:fastExpMod(BigInt("0x"+aesK),BigInt("0x"+key.slice(1024,1024),BigInt("0x"+key.slice(0,1024))});
+}
   
