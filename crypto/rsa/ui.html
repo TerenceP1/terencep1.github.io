@@ -15,6 +15,12 @@
     <label>Enter private key here (secret): </label>
     <input id="prv">
     <br>
+    <label>Enter AES here: </label>
+    <input id="aes">
+    <br>
+    <label>Enter encrypted AES here: </label>
+    <input id="eaes">
+    <br>
     <button onclick="worker.postMessage('keygen();');">Generate key pairs.</button>
     <p id="a"></p>
     <p id="err">Error log:<br></p>
