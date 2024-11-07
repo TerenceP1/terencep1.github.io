@@ -148,5 +148,5 @@ function keygen(){
   postMessage({reg:"prv",val:mkHex(mlt,1024)+mkHex(prv,1024)});
 }
 
-function enc(aesK, key){
+//function enc(aesK, key){
   
