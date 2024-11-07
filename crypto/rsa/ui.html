@@ -22,8 +22,8 @@
     <input id="eaes">
     <br>
     <button onclick="worker.postMessage('keygen();');">Generate key pairs.</button>
-    <button onclick="worker.postMessage('enc('+document.getElementById('aes').value+','+document.getElementById('pub').value+');');">Encrypt key</button>
-    <button onclick="worker.postMessage('enc('+document.getElementById('eaes').value+','+document.getElementById('prv').value+');');"">Decrypt key</button>
+    <button onclick="worker.postMessage('enc(\''+document.getElementById('aes').value+'\',\''+document.getElementById('pub').value+'\'\');');">Encrypt key</button>
+    <button onclick="worker.postMessage('enc(\''+document.getElementById('eaes').value+'\',\''+document.getElementById('prv').value+');');"">Decrypt key</button>
     <p id="a"></p>
     <p id="err">Error log:<br></p>
     <script>
