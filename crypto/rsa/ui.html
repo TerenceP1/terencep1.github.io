@@ -3,17 +3,16 @@
   <head>
     <title>The RSA mschine</title>
     <script>
-      let worker=new Worker("/crypto/rsa/js/keygen.js");
+      let worker=new Worker("/crypto/rsa/js/keygen.js?ooglaboogla="+Math.random());
     </script>
   </head>
   <body>
     <h1>Welcome to the RSA machine!</h1>
     <h3>Encrypt keys make by the <a href=/crypto/aes/ui">AES machine</a> here:</h3>
-    <label>Enter  here: </label>
-    <input>
-    <label>Enter  here: </label>
-    <input>
-    <button onclick="worker.postMessage('keygen();');">Press to generate a key pair</button>
+    <label>Enter public key here: </label>
+    <input id="pub">
+    <label>Enter private key here: </label>
+    <input id="prv">
     <p id="a"></p>
     <p id="err">Error log:<br></p>
     <script>
