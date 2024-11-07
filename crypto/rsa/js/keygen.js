@@ -159,7 +159,7 @@ function denc(aesK, key){
       +fastExpMod(
         BigInt("0x"+aesK),
         BigInt("0x"+key.slice(1024,1024)),
-        BigInt("0x"+key.slice(0,1024)).toString(16)
+        BigInt("0x"+key.slice(0,1024))).toString(16)
     ).slice(-1024)
 });
 }
