@@ -142,6 +142,11 @@ function keygen(){
   postMessage("Making keys...");
   let mlt=pr1*pr2;
   postMessage("Your public key is (anyone can see it): "+mkHex(mlt,1024));
+  postMessage({reg:"pub",val:mkHex(mlt,1024)});
   let prv=euAlg(0x10001n,lcm(pr1-1n,pr2-1n));
   postMessage("Your private key is (keep secret): "+mkHex(mlt,1024)+mkHex(prv,1024));
+  postMessage({reg:"prv",val:mkHex(mlt,1024)+mkHex(prv,1024)});
 }
+
+function enc(aesK, key){
+  
