@@ -8,7 +8,18 @@
   </head>
   <body>
     <h1>Welcome to the RSA machine!</h1>
-    <h3>Encrypt keys make by the AES machine here:</h3>
-    
+    <h3>Encrypt keys make by the <a href=/crypto/aes/ui">AES machine</a> here:</h3>
+    <label>Enter  here: </label>
+    <input>
+    <label>Enter  here: </label>
+    <input>
+    <p id="a"></p>
+    <p id="err">Error log:<br></p>
+    <script>
+      worker.onmessage=function(res){document.getElementById("a").innerText+=res.data+"\n";};
+      worker.onerror=function(err){document.getElementById("err").innerText+="Error on line "+err.lineno+": "+err.message+"\n";};
+      document.getElementById("a").innerText="Message log:\n";
+      //alert("startup!");
+    </script>
   </body>
 </html>
