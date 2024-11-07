@@ -16,7 +16,7 @@
     <p id="a"></p>
     <p id="err">Error log:<br></p>
     <script>
-      worker.onmessage=function(res){document.getElementById("a").innerText+=res.data+"\n";};
+      worker.onmessage=function(res){document.getElementById("a").innerText+=res.data+"\n";if(res.data.reg!==undefined){document.getElementById(res.data.reg)).value=res.data.val;}};
       worker.onerror=function(err){document.getElementById("err").innerText+="Error on line "+err.lineno+": "+err.message+"\n";};
       document.getElementById("a").innerText="Message log:\n";
       //alert("startup!");
