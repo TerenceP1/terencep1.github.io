@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <title id="ttl">umm...</title>
+    <script>
+        let rickA = new Audio("/assets/rick.mp3");
+        function rick() {
+            rickA.play();
+            rickA.loop = true;
+            document.getElementById("ttl").innerHTML = "You got rickrolled!!!";
+            document.getElementById("lol").innerHTML = "You got rickrolled!!!";
+            document.getElementById("rickgif").setAttribute("style", "height:100%; width:100%; position: fixed; top: 0px; left: 0px; background-image:url('/assets/ricky.gif');z-index:-1;");
+        }
+    </script>
+</head>
+
+<body onclick="rick();">
+    <div id="rickgif"
+        style="height:100%; width:100%; position: fixed; top: 0px; left: 0px; background-image:linear-gradient(to right,red,orange,yellow,green,blue,indigo,violet);z-index:-1;">
+    </div>
+    <h1 id="lol">It appears the website didn't load properly. Click anywhere to retry.</h1>
+</body>
+
+</html>
