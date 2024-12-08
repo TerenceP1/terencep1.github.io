@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial"/>
+        <title>Mandelbrot Zoomer in HTML | Terence Pengs random HTML stuff</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="400"></canvas>
+        <p id="worker">Idle</p>
+        <label>MaxIterations: </label>
+        <input type="number" value="1000" id="mi">
+        <button type="button" onclick="mi=parseInt(document.getElementById('mi').value);generate();">Update MaxIterations</button>
+        <br>
+        <label>SpectrumLength: </label>
+        <input type="number" value="10" id="sl">
+        <button type="button" onclick="sl=parseInt(document.getElementById('sl').value);generate();">Update SpectrumLength</button>
+        <h3>re:</h3>
+        <p id="re">0</p>
+        <h3>im:</h3>
+        <p id="im">0</p>
+        <h3>zoom:</h3>
+        <p id="zoom">100</p>
+        <script>
+            let canvas = document.getElementById("canvas").getContext("2d");
+            let x=0,y=0,zoom=100,mi=1000,sl=10;
+            function componentToHex(c) {
+                var hex = c.toString(16);
+                return hex.length == 1 ? "0" + hex : hex;
+            }
+            function HSL2RGB(h,s,l){
+                s/=100;
+                l/=100;
+                var c=(1-Math.abs(2*l-1))*s;
+                var x1=c*(1-Math.abs(2*((h/120)-Math.floor(h/120))-1));
+                var m=l-c/2;
+                var r_=0;
+                var g_=0;
+                var b_=0;
+                if (h<60){
+                    r_=c;
+                    g_=x1;
+                }else if (h<120){
+                    r_=x1;
+                    g_=c;
+                }else if (h<180){
+                    g_=c;
+                    b_=x1;
+                }else if (h<240){
+                    g_=x1;
+                    b_=c;
+                }else if (h<300){
+                    r_=x1;
+                    b_=c;
+                }else if (h<360){
+                    r_=c;
+                    b_=x1;
+                }
+                return [(r_+m)*255,(g_+m)*255,(b_+m)*255];
+            };
+            function generate(){
+                for(var i=-200;i<200;i++){
+                    for(var j=-200;j<200;j++){
+                        var n=0;
+                        var black=true;
+                        var orRe=x+i/zoom;
+                        var orIm=y+j/zoom;
+                        var oRe=0;
+                        var oIm=0;
+                        var nRe=0;
+                        var nIm=0;
+                        for(n=0;n<mi;n++){
+                            nRe=(oRe**2)-(oIm**2)+orRe;
+                            nIm=2*oRe*oIm+orIm;
+                            oRe=nRe;
+                            oIm=nIm;
+                            if ((oRe**2)+(oIm**2)>4){
+                                black=false;
+                                break;
+                            }
+                        }
+                        if (black){
+                            canvas.fillStyle="#000000";
+                            canvas.fillRect(i+200,j+200,1,1);
+                            //console.log("black!")
+                        }else{
+                            var res=HSL2RGB((n%sl)/sl*360,100,50);
+                            var cl='#';
+                            for (var k=0;k<3;k++){
+                                cl=cl.concat(componentToHex(Math.round(res[k])));
+                            }
+                            canvas.fillStyle=cl;
+                            canvas.fillRect(i+200,j+200,1,1);
+                        }
+                    }
+                }
+                console.log("done!");
+            }
+            generate();
+            function click(e){
+                var rect = e.target.getBoundingClientRect();
+                var tx = e.clientX - rect.left; //x position within the element.
+                var ty = e.clientY - rect.top;  //y position within the element.
+                x+=(tx-200)/zoom;
+                y+=(ty-200)/zoom;
+                zoom*=1.5;
+                document.getElementById("worker").innerHTML="Active";
+                generate();
+                document.getElementById("re").innerText=x;
+                document.getElementById("im").innerText=y;
+                document.getElementById("zoom").innerText=zoom;
+                document.getElementById("worker").innerHTML="Idle";
+            }
+            document.getElementById("canvas").addEventListener("click",click);
+        </script>
+    </body>
+</html>
