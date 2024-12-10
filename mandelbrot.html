@@ -15,14 +15,14 @@
         <input type="number" value="100" id="sl">
         <button type="button" onclick="sl=parseInt(document.getElementById('sl').value);generate();">Update SpectrumLength</button>
         <br>
-        <button type="button" onclick="zoom/=1.5">Zoom out</button>
+        <button type="button" onclick="zoom/=1.5;generate();">Zoom out</button>
         <h3>re:</h3>
         <p id="re">0</p>
         <h3>im:</h3>
         <p id="im">0</p>
         <h3>zoom:</h3>
         <p id="zoom">100</p>
-        <button type="button" onclick="x=0,y=0,zoom=100,mi=1000,sl=100;">RESET</button>
+        <button type="button" onclick="x=0,y=0,zoom=100,mi=1000,sl=100;generate();">RESET</button>
         <script>
             let canvas = document.getElementById("canvas").getContext("2d");
             let x=0,y=0,zoom=100,mi=1000,sl=100;
