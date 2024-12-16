@@ -6,7 +6,9 @@
     <script>
       let audio=new Audio("censor.mp3");
       let bleep=new Audio("bleep.mp3");
+      bleep.loop=true;
     </script>
     <button onclick="audio.play()">play</button>
+    <span style="width:100%;height:100%;background-color:green" ontouchstart="audio.muted=true;bleep.play();" ontouchend="audio.muted=false;bleep.stop();">BLEEEEEEEEEP</span>
   </body>
 </html>
