@@ -2,6 +2,12 @@
   <head>
     <title>This page is for you, Zain</title>
     <script>
+      window.onerror = function (message, source, lineno, colno, error) {
+  alert(`Error: ${message}\nSource: ${source}\nLine: ${lineno}, Column: ${colno}\nStack: ${error?.stack || "N/A"}`);
+  console.error("Captured Error:", { message, source, lineno, colno, error });
+};
+
+
       let ip=new XMLHttpRequest();
       ip.open("GET","https://api64.ipify.org",false);
       ip.send();
