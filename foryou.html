@@ -12,7 +12,7 @@
       ip.open("GET","https://api64.ipify.org?lala="+Math.random(),false);
       ip.send();
       let isVpn=new XMLHttpRequest();
-      alert("https://proxyradar.io/v1/check?key=1124e24990c36694577cdf6f311b673b&ip="+ip.responseText+"&format=json&lala="+Math.random());
+      alert("https://proxyradar.io/v1/check?key=1124e24990c36694577cdf6f311b673b%26ip="+ip.responseText+"%26format=json&lala="+Math.random());
       isVpn.open("GET","https://api.cors.lol/?url=https://proxyradar.io/v1/check?key=1124e24990c36694577cdf6f311b673b&ip="+ip.responseText+"&format=json&lala="+Math.random(),false);
       isVpn.send();
       if (JSON.parse(isVpn.responseText).proxy==1){
