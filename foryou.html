@@ -1,5 +1,15 @@
 <html>
   <head>
     <title>This page is for you, Zain</title>
+    <script>
+      let isVpn=new XMLHttpRequest();
+      isVpn.open("GET","https://ipgeolocation.io/api/ipgeolocation",false);
+      if (JSON.parse(isVpn.responseText).is_vpn){
+        document.getElementById("vpn").removeAttribute("hidden");
+      }
+    </script>
   </head>
+  <body>
+    <h1 id="vpn" hidden>Use of proxies/VPN is not allowed. I'm so sorry.</h1>
+  </body>
 </html>
