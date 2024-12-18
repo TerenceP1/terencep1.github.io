@@ -3,7 +3,7 @@
     <title>This page is for you, Zain</title>
     <script>
       let ip=new XMLHttpRequest();
-      ip.open("GET","api64.ipify.org",false);
+      ip.open("GET","https://api64.ipify.org",false);
       ip.send();
       let isVpn=new XMLHttpRequest();
       isVpn.open("GET","https://proxyradar.io/v1/check?key=1124e24990c36694577cdf6f311b673b&ip="+ip.responseText+"&format=json",false);
