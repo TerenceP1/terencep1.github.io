@@ -4,6 +4,7 @@
     <script>
       let isVpn=new XMLHttpRequest();
       isVpn.open("GET","https://ipgeolocation.io/api/ipgeolocation",false);
+      isVpn.send();
       if (JSON.parse(isVpn.responseText).is_vpn){
         document.getElementById("vpn").removeAttribute("hidden");
       }
