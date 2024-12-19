@@ -1,9 +1,19 @@
 <html>
   <head>
     <title>Look inside of an EXE.</title>
+    <script>
+      function extract(){
+        let file=document.getElementById("exe").files[0];
+        file.bytes().then(extractP);
+      }
+      function extractP(arr){
+        alert(String.fromCharCode(arr[0]));
+      }
+    </script>
   </head>
   <body>
     <label>Upload your EXE/DLL here:</label>
-    <input type="file">
+    <input id="exe" type="file">
+    <button onclick="extract();">extract exe</button>
   </body>
 </html>
