@@ -6,8 +6,15 @@
         let file=document.getElementById("exe").files[0];
         file.bytes().then(extractP);
       }
+      function parseInt(arr,offset,size){
+        let res=0;
+        for (let i=0;i<size;i++){
+          res|=arr[i+offset]<<(i*8);
+        }
+        return res;
+      }
       function extractP(arr){
-        alert(String.fromCharCode(arr[0]));
+        //let cfOffset=
       }
     </script>
   </head>
