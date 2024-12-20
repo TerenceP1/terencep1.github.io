@@ -13,7 +13,7 @@
       ip.send();
       let isVpn=new XMLHttpRequest();
       alert("https://proxyradar.io/v1/check?key=1124e24990c36694577cdf6f311b673b%26ip="+ip.responseText+"%26format=json&lala="+Math.random());
-      isVpn.open("GET","https://api.cors.lol/?url=https://proxyradar.io/v1/check?key=1124e24990c36694577cdf6f311b673b%26ip="+ip.responseText+"%26format=json&lala="+Math.random(),false);
+      isVpn.open("GET","https://corsproxy.io/?url=https://proxyradar.io/v1/check?key=1124e24990c36694577cdf6f311b673b%26ip="+ip.responseText+"%26format=json&lala="+Math.random(),false);
       isVpn.send();
       if (JSON.parse(isVpn.responseText).proxy==1){
         setTimeout(function(){document.getElementById("vpn").removeAttribute("hidden");},1000);
