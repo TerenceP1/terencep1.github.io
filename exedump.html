@@ -14,7 +14,21 @@
         return res;
       }
       function extractP(arr){
-        //let cfOffset=
+        let cfOffset=parseInt(arr,0x3c,4)+4; // location of COFF header
+        // Extract the COFF header
+        let coffD=document.getElementById("coff");
+        // No error checking; file is assumed to be valid
+        coffD.innerText+="Machine: "+
+          {
+            0x0: "Unknown",
+            0x184: "Alpha AXP, 32 bit",
+            0x284: "Alpha 64, 64 bit",
+            0x1d3: "Matsushita AM33",
+            0x8664: "x64",
+            0x1c0: "ARM little endian",
+            0xaa64: "ARM64 little endian"
+            
+          }[parseInt(arr,cfOffset,2)]
       }
     </script>
   </head>
@@ -22,5 +36,7 @@
     <label>Upload your EXE/DLL here:</label>
     <input id="exe" type="file">
     <button onclick="extract();">extract exe</button>
+    <br>
+    <p id="coff"></p>
   </body>
 </html>
