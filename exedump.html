@@ -9,7 +9,7 @@
 
       function extract(){
         let file=document.getElementById("exe").files[0];
-        file.bytes().then(extractP);
+        file.arrayBuffer().then(extractP);
       }
       function parseInt(arr,offset,size){
         let res=0;
@@ -18,7 +18,8 @@
         }
         return res;
       }
-      function extractP(arr){
+      function extractP(arr2){
+        let arr=new UInt8Array(arr2);
         alert("start");
         let cfOffset=parseInt(arr,0x3c,4)+4; // location of COFF header
         // Extract the COFF header
