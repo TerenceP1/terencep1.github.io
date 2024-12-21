@@ -19,6 +19,7 @@
         return res;
       }
       function extractP(arr){
+        alert("start");
         let cfOffset=parseInt(arr,0x3c,4)+4; // location of COFF header
         // Extract the COFF header
         let coffD=document.getElementById("coff");
@@ -56,6 +57,7 @@
             0x1c2: "Thumb",
             0x169: "MIPS little-endian WCE v2"
           }[parseInt(arr,cfOffset,2)];
+        alert("done");
       }
     </script>
   </head>
