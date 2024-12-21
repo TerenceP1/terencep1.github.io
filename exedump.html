@@ -27,7 +27,7 @@
         // Extract the COFF header
         let coffD=document.getElementById("coff");
         // No error checking; file is assumed to be valid
-        coffD.innerText+="Machine: "+
+        coffD.innerText+="COFF header:\nMachine: "+
           {
             0x0: "Unknown",
             0x184: "Alpha AXP, 32 bit",
@@ -59,7 +59,9 @@
             0x1a8: "Hitachi SH5",
             0x1c2: "Thumb",
             0x169: "MIPS little-endian WCE v2"
-          }[parseInt(arr,cfOffset,2)];
+          }[parseInt(arr,cfOffset,2)]+"\n";
+        let nsec=parseInt(arr,cfOffset+2,2); // Number of sections
+        coffD.innerText+="Number of sections: "+nsec+"\n";
         alert("done");
       }
     </script>
