@@ -62,6 +62,8 @@
           }[parseInt(arr,cfOffset,2)]+"\n";
         let nsec=parseInt(arr,cfOffset+2,2); // Number of sections
         coffD.innerText+="Number of sections: "+nsec+"\n";
+        let tmpdt=new Date(parseInt(arr,cfOffset+4,4)*1000);
+        coffD.innerText+="Date created: "+tmpdt.toLocaleDateString()+" "+tmpdt.toLocaleTimeString()+"\n";
         alert("done");
       }
     </script>
