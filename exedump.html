@@ -10,18 +10,18 @@
       function extract(){
         alert("pressed");
         let file=document.getElementById("exe").files[0];
-        file.arrayBuffer().then(extractP);
+        file.arrayBuffer().then(extractP,window.onerror);
         alert("waiting...");
       }
       function parseInt(arr,offset,size){
         let res=0;
         for (let i=0;i<size;i++){
-          res|=arr[i i+offset]<<(i*8);
+          res|=arr[i+offset]<<(i*8);
         }
         return res;
       }
       function extractP(arr2){
-        let arr=new UInt8Array(arr2);
+        let arr=new Uint8Array(arr2);
         alert("start");
         let cfOffset=parseInt(arr,0x3c,4)+4; // location of COFF header
         // Extract the COFF header
