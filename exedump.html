@@ -65,6 +65,58 @@
         let tmpdt=new Date(parseInt(arr,cfOffset+4,4)*1000);
         coffD.innerText+="Date created: "+tmpdt.toLocaleDateString()+" "+tmpdt.toLocaleTimeString()+"\n";
         alert("done");
+        let ohsz=parseInt(arr,cfOffset+16,2);
+        coffD.innerText+="Size of optional header: "+ohsz+"\nCharacteristics: ";
+        let chn=parseInt(arr,cfOffset+18,2);
+        let chl=[];
+        if (chn&0x1){
+          chl.push("No base relocations");
+        }
+        if (chn&0x2){
+          chl.push("The file is valid");
+        }
+        if (chn&0x4){
+          chl.push("DEPRECATED FLAG");
+        }
+        if (chn&0x8){
+          chl.push("DEPRECATED FLAG");
+        }
+        if (chn&0x10){
+          chl.push("OBSOLETE FLAG");
+        }
+        if (chn&0x20){
+          chl.push("This file can handle >2GB addresses");
+        }
+        if (chn&0x40){
+          chl.push("RESERVED FLAG");
+        }
+        if (chn&0x80){
+          chl.push("DEPRECATED FLAG");
+        }
+        if (chn&0x100){
+          chl.push("Runs on a 32-bit computer");
+        }
+        if (chn&0x200){
+          chl.push("Debugging info has been stripped");
+        }
+        if (chn&0x400){
+          chl.push("If the image is on removable media, fully load it and copy it to the swap file.");
+        }
+        if (chn&0x1){
+          chl.push("");
+        }
+        if (chn&0x1){
+          chl.push("");
+        }
+        if (chn&0x1){
+          chl.push("");
+        }
+        if (chn&0x1){
+          chl.push("");
+        }
+        if (chn&0x1){
+          chl.push("");
+        }
       }
     </script>
   </head>
