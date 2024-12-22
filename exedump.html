@@ -27,7 +27,7 @@
         // Extract the COFF header
         let coffD=document.getElementById("coff");
         // No error checking; file is assumed to be valid
-        coffD.innerText+="COFF header:\nMachine: "+
+        coffD.innerText="COFF header:\nMachine: "+
           {
             0x0: "Unknown",
             0x184: "Alpha AXP, 32 bit",
@@ -102,21 +102,22 @@
         if (chn&0x400){
           chl.push("If the image is on removable media, fully load it and copy it to the swap file.");
         }
-        if (chn&0x1){
-          chl.push("");
+        if (chn&0x800){
+          chl.push("If the image is on network media, fully load it and copy it to the swap file.");
         }
-        if (chn&0x1){
-          chl.push("");
+        if (chn&0x1000){
+          chl.push("This is a system file");
         }
-        if (chn&0x1){
-          chl.push("");
+        if (chn&0x2000){
+          chl.push("This is a DLL");
         }
-        if (chn&0x1){
-          chl.push("");
+        if (chn&0x4000){
+          chl.push("The file should be run only on a uniprocessor machine.");
         }
-        if (chn&0x1){
-          chl.push("");
+        if (chn&0x8000){
+          chl.push("DEPRECATED FLAG");
         }
+        coffD.innerText+=chn+"\n";
       }
     </script>
   </head>
