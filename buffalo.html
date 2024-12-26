@@ -72,8 +72,8 @@
                         var nRe=0;
                         var nIm=0;
                         for(n=0;n<mi;n++){
-                            nRe=(oRe**2)-(oIm**2)-oRe+orRe;
-                            nIm=2*oRe*oIm-oIm+orIm;
+                            nRe=(oRe**2)-(oIm**2)-Math.abs(oRe)+orRe;
+                            nIm=Math.abs(2*oRe*oIm)-Math.abs(oIm)+orIm;
                             oRe=nRe;
                             oIm=nIm;
                             if ((oRe**2)+(oIm**2)>4){
