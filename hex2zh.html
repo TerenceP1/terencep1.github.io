@@ -1,5 +1,28 @@
 <html lang="en">
   <head>
-    <title>Convert hex to chinese characters</title>
+    <title>Convert hex to Chinese characters</title>
   </head>
+  <body>
+    <label>HEX: </label>
+    <input id="hex">
+    <br>
+    <label>Chinese: </label>
+    <input id="zh">
+    <br>
+    <script>
+      let hex=document.getElementById("hex");
+      let zh=document.getElementById("zh");
+      function tozh(){
+        let hexa="01234567890abcdef";
+        let ihexa={
+          "0":0,
+          "1":1,
+          "2":2,
+          "3":3,
+          "4":4,
+          "5":5
+      }
+    </script>
+    <button onclick="tozh();">Convert hex to Chinese</button>
+  </body>
 </html>
