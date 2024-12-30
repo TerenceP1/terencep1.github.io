@@ -44,6 +44,11 @@
           inpb.push((inp[i]&0x4)!=0);
           inpb.push((inp[i]&0x8)!=0);
         }
+        //find padding and pad
+        let pad=(14-(inpb.length%14))%14;
+        for (let i=0;i<pad;i+=){
+          inpb.push(0);
+        }
       }
     </script>
     <button onclick="tozh();">Convert hex to Chinese</button>
