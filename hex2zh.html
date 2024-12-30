@@ -49,7 +49,19 @@
         for (let i=0;i<pad;i+=){
           inpb.push(0);
         }
+        // finish
+        let res=hexa[pad];
+        for (let i=0;i<inpb.length;i+=14){
+          let num=0;
+          for (let j=0;j<14;j++){
+            num<<=1;
+            num^=inpb[i+j];
+          }
+          res+=String.fromCharCode(0x4e00+num);
+        }
+        zh.value=res;
       }
+      
     </script>
     <button onclick="tozh();">Convert hex to Chinese</button>
   </body>
