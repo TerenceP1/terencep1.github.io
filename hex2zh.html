@@ -51,7 +51,7 @@
         }
         //find padding and pad
         let pad=(14-(inpb.length%14))%14;
-        for (let i=0;i<pad;i+=){
+        for (let i=0;i<pad;i++){
           inpb.push(0);
         }
         // finish
@@ -60,7 +60,7 @@
           let num=0;
           for (let j=0;j<14;j++){
             num<<=1;
-            num^=inpb[i+j];
+            num|=inpb[i+j];
           }
           res+=String.fromCharCode(0x4e00+num);
         }
