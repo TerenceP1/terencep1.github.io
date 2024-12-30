@@ -10,6 +10,11 @@
     <input id="zh">
     <br>
     <script>
+      window.onerror = function (message, source, lineno, colno, error) {
+  alert(`Error: ${message}\nSource: ${source}\nLine: ${lineno}, Column: ${colno}\nStack: ${error?.stack || "N/A"}`);
+  console.error("Captured Error:", { message, source, lineno, colno, error });
+};
+
       let hex=document.getElementById("hex");
       let zh=document.getElementById("zh");
       function tozh(){
