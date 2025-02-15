@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>USCF Rating Caluculator</title>
+        <link rel="icon" type="image/x-icon" href="data:image/png;base64,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">
+        <meta charset="UTF-8">
+        <meta name="description" content="USCF Rating Caluculator">
+        <meta name="author" content="Terence Pwng">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Welcome to my HTML Version of my USCF Rating calulator (<em>NOT ESTIMATOR</em>)</h1>
+        <script>
+            var gms=0;
+            var rts=[];
+            var spr=false;
+            var oprt=false;
+            var r0=0;
+            var mrs=false;
+            var n_=0;
+            var chkv=false;
+            function We(a,b){
+                return 1/(1 + 1/(10**((a-b)/400)));
+            }
+            function max(a,b){
+                if (a>b){
+                    return a;
+                }else{
+                    return b;
+                }
+            }
+            function st_rtg(){
+                var k=800/(n_+gms);
+                if (chkv){
+                    if (r0<2500){
+                        k=800*(6.5 - 0.0025*r0)/(n_ + gms);
+                    }else{
+                        k=200/(n_ + gms);
+                    }
+                }
+                document.getElementById("kv").innerHTML="K value: "+k.toString();
+                var e=0;
+                for (var i=0;i<gms;i++){
+                    e+=We(r0,rts[i]);
+                }
+                console.log(e);
+                var s=parseFloat(document.getElementById("score").value);
+                document.getElementById("scin").innerHTML='<p style="color:green">Your score has been submitted!</p>';
+                if (gms>=3){
+                    document.getElementById("res").innerHTML+=(r0 + k*(s - e) + max(0, k*(s - e) - 12*(max(gms,0)**0.5))).toString();
+                    document.getElementById("res").removeAttribute("hidden");
+                }else{
+                    document.getElementById("res").innerHTML+=(r0 + k*(s - e)).toString();
+                    document.getElementById("res").removeAttribute("hidden");
+                }
+                document.getElementById("loading").setAttribute("hidden","");
+                document.getElementById("lt").setAttribute("hidden","");
+            }
+            function sp_rtg(){
+                document.getElementById("error").innerHTML="ERROR: Terence is not done programming <em>\"Special Rating Formula\"</em>.";
+
+            }
+            function solve(){
+                console.log("solve called");
+                document.getElementById("loading").removeAttribute("hidden")
+                document.getElementById("lt").removeAttribute("hidden");
+                if (spr){
+                    sp_rtg();
+                }else{
+                    st_rtg();
+                }
+            }
+            function rts_sub(){
+                if (document.getElementById("spr").value=='special'){
+                    spr=true;
+                }
+                for (var i=0;i<gms;i++){
+                    rts.push(parseInt(document.getElementById("rtg-"+i.toString()).value));
+                }
+                document.getElementById("scores").innerHTML='';
+                var unr=false;
+                for (var i=0;i<gms;i++){
+                    if (rts[i]==-1){
+                        unr=true;
+                        document.getElementById("scores").innerHTML+="<label>What is Player "+(i+1).toString()+"'s age in years: </label><input type='number' value='10' id='init"+i.toString()+"'><br>";
+                    }
+                }
+                if (!unr){
+                oprt=true;
+                    if (mrs){
+                        document.getElementById("loading").removeAttribute("hidden");
+                        document.getElementById("lt").removeAttribute("hidden");
+                        solve();
+                    }
+                    document.getElementById("scores").innerHTML="<p style='color:green'>Your opponents rating(s) have been submited!</p>";
+                }
+                else{
+                    document.getElementById("scores").innerHTML+="<button type='button' onClick='rtg_init()'>SUBMIT AGES</button>";
+                }
+            }
+            function rtg_init(){
+                for (var i=0;i<gms;i++){
+                    if (rts[i]==-1){
+                        var tmp=parseInt(document.getElementById("init"+i.toString()).value);
+                        console.log(tmp);
+                        if (tmp<2){
+                            rts[i]=100;
+                        }
+                        else if (tmp<=20){
+                            rts[i]=50*tmp;
+                        }else{
+                            rts[i]=1300;
+                        }
+                    }
+                }
+                if (mrs){
+                        document.getElementById("loading").removeAttribute("hidden");
+                        document.getElementById("lt").removeAttribute("hidden");
+                        solve();
+                    }
+                oprt=true;
+                document.getElementById("scores").innerHTML="<p style='color:green'>Your opponents rating(s) have been submited!</p>";
+            }
+        </script>
+        <style>
+            .tp-btn {
+                border-radius: 12px;
+                background-color: #7369C0;
+                color: #0395a7;
+            }
+        </style>
+        <div id="scores">
+            <label>Number of games played:</label>
+            <input type="number" value="3" id="val">
+            <button class="tp-btn" type="button" onClick="gms=parseInt(gms=document.getElementById('val').value);var input='';for(var i=0;i<gms;i++){input=input.concat('<label>Player '+(i+1).toString()+'\'s rating (write -1 if unrated): <\label><input type=\'number\' value=\'1000\' id=&quot;rtg-'+i.toString()+'&quot;><br>')}input+='<button onClick=&quot;rts_sub();&quot;>SUBMIT RATINGS</button>';document.getElementById('scores').innerHTML=input;">Click here to input your oppenents ratings</button>
+        </div>
+        <div id="scin">
+        <label>Your score (do second): </label>
+        <input type="number" id="score" value="0">
+        </div>
+        <div id="mr">
+            <label>Your rating (write -1 is unrated): </label>
+            <input id="r0" type="number" value="1000">
+            <br>
+            <button class="tp-btn" onClick="r0=parseInt(document.getElementById('r0').value);if(r0==-1){document.getElementById('mr').innerHTML='<label>Your age in years: </label><input id=&quot;r0&quot; type=&quot;number&quot; value=&quot;10&quot;><button onClick=&quot;var tmp=parseInt(document.getElementById(\'r0\'));if(tmp<2){r0=300;}else if(tmp<=20){r0=tmp*50;}else{r0=1300;}document.getElementById(\'mr\').innerHTML=\'<p style=\\\';color:green\\\'>Your rating has been submited</p>\';mrs=true;if(oprt){solve();}n_=(50/((0.662+0.00000739*(2569-r0))**2));&quot;>Submit age</button>'}else{r0=parseInt(document.getElementById('r0').value);document.getElementById('mr').innerHTML='<p style=\'color:green\'>Your rating has been submited</p>';mrs=true;if(oprt){solve();}if (r0>2355){n_=50;}else{n_=(50/((0.662+0.00000739*(2569-r0))**2))}}">Submit your rating</button>
+        </div>
+        <p>If any of the folowing are true about you, write "<em>special</em>" in lower case in the box below (please do first):</p>
+        <ul>
+            <li style="color:red">I lost every game I played</li>
+            <li style="color:green">I won every game I played</li>
+            <li  style="color:#FFA700">I've played less than or excactly 8 offical USCF rated rounds</li>
+        </ul>
+        <input type="text" id="spr" size="40" value="Not me!!!"/>
+        <style>
+            .loader {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: /*500ms ease-out 0s infinite running spin1,*/
+  3s ease-in 0s infinite running spin2;
+}
+
+@keyframes spin1 {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(180deg); }
+}
+@keyframes spin2 {
+  0% { transform: rotate(0deg); }
+  30%{ transform: rotate(30deg); }
+  70% { transform: rotate(330deg);}
+  100% { transform: rotate(360deg); }
+}
+        </style>
+        <br>
+        <label><b>FOR CHESS MASTERS ONLY!!!</b> If your rating is greater than 2200 and the number of minutes + seconds in your time control are between 30 and 65, click this button: </label>
+        <p id="kv"></p>
+        <button class="tp-btn" type="button" id="chkv" onclick="chkv=true;document.getElementById('chkv').setAttribute('disabled','');document.getElementById('chkv').innerHTML='You have clicked me. If you didn\'t mean to, reload the page. I can\'t be spam-clicked as I\'m now disabled😁'">Don't click me without reading the label. If you accedently do, reload your page please.</button>
+        <p hidden="true" id="lt"><b>Calculating rating...</b></p><div class="loader" id="loading" hidden="true"></div>
+        <p style="color:red;" id="error"></p>
+        <p id="res" hidden="true">Your new <u><em><b>PRECISE</b></em></u> USCF rating is: </p>
+    </body>
+</html>
