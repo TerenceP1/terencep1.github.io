@@ -30,6 +30,15 @@
                 }
             }
             function st_rtg(){
+                let n__;
+                if (r0<=2355){
+                    n__=50/((0.662+0.00000739*((2569-r0)**2))**0.5);
+                }
+                else {
+                    n__=50;
+                }
+                let ngmst=Number(prompt("How many USCF rates tournement games have you played (just put 50 if you have played more than 50)","50"));
+                let n_=n__<ngmst?n__:ngmst;
                 var k=800/(n_+gms);
                 if (chkv){
                     if (r0<2500){
