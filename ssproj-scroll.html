@@ -11,7 +11,7 @@
       function loop(a){
         if (a<10000){
           document.getElementById("txt").scroll({top:a,left:0,behavior:"instant"});
-          setTimeout(loop,a+Number(document.getElementById("inp").value),25);
+          setTimeout(loop,25,a+Number(document.getElementById("inp").value));
         }
       }
       function goo(){
