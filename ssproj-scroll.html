@@ -10,7 +10,8 @@
     <script>
       function loop(a){
         if (a<10000){
-          document.getElementById("txt").scroll({top:a,left:0,behavior:"instant"})
+          document.getElementById("txt").scroll({top:a,left:0,behavior:"instant"});
+          setTimeout(loop,a+Number(document.getElementById(
       function goo(){
         
     </script>
