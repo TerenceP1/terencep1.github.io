@@ -85,5 +85,6 @@ function(){
       this.json = frq.json;
       this.text = frq.text;
       return this;
+    }
   }
 }();
