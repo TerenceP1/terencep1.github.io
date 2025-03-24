@@ -4,7 +4,7 @@ function(){
   function proxynate(url){
     let ourl=url;
     if (url.startsWith("https://")){
-      url.substring(8);
+      url=url.substring(8);
     }
     else{
       ourl="https://"+origin+ourl;
