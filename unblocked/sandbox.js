@@ -12,10 +12,10 @@ function(){
     url="https://unblocked2.vercel.app"+url;
     return {url:url,ourl:ourl};
   }
-  function readonly(ths,a){
+  function readonly(ths,a,value){
     Object.defineProperty(ths, a, {
-      value: ths[a],
-      writable: false
+      get: function(){return value;},
+      configurable: false
     });
   }
   // Block fetch
@@ -35,9 +35,9 @@ function(){
         frq=new oRequest(proxied.url,b);
       }
       
-      delete frq.url;
-      frq.url=proxied.oUrl;
-      readonly(frq.url)
+      
+      readonly(frq,"url",proxied.ourl);
+      
       return frq;
     }
   }
