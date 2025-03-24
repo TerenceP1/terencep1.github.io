@@ -3,7 +3,7 @@ function(){
   let origin=window.location.origin;
   function proxynate(url){
     let ourl=url;
-    if (url.startsWith("https://"){
+    if (url.startsWith("https://")){
       url.substring(8);
     }
     else{
@@ -58,6 +58,14 @@ function(){
       readonly(this.signal);
       this.url = a.url;
       readonly(this.url);
+      this.arrayBuffer = a.arrayBuffer;
+      this.blob = a.blob;
+      this.bytes = a.bytes;
+      this.clone = a.clone;
+      this.formData = a.formData;
+      this.json = a.json;
+      this.text = a.text;
+      return this;
     }
     else{
       let proxied=proxynate(a);
@@ -100,5 +108,13 @@ function(){
       readonly(this.signal);
       this.url = proxied.ourl;
       readonly(this.url);
+      this.arrayBuffer = frq.arrayBuffer;
+      this.blob = frq.blob;
+      this.bytes = frq.bytes;
+      this.clone = frq.clone;
+      this.formData = frq.formData;
+      this.json = frq.json;
+      this.text = frq.text;
+      return this;
   }
 }();
