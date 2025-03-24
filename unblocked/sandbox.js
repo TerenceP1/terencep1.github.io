@@ -7,7 +7,7 @@ function(){
       url=url.substring(8);
     }
     else{
-      ourl="https://"+origin+ourl;
+      ourl=origin+ourl;
     }
     url="https://unblocked2.vercel.app"+url;
     return {url:url,ourl:ourl};
