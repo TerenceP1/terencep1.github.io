@@ -15,7 +15,8 @@ function(){
   function readonly(ths,a,value){
     Object.defineProperty(ths, a, {
       get: function(){return value;},
-      configurable: false
+      configurable: false,
+      enumerable: true
     });
   }
   // Block fetch
