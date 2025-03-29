@@ -6,19 +6,19 @@
   <body>
     <h1>Zee setsolver</h1>
     <label>shape</label>
-    <select id="shape" onchange="setTimeout(function(){document.getElementById('color').click();},100);">
+    <select id="shape" onchange="setTimeout(function(){document.getElementById('color').showPicker();},100);">
       <option value="0">Oval</option>
       <option value="1">Rhombus</option>
       <option value="2">Squiggle</option>
     </select>
     <label>color</label>
-    <select id="color" onchange="setTimeout(function(){document.getElementById('fill').click();},100);">
+    <select id="color" onchange="setTimeout(function(){document.getElementById('fill').showPicker();},100);">
       <option value="0">Green</option>
       <option value="1">Red</option>
       <option value="2">Purple</option>
     </select>
     <label>fill</label>
-    <select id="fill" onchange="setTimeout(function(){document.getElementById('number').click();},100);">
+    <select id="fill" onchange="setTimeout(function(){document.getElementById('number').showPicker();},100);">
       <option value="0">None</option>
       <option value="1">Partial</option>
       <option value="2">Full</option>
@@ -39,7 +39,7 @@
           document.getElementById("number").value,
           ]);
         document.getElementById("thing").innerText=JSON.stringify(set,null,2);
-        setTimeout(function(){document.getElementById('shape').click();},100);
+        setTimeout(function(){document.getElementById('shape').showPicker();},100);
       }
     </script>
     <button onclick="add();">Add</button>
