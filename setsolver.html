@@ -23,6 +23,7 @@
       <option value="1">Partial</option>
       <option value="2">Full</option>
     </select>
+    <label>number</label>
     <script>
       let set=[];
       function add(){
@@ -31,7 +32,7 @@
           document.getElementById("color").value,
           document.getElementById("fill").value,
           ]);
-        document.getElementById("thing").innerText=set.toString();
+        document.getElementById("thing").innerText=JSON.stringify(set,null,2);
       }
     </script>
     <button onclick="add();">Add</button>
