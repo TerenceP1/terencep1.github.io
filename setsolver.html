@@ -1,0 +1,41 @@
+<html lang=en>
+  <head>
+    <title>SET SOLVER HAHAHAHAHA</title>
+    <script src="setsolver.js"></script>
+  </head>
+  <body>
+    <h1>Zee setsolver</h1>
+    <label>shape</label>
+    <select id="shape">
+      <option value="0">Oval</option>
+      <option value="1">Rhombus</option>
+      <option value="2">Squiggle</option>
+    </select>
+    <label>color</label>
+    <select id="color">
+      <option value="0">Green</option>
+      <option value="1">Red</option>
+      <option value="2">Purple</option>
+    </select>
+    <label>fill</label>
+    <select id="fill">
+      <option value="0">None</option>
+      <option value="1">Partial</option>
+      <option value="2">Full</option>
+    </select>
+    <script>
+      let set=[];
+      function add(){
+        set.push([
+          document.getElementById("shape").value,
+          document.getElementById("color").value,
+          document.getElementById("fill").value,
+          ]);
+        document.getElementById("thing").innerText=set.toString();
+      }
+    </script>
+    <button onclick="add();">Add</button>
+    <button onclick="setsolve(set);">Solve</button>
+    <p id="thing"></p>
+  </body>
+</html>
