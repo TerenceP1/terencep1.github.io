@@ -24,6 +24,11 @@
       <option value="2">Full</option>
     </select>
     <label>number</label>
+    <select id="fill">
+      <option value="0">1</option>
+      <option value="1">2</option>
+      <option value="2">3</option>
+    </select>
     <script>
       let set=[];
       function add(){
@@ -31,6 +36,7 @@
           document.getElementById("shape").value,
           document.getElementById("color").value,
           document.getElementById("fill").value,
+          document.getElementById("number").value,
           ]);
         document.getElementById("thing").innerText=JSON.stringify(set,null,2);
       }
