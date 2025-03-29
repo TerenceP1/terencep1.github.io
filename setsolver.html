@@ -6,13 +6,13 @@
   <body>
     <h1>Zee setsolver</h1>
     <label>shape</label>
-    <select id="shape">
+    <select id="shape" onchange="document.getElementById('color').focus();">
       <option value="0">Oval</option>
       <option value="1">Rhombus</option>
       <option value="2">Squiggle</option>
     </select>
     <label>color</label>
-    <select id="color">
+    <select id="color" onchange="document.getElementById('fill').focus();">
       <option value="0">Green</option>
       <option value="1">Red</option>
       <option value="2">Purple</option>
@@ -39,6 +39,7 @@
           document.getElementById("number").value,
           ]);
         document.getElementById("thing").innerText=JSON.stringify(set,null,2);
+        document.getElementById('shape').focus();
       }
     </script>
     <button onclick="add();">Add</button>
