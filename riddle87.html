@@ -14,7 +14,7 @@
           if (r===`${a*b}`){
             lft--;
             if (lft==0){
-              document.getElementById("btn").removeAttribute("hidden");
+              setTimeout(function(){document.getElementById("btn").removeAttribute("hidden");},1000);
               break;
             }
           }
