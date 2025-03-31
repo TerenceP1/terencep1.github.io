@@ -33,7 +33,7 @@
       function rick(){
         document.body.setAttribute("style",style);
         audio.play();
-        setTimeout(function(){document.getElementById("ans").removeAttribute("hidden");},209000);
+        setTimeout(function(){document.getElementById("ans").removeAttribute("hidden");document.body.removeAttribute("style");},209000);
       }
     </script>
     <button id="btn" hidden onclick="rick();">Click to get password (Turn up your volume and listen to the whole song first</button>
