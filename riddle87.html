@@ -11,6 +11,10 @@
         while (true){
           let a=Math.floor(Math.random()*1000),b=Math.floor(Math.random()*1000);
           let r=prompt(`What is ${a}x${b}? You have ${lft} questions left in a row to answer`);
+          if (r==="CHE4T.C0DE$"){
+            alert("CHEAT CODE DETECTED");
+            break;
+          }
           if (r===`${a*b}`){
             lft--;
             if (lft==0){
