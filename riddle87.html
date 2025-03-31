@@ -31,6 +31,7 @@
       let style="background-image: url(\"assets/ricky.gif\");";
       questionize();
       function rick(){
+        document.getElementById("btn").setAttribute("hidden","");
         document.body.setAttribute("style",style);
         audio.play();
         setTimeout(function(){document.getElementById("ans").removeAttribute("hidden");document.body.removeAttribute("style");},209000);
