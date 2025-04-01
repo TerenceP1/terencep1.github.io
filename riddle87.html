@@ -1,6 +1,15 @@
 <html lang=en>
   <head>
     <title>You passed!!!!</title>
+    <style>
+      @keyframes cursedahh {
+        0% {background-size:100% 100%; transform: rotate(0deg);}
+        25% {background-size:120% 80%; transform: rotate(30deg);}
+        50% {background-size:80% 120%; transform: rotate(-30deg);}
+        75% {background-size:100% 100%; transform: rotate(0deg);}
+        100% {background-size:100% 100%; transform: rotate(360deg);}
+      }
+    </style>
   </head>
   <body>
     <h1>CONGRATS ON FIGURING OUT THE RIDDLE!</h1>
@@ -28,7 +37,7 @@
           }
         }
       }
-      let style="background-image: url(\"assets/ricky.gif\");background-size: 100% 100%;background-repeat: no-repeat;background-position: center;";
+      let style="background-image: url(\"assets/ricky.gif\");background-size: 100% 100%;background-repeat: no-repeat;background-position: center;animation: cursedahh 2s infinite alternate linear";
       questionize();
       function rick(){
         document.getElementById("btn").setAttribute("hidden","");
