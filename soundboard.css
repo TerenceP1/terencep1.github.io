@@ -25,7 +25,7 @@
 }
 @keyframes spin {
   0% {rotate:0deg;}
-  100% {rotate:0deg; background-color:blue;}
+  100% {rotate:360deg; background-color:blue;}
 }
 .button:hover {
   animation-name: spin;
