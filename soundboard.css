@@ -2,22 +2,32 @@
   width: 300px;
   height: 100px;
 }
+/*
 .grid > button:first-child {
   position: relative;
   left:0px;
 }
 .grid > button:nth-child(2) {
   position: relative;
-  left:100px;
+  left:50px;
 }
 .grid > button:nth-child(3) {
   position: relative;
-  left:200px;
+  left:100px;
 }
+*/
 .button {
   width:100px;
   height:100px;
   border-radius: 50px;
   background-color:red;
   color:white;
+}
+@keyframes spin {
+  0% {rotate:0deg;}
+  100% {rotate:0deg; background-color:blue;}
+}
+.button:hover {
+  animation-name: spin;
+  animation-duration: 1s;
 }
