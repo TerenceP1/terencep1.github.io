@@ -3,6 +3,8 @@
   height: 100px;
 }
 
+body {overflow: hidden;}
+
 .grid > button:first-child {
   position: relative;
   left:0px;
