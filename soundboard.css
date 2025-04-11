@@ -24,12 +24,16 @@
   color:white;
 }
 @keyframes spin {
-  0% {rotate:0deg;}
-  50% {rotate:360deg; background-color:blue;}
+  0% {rotate:0deg;width:100px;
+  height:100px;}
+  50% {rotate:360deg; background-color:blue;width:100px;
+  height:100px;}
   75% {rotate:360deg; background-color:blue;width:100%;height:100%;border-radius: 25px;}
   100% {rotate:360deg; background-color:blue; position: absolute; left:0px;top:0px;width:100%;height:100%;border-radius: 0px;}
 }
 .button:hover {
   animation-name: spin;
   animation-duration: 2s;
+  animation-fill-mode: forwards;
+  z-index:1;
 }
