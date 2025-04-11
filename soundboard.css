@@ -39,7 +39,7 @@ body {overflow: hidden;}
   100% {rotate:360deg; z-index:1;
         white-space: pre;background-color:blue;z-index:1; position: absolute; left:0px;top:0px;width:100vw;height:100vh;border-radius: 0px;}
 }
-.button:hover {
+.button:focus {
   animation-name: spin;
   animation-duration: 2s;
   animation-fill-mode: forwards;
