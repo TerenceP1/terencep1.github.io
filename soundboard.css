@@ -35,7 +35,7 @@ body {overflow: hidden;}
   /*75% {rotate:360deg; background-color:blue;  position: relative;white-space: pre;
   left:0px;border-radius: 25px;}*/
   75.01% {rotate:360deg; background-color:blue;  position: relative;
-  left:0px;width:100vw;height:100vh;border-radius: 25px;z-index:1;}
+  left:0px;width:99vw;height:100vh;border-radius: 25px;z-index:1;}
   100% {rotate:360deg; z-index:1;
         white-space: pre;background-color:blue;z-index:1; position: absolute; left:0px;top:0px;width:100vw;height:100vh;border-radius: 0px;}
 }
