@@ -13,11 +13,12 @@ let sounds=[
   new Audio("assets/soundboard/sd1.mp3")
 ];
 
+document.addEventListener("DOMContentLoaded",function(){
 for (let i=0;i<1;i++){
   let tmp=i;
   document.getElementById("btn"+i).addEventListener("click",function(){sounds[tmp].play();});
   document.body.addEventListener("keydown",function(e){if(e.key===(tmp+1).toString()){document.getElementById("btn"+tmp).click();}});
 }
-
+});
 
 
