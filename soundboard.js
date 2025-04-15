@@ -10,11 +10,12 @@ for (let i=0;i<itms.length;i++){
 // sounds
 
 let sounds=[
-  new Audio("assets/soundboard/sd1.mp3")
+  new Audio("assets/soundboard/sd1.mp3"),
+  new Audio("assets/soundboard/sd2.mp3")
 ];
 
 document.addEventListener("DOMContentLoaded",function(){
-for (let i=0;i<1;i++){
+for (let i=0;i<2;i++){
   let tmp=i;
   document.getElementById("btn"+i).addEventListener("click",function(){sounds[tmp].play();document.getElementById("btn"+tmp).focus();});
   document.body.addEventListener("keydown",function(e){if(e.key===(tmp+1).toString()){document.getElementById("btn"+tmp).click();}});
