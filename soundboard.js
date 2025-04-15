@@ -10,12 +10,14 @@ for (let i=0;i<itms.length;i++){
 // sounds
 
 let sounds=[
-  new Audio("assets/soundboard/sd1.mp3"),
-  new Audio("assets/soundboard/sd2.mp3")
 ];
 
+for (let i=0;i<9;i++){
+  sounds.push(new Audio("assets/soundboard/sd"+(i+1).toString()+".mp3"));
+}
+
 document.addEventListener("DOMContentLoaded",function(){
-  let nm=2;
+  let nm=9;
 for (let i=0;i<nm;i++){
   let tmp=i;
   document.getElementById("btn"+i).addEventListener("click",function(){
