@@ -62,3 +62,6 @@ body {overflow: hidden;}
 #btn2:focus {
     background-image: url("assets/android.png");
 }
+#btn5:focus {
+    background-image: url("assets/sus.gif");
+}
