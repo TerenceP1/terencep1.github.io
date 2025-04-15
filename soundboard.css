@@ -58,3 +58,7 @@ body {overflow: hidden;}
 #btn7:focus {
     background-image: url("assets/nuke.gif");
 }
+
+#btn2:focus {
+    background-image: url("assets/android.png");
+}
