@@ -45,3 +45,7 @@ body {overflow: hidden;}
   animation-fill-mode: forwards;
   z-index:1;
 }
+
+#btn6:focus {
+    background-image: url("assets/themoreyouknnow");
+}
