@@ -28,4 +28,7 @@ for (let i=0;i<nm;i++){
 }
 });
 
-
+function stop(){
+  let nm=9;
+  for (let j=0;j<nm;j++){sounds[j].pause();sounds[j].currentTime=0;}
+}
