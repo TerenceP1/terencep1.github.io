@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded",function(){
 for (let i=0;i<nm;i++){
   let tmp=i;
   document.getElementById("btn"+i).addEventListener("click",function(){
-                                                                      for (let j=0;j<nm;j++){sounds[j].pause();if(j==tmp){sounds[j].currentTime=0;}}
+                                                                      for (let j=0;j<nm;j++){sounds[j].pause();if(j!=tmp){sounds[j].currentTime=0;}}
     sounds[tmp].play();document.getElementById("btn"+tmp).focus();
                                                                       });
   document.body.addEventListener("keydown",function(e){if(e.key===(tmp+1).toString()){document.getElementById("btn"+tmp).click();}});
