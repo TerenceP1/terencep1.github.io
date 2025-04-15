@@ -49,3 +49,9 @@ body {overflow: hidden;}
 #btn6:focus {
     background-image: url("assets/themoreyouknow.gif");
 }
+#btn1:focus {
+    background-image: url("assets/1000iq.gif");
+}
+#btn8:focus {
+    background-image: url("assets/bill-nye-the-science-guy.gif");
+}
