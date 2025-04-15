@@ -37,7 +37,7 @@ body {overflow: hidden;}
   75.01% {rotate:360deg; background-color:blue;  position: relative;
   left:0px;width:99vw;height:100vh;border-radius: 25px;z-index:1;}
   100% {rotate:360deg; z-index:1;
-        white-space: pre;background-color:blue !important ;z-index:1; position: absolute; left:0px;top:0px;width:100vw;height:100vh;border-radius: 0px;}
+        white-space: pre;background-color:blue ;z-index:1; position: absolute; left:0px;top:0px;width:100vw;height:100vh;border-radius: 0px;}
 }
 .button:focus {
   animation-name: spin;
