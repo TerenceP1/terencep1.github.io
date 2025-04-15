@@ -15,9 +15,13 @@ let sounds=[
 ];
 
 document.addEventListener("DOMContentLoaded",function(){
-for (let i=0;i<2;i++){
+  let nm=2;
+for (let i=0;i<nm;i++){
   let tmp=i;
-  document.getElementById("btn"+i).addEventListener("click",function(){sounds[tmp].play();document.getElementById("btn"+tmp).focus();});
+  document.getElementById("btn"+i).addEventListener("click",function(){
+                                                                      for (let j=0;j<nm;j++){sounds[j].pause();sounds[j].currentTime=0;}
+    sounds[tmp].play();document.getElementById("btn"+tmp).focus();
+                                                                      });
   document.body.addEventListener("keydown",function(e){if(e.key===(tmp+1).toString()){document.getElementById("btn"+tmp).click();}});
 }
 });
