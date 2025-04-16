@@ -72,4 +72,6 @@ body {overflow: hidden;}
   border-radius: 150px;
   background-color:red;
   color:white;
+    padding-left: 400px;
+    top: 100;
 }
