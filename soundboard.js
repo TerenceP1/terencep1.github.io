@@ -26,7 +26,7 @@ for (let i=0;i<nm;i++){
                                                                       });
   document.body.addEventListener("keydown",function(e){if(e.key===(tmp+1).toString()){document.getElementById("btn"+tmp).click();}});
 }
-  itms2=document.body.addEventListener("keydown",function(e){if(e.key=="s"){document.getElementsByClassName("bigb")[0].click();}}
+  document.body.addEventListener("keydown",function(e){if(e.key=="s"){document.getElementsByClassName("bigb")[0].click();}}
 });
 
 function stop(){
