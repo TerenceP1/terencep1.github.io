@@ -8,7 +8,7 @@
 <body>
     <h1>Stare at center</h1>
     <canvas id="main"></canvas>
-    <button onclick="document.getElementById('main').requestFullscreen();">Fullscreen</button>
+    <button onclick="document.getElementById('main').requestFullscreen();document.getElementById('main').webkitRequestFullscreen();">Fullscreen</button>
     <script>
         let canvas = document.getElementById("main");
         let cv = canvas.getContext("2d");
