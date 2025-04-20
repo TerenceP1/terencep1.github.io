@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>This illusion will make you HALLUCINATE!!!</title>
+</head>
+
+<body>
+    <h1>Stare at center</h1>
+    <canvas id="main"></canvas>
+    <button onclick="document.getElementById('main').requestFullscreen();">Fullscreen</button>
+    <script>
+        let canvas = document.getElementById("main");
+        let cv = canvas.getContext("2d");
+        canvas.width = 400;
+        canvas.height = 400;
+        function mod(a, b) {
+            if (a >= 0) {
+                return a % b;
+            }
+            else {
+                let res = a % b;
+                res += b;
+                res %= b;
+                return res;
+            }
+        }
+        let normO = 0, inO = 0;
+        function loop() {
+            normO = mod(normO + 2, 50);
+            inO = mod(inO - 2, 50);
+            let x = 400, y = 400;
+            let img = cv.createImageData(x, y);
+            for (let i = 0; i < x; i++) {
+                for (let j = 0; j < y; j++) {
+                    let ind = i * x + j;
+                    if (Math.sqrt((i - x / 2) ** 2 + (j - y / 2) ** 2) < 150) {
+                        dst = mod(Math.abs(i - x / 2) + Math.abs(j - y / 2) + normO, 50);
+                        if (dst > 25) {
+                            img.data[ind * 4] = 255;
+                            img.data[ind * 4 + 1] = 255;
+                            img.data[ind * 4 + 2] = 255;
+                            img.data[ind * 4 + 3] = 255;
+                            //console.log("gotit");
+                        }
+                        else {
+                            img.data[ind * 4] = 0;
+                            img.data[ind * 4 + 1] = 0;
+                            img.data[ind * 4 + 2] = 0;
+                            img.data[ind * 4 + 3] = 255;
+                        }
+                    }
+                    else {
+                        dst = mod(Math.abs(i - x / 2) + Math.abs(j - y / 2) + inO, 50);
+                        if (dst > 25) {
+                            img.data[ind * 4] = 255;
+                            img.data[ind * 4 + 1] = 255;
+                            img.data[ind * 4 + 2] = 255;
+                            img.data[ind * 4 + 3] = 255;
+                            //console.log("gotit");
+                        }
+                        else {
+                            img.data[ind * 4] = 0;
+                            img.data[ind * 4 + 1] = 0;
+                            img.data[ind * 4 + 2] = 0;
+                            img.data[ind * 4 + 3] = 255;
+                        }
+                    }
+                }
+            }
+            cv.putImageData(img, 0, 0);
+            cv.lineWidth = 3;
+            cv.beginPath();
+            cv.strokeStyle = "red";
+            cv.moveTo(190, 200);
+            cv.lineTo(210, 200);
+            cv.stroke();
+            cv.beginPath();
+            cv.strokeStyle = "red";
+            cv.moveTo(200, 190);
+            cv.lineTo(200, 210);
+            cv.stroke();
+            setTimeout(loop, 15);
+        }
+        loop();
+    </script>
+</body>
+
+</html>
