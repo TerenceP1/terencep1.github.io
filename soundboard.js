@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded",function(){
   let nm=9;
 for (let i=0;i<nm;i++){
   let tmp=i;
+  if (i==1) {continue;}
   document.getElementById("btn"+i).addEventListener("click",function(){
                                                                       for (let j=0;j<nm;j++){sounds[j].pause();if(j!=tmp){sounds[j].currentTime=0;}}
     sounds[tmp].play();document.getElementById("btn"+tmp).focus();
