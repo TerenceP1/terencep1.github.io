@@ -3,8 +3,11 @@
   <title>Formmy formmy</title>
     <script>
       let form;
+      function bodyProc(json){
+        alert(json);
+      }
       function loadHandle(rsp){
-        alert(rsp.body);
+        rsp.text().then(bodyProc);
       }
       function loadForm(){
         let cId=document.getElementById("formid").value;
