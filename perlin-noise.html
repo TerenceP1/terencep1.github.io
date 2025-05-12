@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <title>Perlin noise</title>
+    <script>
+      //Perlin noise
+
+// Parameters
+
+let gridSz=11; // size of each square in grid in pixels
+let gridNm=2; // size of grid itself in squares of gridSz
+
+
+// Helpers
+  
+function lerp(a,b,c){ // linear interpolation
+  return a*(1-c)+b*c;
+}
+
+function fade(x){
+  return 6*x**5-15*x**4+10*x**3;
+}
+
+function dProd(vec1,vec2){
+  // dot product
+  return vec1[0]*vec2[0]+vec1[1]*vec2[1];
+}
+
+function interpole(g1,g2,g3,g4,u,v){
+  // interpole
+  return lerp(lerp(g1,g2,fade(u)),
+              lerp(g3,g4,fade(u)),fade(v));
+}
+
+// Generaation
+      let rdVec;
+function rdVecG(){
+  // Make array of random vectors
+  rdVec=new Array(gridNm+1);
+  for (let i=0;i<gridNm+1;i++){
+    rdVec[i]=new Array(gridNm+1);
+    for (let j=0;j<gridNm+1;j++){
+      let tmpDg=Math.random()*Math.PI*2;
+      rdVec[i][j]=[Math.sin(tmpDg),Math.cos(tmpDg)];
+    }
+  }
+}
+
+let img;
+function imgGen(){
+  let gridFs=gridSz*gridNm; // canvas size
+  img=new Array(gridFs);
+  for (let i=0;i<gridFs;i++){
+    img[i]= Array(gridFs);
+    for (let j=0;j<gridFs;j++){
+      let xPos=i/gridSz;
+      let yPos=j/gridSz;
+      //let 
+    }
+  }
+}
+
+    </script>
+  </head>
+  <body>
+    
+  </body>
+</html>
