@@ -54,7 +54,15 @@ function imgGen(){
     for (let j=0;j<gridFs;j++){
       let xPos=i/gridSz;
       let yPos=j/gridSz;
-      //let 
+      let u=xPos%1;
+      let v=yPos%1;
+      let gLst=[0,0,0,0];
+      for (let k=0;k<4;k++){
+        let xRd=(k%2)==0?Math.floor(xPos):Math.ceil(xPos);
+        let yRd=k<2?Math.floor(yPos):Math.ceil(yPos);
+        gLst[k]=dProd([xPos-xRd,yPos-yRd],rdVec[xRd][yRd]);
+      }
+      img[i][j]=interpole(...gLst,u,v);
     }
   }
 }
