@@ -78,7 +78,7 @@ function imgGen(){
       let ctx=canvas.getContext("2d");
       canvas.width=gridSz*gridNm;
       canvas.height=gridSz*gridNm;
-      let img2=ctx.getImageData();
+      let img2=ctx.getImageData(0,0,gridSz*gridNm,gridSz*gridNm);
       for (let i=0;i<gridSz*gridNm;i++){
         for (let j=0;j<gridSz*gridNm;j++){
           img2.data[4*j+4*i*gridSz*gridNm]=img[i][j];
@@ -87,7 +87,7 @@ function imgGen(){
           img2.data[4*j+4*i*gridSz*gridNm+3]=255;
         }
       }
-      ctx.putImageData(img2);
+      ctx.putImageData(img2,0,0);
     </script>
   </body>
 </html>
