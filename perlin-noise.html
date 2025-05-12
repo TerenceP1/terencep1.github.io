@@ -62,7 +62,7 @@ function imgGen(){
         let yRd=k<2?Math.floor(yPos):Math.ceil(yPos);
         gLst[k]=dProd([xPos-xRd,yPos-yRd],rdVec[xRd][yRd]);
       }
-      img[i][j]=interpole(...gLst,u,v);
+      img[i][j]=(interpole(...gLst,u,v)/Math.sqrt(2)+0.5)*255;
     }
   }
 }
@@ -70,6 +70,24 @@ function imgGen(){
     </script>
   </head>
   <body>
-    
+    <canvas id="cv"></canvas>
+    <script>
+      rdVecG();
+      imgGen();
+      let canvas=document.getElementById("cv");
+      let ctx=canvas.getContext("2d");
+      canvas.width=gridSz*gridNm;
+      canvas.height=gridSz*gridNm;
+      let img2=ctx.getImageData();
+      for (let i=0;i<gridSz*gridNm;i++){
+        for (let j=0;j<gridSz*gridNm;j++){
+          img2.data[4*j+4*i*gridSz*gridNm]=img[i][j];
+          img2.data[4*j+4*i*gridSz*gridNm+1]=img[i][j];
+          img2.data[4*j+4*i*gridSz*gridNm+2]=img[i][j];
+          img2.data[4*j+4*i*gridSz*gridNm+3]=255;
+        }
+      }
+      ctx.putImageData(img2);
+    </script>
   </body>
 </html>
