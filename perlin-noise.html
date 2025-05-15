@@ -48,9 +48,9 @@
       }
     }
 
-    let img = 1;
+    let img;
     function imgGen(amp) {
-      let uf = img == 1;
+      let uf = typeof(img)=='undefined';
       let gridFs = gridSz * gridNm; // canvas size
       if (uf) {
         img = new Array(gridFs);
