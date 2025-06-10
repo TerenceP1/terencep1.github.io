@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>USCF Rating Calculator by Terence Peng</title>
+        <style>
+            html, body {
+                cursor: url(http://www.rw-designer.com/cursor-extern.php?id=197484);
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color:#58A8A9;
+            }
+            .nt-border {
+                border-left: 3px solid black;
+                border-top: 3px solid black;
+                
+                border-right: 3px solid white;
+                
+                border-bottom: 3px solid white;
+            }
+            .window{
+                margin: auto;
+                position:absolute;
+                left:10%;
+                top:10%;
+                width:80%;
+                height:81%;
+                /* border: 3px solid black; */
+                /* border-radius: 50px; */
+
+                /* background-color:#01019F; */
+            }
+            .window > :first-child {
+    display: flex;              /* flexbox */
+    justify-content: center;    /* horizontal center */
+    align-items: center;        /* vertical center */
+                font-family: 'Tahoma', sans-serif;
+                text-align: center;
+                font-size: 6vh;
+                line-height: 8%;
+                height: 10%;
+                border-bottom: 3px solid black;
+                width:100%;
+                background-color:#01019F;
+                margin:0px;
+                padding:0px;
+                color:white;
+            }
+            .window > :last-child {/* 
+                position:relative; */
+                padding-left:10px;
+                font-family: 'Tahoma', sans-serif;
+                height: 89.5%;
+                /* left:0%; */
+                width:99%;
+                font-size: 2vh;
+                background-color: #BFC8C7;
+                margin:0px;
+                /* padding:0px; */
+    display: flex;              /* flexbox */
+    justify-content: center;    /* horizontal center */
+    align-items: center;        /* vertical center */
+    white-space: pre-wrap;
+    flex-direction: column;    /* add this to stack children vertically */
+            }
+            /* .window > :last-child  p {
+                
+    display: block;       
+                display: block; 
+                align-items: flex-start;
+            } */
+        </style>
+    </head>
+    <body>
+        <div class="window nt-border">
+            <div><p><b id="title">Start page</b></p></div>
+            <div id="content">
+                <h1>This is a full working USCF Rating Calculator using the published rating formula from US Chess</h1>
+                <br>
+                <p>To continue, click anywhere on this window</p>
+            </div>
+        </div>
+        <div id="unrated" hidden>
+            <div id="intro">
+                <h1>Welcome to the rating initializer!</h1>
+                <p>Click anywhere to continue</p>
+            </div>
+            <div id="age" hidden>
+                <h1>What's your/your opponent's age in days since the tournement ended?</h1>
+                <label>Enter the age here: </label>
+                <input id="age" type="number">
+                <button onclick="ageSubm();">Submit age</button>
+            </div>
+        </div>
+        <script>
+            let stage=0;
+            let playerRating;
+            let age;
+            let ntstart=new Audio("ntstart2.mp3");
+            document.getElementById("content").addEventListener("click",function(){
+                if (stage==0){
+                    document.getElementById("content").innerHTML= document.getElementById("unrated").innerHTML;
+                    document.getElementById("title").innerText="Rating initializer";
+                    stage++;
+                    ntstart.play();
+                }
+                else if (stage==1){
+                    document.getElementById("intro").setAttribute("hidden", "");
+                    document.getElementById("age").removeAttribute("hidden");
+                }
+            });
+            function ageSubm(){
+                alert("Age: "+document.getElementById("age").value);
+            }
+        </script>
+    </body>
+</html>
