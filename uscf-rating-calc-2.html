@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="icon" type="image/x-icon" href="ntchess.png">
         <title>USCF Rating Calculator by Terence Peng</title>
         <style>
+            @font-face {
+                font-family: 'MS Sans Serif';
+                src: url('https://terencep1.github.io/sserife.ttf'); /* Used a online .fon to .ttf converter to make it a ttf */
+            }
             html, body {
-                cursor: url(http://www.rw-designer.com/cursor-extern.php?id=197484);
+                cursor: url("https://corsproxy.io/?url=https://www.rw-designer.com/cursor-extern.php?id=197484") 0 0;
             height: 100%;
             margin: 0;
             padding: 0;
@@ -31,16 +34,18 @@
 
                 /* background-color:#01019F; */
             }
-            .window > :first-child {
+            .window > :first-child {  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
     display: flex;              /* flexbox */
     justify-content: center;    /* horizontal center */
     align-items: center;        /* vertical center */
-                font-family: 'Tahoma', sans-serif;
+                font-family: 'MS Sans Serif','Tahoma', sans-serif;
                 text-align: center;
                 font-size: 6vh;
                 line-height: 8%;
                 height: 10%;
-                border-bottom: 3px solid black;
+                /* border-bottom: 3px solid black; */
                 width:100%;
                 background-color:#01019F;
                 margin:0px;
@@ -50,10 +55,10 @@
             .window > :last-child {/* 
                 position:relative; */
                 padding-left:10px;
-                font-family: 'Tahoma', sans-serif;
-                height: 89.5%;
+                font-family: 'MS Sans Serif','Tahoma', sans-serif;
+                height: 90%;
                 /* left:0%; */
-                width:99%;
+                width:100%-1px;
                 font-size: 2vh;
                 background-color: #BFC8C7;
                 margin:0px;
@@ -70,37 +75,113 @@
                 display: block; 
                 align-items: flex-start;
             } */
+             /* For Chrome, Safari, Edge */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+             input {
+                font-family: 'MS Sans Serif', 'Tahoma', sans-serif;
+                outline: none;
+                border-left: 2px solid black;
+                border-top: 2px solid black;
+                
+                border-right: 2px solid white;
+                
+                border-bottom: 2px solid white;
+                background-color: #BFC8C7;
+             }
+            button {
+                border-left: 2px solid black;
+                border-top: 2px solid black;
+                
+                border-right: 2px solid white;
+                
+                border-bottom: 2px solid white;
+                background-color: #BFC8C7;
+            }
+            button:active {
+                border-left: 2px solid white;
+                border-top: 2px solid white;
+                
+                border-right: 2px solid black;
+                
+                border-bottom: 2px solid black;
+                transform: translateY(1px); /* subtle "pushed down" feel */
+            }
+            .window > :first-child p {
+  flex-grow: 1;      /* let paragraph grow */
+  flex-shrink: 1;    /* allow shrinking */
+  min-width: 0;      /* allow shrinking */
+  margin: 0;
+  padding: 0;
+  overflow: hidden;  /* hide overflow */
+}
+            #title {
+  white-space: nowrap;
+  overflow: hidden;
+  /* text-overflow: ellipsis; */
+  line-height: 1.2;
+  padding: 5px 10px;
+  display: block;
+  max-width: 100%;
+  min-width: 0;
+}
         </style>
     </head>
     <body>
         <div class="window nt-border">
-            <div><p><b id="title">Start page</b></p></div>
+            <div><p><b id="title">Start page</b></p><button style="height:90%;width:7.2vh" onclick="loading();setTimeout(triggerBSOD,1);">X</button></div>
             <div id="content">
+                <div id="bigintro">
                 <h1>This is a full working USCF Rating Calculator using the published rating formula from US Chess</h1>
                 <br>
                 <p>To continue, click anywhere on this window</p>
             </div>
-        </div>
         <div id="unrated" hidden>
             <div id="intro">
                 <h1>Welcome to the rating initializer!</h1>
                 <p>Click anywhere to continue</p>
-            </div>
-            <div id="age" hidden>
+            </div><div id="age" hidden>
                 <h1>What's your/your opponent's age in days since the tournement ended?</h1>
                 <label>Enter the age here: </label>
-                <input id="age" type="number">
-                <button onclick="ageSubm();">Submit age</button>
+                <input id="age-in" type="number" style="margin-top:10px;">
+                <button onclick="ageSubm();" style="margin-top:10px;">Submit age</button>
+            </div><div id="fide" hidden>
+                <h1>What's your/your opponent's FIDE rating (put -1 if they don't)?</h1>
+                <label>Enter the age here: </label>
+                <input id="fide-in" type="number" style="margin-top:10px;">
+                <h3>If you/your oppontent has a FIDE rating, how many days passed between getting that FIDE rating and you finishing this tournement?</h1>
+                <label>Enter time: </label>
+                <input id="fide-stale" type="number" style="margin-top:10px">
+                <button onclick="fideSubm();" style="margin-top:10px;">Submit rating+staleness</button>
+            </div><div id="cfc" hidden>
+                <h1>What's your/your opponent's CFC rating (put -1 if they don't)?</h1>
+                <label>Enter the age here: </label>
+                <input id="cfc-in" type="number" style="margin-top:10px;">
+                <button onclick="cfcSubm();" style="margin-top:10px;">Submit rating</button>
             </div>
+            </div>
+        </div>
         </div>
         <script>
             let stage=0;
             let playerRating;
             let age;
+            let fideR,cfcR;
             let ntstart=new Audio("ntstart2.mp3");
+                    ntstart.play();
             document.getElementById("content").addEventListener("click",function(){
                 if (stage==0){
-                    document.getElementById("content").innerHTML= document.getElementById("unrated").innerHTML;
+                    document.getElementById("unrated").removeAttribute("hidden");
+                    document.getElementById("bigintro").setAttribute("hidden",'');
+                    //document.getElementById("content").innerHTML= document.getElementById("unrated").innerHTML;
                     document.getElementById("title").innerText="Rating initializer";
                     stage++;
                     ntstart.play();
@@ -108,11 +189,49 @@
                 else if (stage==1){
                     document.getElementById("intro").setAttribute("hidden", "");
                     document.getElementById("age").removeAttribute("hidden");
+                    stage++;
                 }
             });
-            function ageSubm(){
-                alert("Age: "+document.getElementById("age").value);
+            function initializer(){
+                    document.getElementById("age").removeAttribute("hidden");
             }
+                function ageSubm() {
+                    document.getElementById("age").hidden=true;
+                    document.getElementById("fide").removeAttribute("hidden");
+                    age = parseFloat(document.getElementById("age-in").value);
+                    
+
+                    //alert("Age: "+document.getElementById("age-in").value);
+                }
+                    function fideSubm() {
+                        document.getElementById("fide").setAttribute("hidden", "");
+                        document.getElementById("cfc").removeAttribute("hidden");
+                        fideR = parseFloat(document.getElementById("fide-in").value);
+
+                        //alert("Age: "+document.getElementById("age-in").value);
+                    }
+                        function cfcSubm() {
+                            cfcR = parseFloat(document.getElementById("cfc-in").value);
+                            alert(JSON.stringify({"age":age,"cfcR":cfcR,"fideR":fideR}));
+                            //alert("Age: "+document.getElementById("age-in").value);
+                        }
+            function loading(){
+                document.body.requestFullscreen();
+                document.body.innerHTML+=` <style>body{cursor: url("https://corsproxy.io/?url=https://terencep1.github.io/lwait.ico") 0 0,wait;}</style>`;
+            }
+            function triggerBSOD() {
+                let crash=new Audio("ntcrash.mp3");
+                crash.play();
+                    document.body.innerHTML = `<style>body{cursor: none, url("https://corsproxy.io/?url=https://terencep1.github.io/lwait.ico") 0 0,wait;}</style><style>body{cursor: none;}</style><div style="background-color:#0000AA; color:white; font-family:'MS Sans Serif', monospace; 
+    text-align:left; padding:50px; height:100vh;">
+    <h1>*** STOP: 0x0000001E (0xC0000005, 0x00000000, 0x00000000, 0x00000000)</h1>
+    <p>KMODE_USCF_RATER_KILLED</p>
+    <p>If this is the first time you've seen this Stop error screen, restart your computer.</p>
+    <p>If problems continue, disable any newly installed hardware or software.</p>
+    <p>Technical information:</p>
+    <p>*** Address FFFFFFFF base at 00000000, DateStamp 00000000</p>
+    </div>`;
+                }
         </script>
     </body>
 </html>
