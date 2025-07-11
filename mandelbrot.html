@@ -120,7 +120,7 @@
                     
                 fetch('https://mandelbrot-link.vercel.app/gen', {
   method: 'POST',
-  body: x.toString()+" "+y.toString()+" "+(zoom/100).toString()+" "+mi.toString()+" "+sl.toString()+" "+Date.now().toString()+".mp4"
+  body: x.toString()+" "+y.toString()+" "+(zoom/100).toString()+" "+mi.toString()+" "+sl.toString()+" 0.4 "+Date.now().toString()+".mp4"
 })
                     alert("Done");
             }else {
