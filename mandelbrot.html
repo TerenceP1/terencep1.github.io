@@ -24,6 +24,7 @@
         <p id="zoom">100</p>
         <button type="button" onclick="x=0,y=0,zoom=100,mi=1000,sl=100;generate();">RESET</button>
         <button onclick="upl();">UPLOAD</button>
+        <button onclick="full();">FULLSCREEN</button>
         <script>
             let canvas = document.getElementById("canvas").getContext("2d");
             let x=0,y=0,zoom=100,mi=1000,sl=100;
@@ -126,6 +127,7 @@
             }else {
     alert("Incorrect password.");
   }}
+            function full(){document.getElementById("canvas").requestFullscreen();}
         </script>
     </body>
 </html>
