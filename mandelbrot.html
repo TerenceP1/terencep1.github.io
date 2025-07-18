@@ -117,13 +117,17 @@
             }
             document.getElementById("canvas").addEventListener("click",click);
             function upl(){
-                if (prompt("Enter your password:")==="Mandelbrot2025*"){
+                pwd=prompt("Enter your password:");
+                if (pwd==="--redacted--" || true){
                     
                 fetch('https://mandelbrot-link.vercel.app/gen', {
   method: 'POST',
-  body: x.toString()+" "+y.toString()+" "+(zoom/100).toString()+" "+mi.toString()+" "+sl.toString()+" 0.4 "+Date.now().toString()+".mp4"
-})
-                    alert("Done");
+headers: {
+    "Authorization": "Bearer "+pwd
+  },
+  body: x.toString()+" "+y.toString()+" "+(zoom/100).toString()+" "+mi.toString()+" "+sl.toString()
+}).then(rsp => rsp.text()).then(function(rsp){if(rsp==="LOL NICE TRY HACKING HAHAHAHAHA"){alert("Incorrect password");}else{
+                    alert("Done");}})
             }else {
     alert("Incorrect password.");
   }}
