@@ -105,8 +105,11 @@
                 var rect = e.target.getBoundingClientRect();
                 var tx = e.clientX - rect.left; //x position within the element.
                 var ty = e.clientY - rect.top;  //y position within the element.
-                x+=(tx-200)/zoom;
-                y+=(ty-200)/zoom;
+                const centerX = canvasEl.width / 2;
+                const centerY = canvasEl.height / 2;
+            
+                x += (tx - centerX) / zoom;
+                y += (ty - centerY) / zoom;
                 zoom*=1.5;
                 document.getElementById("worker").innerHTML="Active";
                 generate();
