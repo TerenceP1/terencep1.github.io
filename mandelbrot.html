@@ -105,8 +105,8 @@
                 var rect = e.target.getBoundingClientRect();
                 var tx = e.clientX - rect.left; //x position within the element.
                 var ty = e.clientY - rect.top;  //y position within the element.
-                const centerX = document.getElementById("canvas").width / 2;
-                const centerY = document.getElementById("canvas").height / 2;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
             
                 x += (tx - centerX) / zoom;
                 y += (ty - centerY) / zoom;
