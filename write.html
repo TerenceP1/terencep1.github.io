@@ -1,0 +1,73 @@
+<!-- Thanks to ChatGPT for speeding this up -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Touch Drawing Canvas</title>
+<style>
+  body, html { margin:0; padding:0; height:100%; overflow:hidden; }
+  canvas { touch-action: none; display: block; background: #fff; }
+</style>
+</head>
+<body>
+<canvas id="drawCanvas"></canvas>
+<br><button onclick="clear()">Clear writing</button>
+<script>
+const canvas = document.getElementById('drawCanvas');
+const ctx = canvas.getContext('2d');
+function clear() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+// Resize canvas to fill window
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+ctx.lineWidth = 4;
+ctx.lineCap = 'round';
+ctx.strokeStyle = 'black';
+
+let drawing = false;
+let lastX = 0;
+let lastY = 0;
+
+function startTouch(e) {
+  e.preventDefault();
+  drawing = true;
+  const touch = e.touches[0];
+  lastX = touch.clientX;
+  lastY = touch.clientY;
+}
+
+function moveTouch(e) {
+  e.preventDefault();
+  if (!drawing) return;
+  const touch = e.touches[0];
+  const currentX = touch.clientX;
+  const currentY = touch.clientY;
+
+  ctx.beginPath();
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(currentX, currentY);
+  ctx.stroke();
+
+  lastX = currentX;
+  lastY = currentY;
+}
+
+function endTouch(e) {
+  e.preventDefault();
+  drawing = false;
+}
+
+canvas.addEventListener('touchstart', startTouch);
+canvas.addEventListener('touchmove', moveTouch);
+canvas.addEventListener('touchend', endTouch);
+canvas.addEventListener('touchcancel', endTouch);
+</script>
+</body>
+</html>
