@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>JSON Loader</title>
+</head>
+
+<body>
+    <h2>Load JSON File</h2>
+<canvas id="displayCanvas"></canvas>
+<script>
+    const canvas = document.getElementById('displayCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas size
+    canvas.width = window.innerWidth * 10;
+    canvas.height = Math.floor(window.innerHeight / 2);
+    let posX=0,posY=0;
+    function draw(arr){
+        if (arr[0][2]){
+        ctx.beginPath();
+        ctx.moveTo(posX, posY);
+            posX += arr[0][0];
+            posY += arr[0][1];
+        ctx.lineTo(posX, posY);
+        ctx.lineWidth = 4;        // 4px thickness
+        ctx.lineCap = 'round';    // rounded ends
+        ctx.strokeStyle = '#000'; // black
+        ctx.stroke();
+        }
+        else{
+            posX += arr[0][0];
+            posY += arr[0][1];
+        }
+        arr.shift();
+        scrollTo({
+            left: posX-window.innerWidth/2,
+            behavior: 'smooth'
+        });
+        requestAnimationFrame(() => draw(arr));
+    }
+/*     // Optional: test fill
+    ctx.fillStyle = "#ccc";
+    ctx.fillRect(0, 0, canvas.width, canvas.height); */
+
+</script>
+    <input type="file" id="fileInput" accept=".json">
+
+    <pre id="output"></pre>
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+                    console.log("Parsed data:", data);
+                    posX=0,posY=0;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    draw(data);
+                    // Here you can send `data` to your stroke-handling logic
+                } catch (err) {
+                    alert("Invalid JSON file");
+                    console.error(err);
+                }
+            };
+            reader.readAsText(file);
+        });
+    </script>
+</body>
+
+</html>
