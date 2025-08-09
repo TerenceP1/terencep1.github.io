@@ -34,11 +34,13 @@ ctx.strokeStyle = 'black';
 let drawing = false;
 let lastX = 0;
 let lastY = 0;
-
+let strokeArr=[];
+  
 function startTouch(e) {
   e.preventDefault();
   drawing = true;
   const touch = e.touches[0];
+  strokeArr.push([touch.pageX-lastX,touch.pageY-lastY,false]);
   lastX = touch.pageX;
   lastY = touch.pageY;
 }
@@ -49,7 +51,7 @@ function moveTouch(e) {
   const touch = e.touches[0];
   const currentX = touch.pageX;
   const currentY = touch.pageY;
-
+  strokeArr.push([currentX-lastX,currentY-lastY,true]);
   ctx.beginPath();
   ctx.moveTo(lastX, lastY);
   ctx.lineTo(currentX, currentY);
