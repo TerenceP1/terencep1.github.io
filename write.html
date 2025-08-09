@@ -20,6 +20,7 @@ const ctx = canvas.getContext('2d');
 function clearW() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   strokeArr=[];
+  lastX=0;lastY=0;
 }
 // Resize canvas to fill window
 function resize() {
