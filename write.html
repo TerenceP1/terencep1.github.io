@@ -12,11 +12,11 @@
 </head>
 <body>
 <canvas id="drawCanvas"></canvas>
-<br><button onclick="clear()">Clear writing</button>
+<br><button onclick="clearW()">Clear writing</button>
 <script>
 const canvas = document.getElementById('drawCanvas');
 const ctx = canvas.getContext('2d');
-function clear() {
+function clearW() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 // Resize canvas to fill window
@@ -39,16 +39,16 @@ function startTouch(e) {
   e.preventDefault();
   drawing = true;
   const touch = e.touches[0];
-  lastX = touch.clientX;
-  lastY = touch.clientY;
+  lastX = touch.pageX;
+  lastY = touch.pageY;
 }
 
 function moveTouch(e) {
   e.preventDefault();
   if (!drawing) return;
   const touch = e.touches[0];
-  const currentX = touch.clientX;
-  const currentY = touch.clientY;
+  const currentX = touch.pageX;
+  const currentY = touch.pageY;
 
   ctx.beginPath();
   ctx.moveTo(lastX, lastY);
