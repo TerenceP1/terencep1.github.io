@@ -87,6 +87,7 @@
             URL.revokeObjectURL(url); */
             outp['st'].push(strokeArr)
             
+            prog.innerText='Times copied: '+drawN.toSt
             if (drawN>4){
                 drawN=0;
                 fetch('https://label-link-beta.vercel.app/qpush', {
@@ -99,14 +100,14 @@
                         header.innerText = res;
                         sc = res;
                         outp = { 'sc': res, 'st': [] }
+                        prog.innerText='Times copied: 0/5'
                     });
                 });
                 prog.innerText='Times copied: 5/5'
             }
             else{
                 drawN+=1;
-            }
-            prog.innerText='Times copied: '+drawN.toString()+'/5'
+            }ring()+'/5'
             clearW()
         }
         function startTouch(e) {
@@ -145,5 +146,6 @@
         canvas.addEventListener('touchcancel', endTouch);
     </script>
 </body>
+
 
 </html>
