@@ -87,7 +87,6 @@
             URL.revokeObjectURL(url); */
             outp['st'].push(strokeArr)
             
-            prog.innerText='Times copied: '+drawN.toString();
             if (drawN>4){
                 drawN=0;
                 fetch('https://label-link-beta.vercel.app/qpush', {
@@ -107,7 +106,8 @@
             }
             else{
                 drawN+=1;
-            }ring()+'/5'
+            }
+            prog.innerText='Times copied: '+drawN.toString()+'/5;
             clearW()
         }
         function startTouch(e) {
@@ -149,4 +149,5 @@
 
 
 </html>
+
 
