@@ -86,7 +86,7 @@
             // 5. Clean up
             URL.revokeObjectURL(url); */
             for (let i=0;i<strokeArr.length;i++){
-                strokeArr[i][0]/=window.innerWidth;
+                strokeArr[i][0]/=window.innerHeight;
                 strokeArr[i][1]/=window.innerHeight;
             }
             outp['st'].push(strokeArr);
@@ -153,6 +153,7 @@
 
 
 </html>
+
 
 
 
