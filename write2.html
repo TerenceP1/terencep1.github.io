@@ -85,9 +85,13 @@
 
             // 5. Clean up
             URL.revokeObjectURL(url); */
-            outp['st'].push(strokeArr)
+            for (let i=0;i<strokeArr.length;i++){
+                strokeArr[0]/=window.innerWidth;
+                strokeArr[1]/=window.innerHeight;
+            }
+            outp['st'].push(strokeArr);
             
-            if (drawN>4){
+            if (drawN>=4){
                 drawN=0;
                 fetch('https://label-link-beta.vercel.app/qpush', {
                     method: 'POST', // Use POST method
@@ -149,6 +153,7 @@
 
 
 </html>
+
 
 
 
