@@ -42,7 +42,9 @@
             lastX = 0; lastY = 0;
         }
         // Resize canvas to fill window
+        let locked=false;
         function resize() {
+            if (locked){return 1;}
             canvas.width = window.innerWidth * 10;
             canvas.height = Math.floor(window.innerHeight / 2);
         }
@@ -115,6 +117,7 @@
             clearW()
         }
         function startTouch(e) {
+            locked=true;
             e.preventDefault();
             drawing = true;
             const touch = e.touches[0];
