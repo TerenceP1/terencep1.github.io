@@ -150,8 +150,8 @@
             // 5. Clean up
             URL.revokeObjectURL(url); */
             for (let i in strokeArr){
-                strokeArr[0]/=window.innerHeight;
-                strokeArr[1]/=window.innerHeight;
+                strokeArr[i][0]/=window.innerHeight;
+                strokeArr[i][1]/=window.innerHeight;
             }
             outp['st'].push(strokeArr)
 
