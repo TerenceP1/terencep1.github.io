@@ -31,33 +31,79 @@
     <p style='color:white' id="prog">Times copied: 0/5</p>
     <br><button onclick="clearW()">Clear writing</button><button onclick="exportS();">Export JSON</button>
     <br>
-    <h3 style='color:white'>Please enter your credentials</h3>
-    <label style='color:white'>Username: </label>
-    <input id="usr">
-    <br>
-    <label style='color:white'>Password: </label>
-    <input id="pwd" type="password">
-    <br>
-    <button onclick="usr=usrI.value;pwd=pwdI.value;verifyC();">Verify and set credentials</button>
-    <script>
-        const canvas = document.getElementById('drawCanvas');
-        const ctx = canvas.getContext('2d');
-        const header = document.getElementById('st');
-        const prog = document.getElementById('prog');
-        const usrI = document.getElementById('usr');
-        const pwdI = document.getElementById('pwd');
-        let usr,pwd;
-        let authed=false;
-        async function verifyC(){
-            rsp=await fetch("https://label-link2.vercel.app/verify/", {
-                method: 'GET', 
-                headers: {
-                'X-Username': usr,
-                'X-Pass': pwd
-            }})
-            if (rsp.ok){
-                alert("Authentication success!");
-                authed=true;
+    <h2 style='color:white'>Please enter your credentials</h3>
+        <label style='color:white'>Username: </label>
+        <input id="usr">
+        <br>
+        <label style='color:white'>Password: </label>
+        <input id="pwd" type="password">
+        <br>
+        <button onclick="usr=usrI.value;pwd=pwdI.value;verifyC();">Verify and set credentials</button>
+        <h2 style='color:white'>User management</h2><label style='color:white'>New username: </label>
+        <input id="nusr" >
+        <br>
+        <label style='color:white'>New password: </label>
+        <input id="npwd" type="password">
+        <br>
+        <label style='color:white'>Admin password: </label>
+        <input id="apwd" type="password">
+        <br>
+        <button onclick="newuser();">Create new user</button>
+        <script>
+            const canvas = document.getElementById('drawCanvas');
+            const ctx = canvas.getContext('2d');
+            const header = document.getElementById('st');
+            const prog = document.getElementById('prog');
+            const usrI = document.getElementById('usr');
+            const pwdI = document.getElementById('pwd');
+            const nusr = document.getElementById('nusr');
+            const npwd = document.getElementById('npwd');
+            const apwd = document.getElementById('apwd');
+            let usr, pwd;
+            let authed = false;
+            async function newuser(){
+                rsp = await fetch("https://label-link2.vercel.app/newuser/", {
+                    method: 'POST',
+                    headers: {
+                        'X-Pass': apwd.value
+                    },
+                    body: JSON.stringify({'username':nusr.value,'password':npwd.value})
+                })
+                if (rsp.ok){
+                    alert("Successfully created user!");
+                }
+                else{
+                    alert("Invalid credentials");
+                }
+            }
+            async function verifyC() {
+                rsp = await fetch("https://label-link2.vercel.app/verify/", {
+                    method: 'GET',
+                    headers: {
+                        'X-Username': usr,
+                        'X-Pass': pwd
+                    }
+                })
+                if (rsp.ok) {
+                    alert("Authentication success!");
+                    authed = true;
+                    fetch("https://label-link2.vercel.app/pop/", {
+                        method: 'GET',
+                        headers: {
+                            'X-Username': usr,
+                            'X-Pass': pwd
+                        }
+                    }).then(function (rsp) {
+                        rsp.text().then(function (res) {
+                            header.innerText = res;
+                            sc = res;
+                            outp = { 'sc': res, 'st': [] }
+                        })
+                    })
+                }
+                else {
+                    alert("Invalid credentials!");
+                }
                 fetch("https://label-link2.vercel.app/pop/", {
                     method: 'GET',
                     headers: {
@@ -72,156 +118,139 @@
                     })
                 })
             }
-            else{
-                alert("Invalid credentials!");
+            let strokeArr = [];
+            function clearW() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                strokeArr = [];
+                lastX = 0; lastY = 0;
             }
-            fetch("https://label-link2.vercel.app/pop/", {
-                method: 'GET',
-                headers: {
-                    'X-Username': usr,
-                    'X-Pass': pwd
-                }
-            }).then(function (rsp) {
-            rsp.text().then(function (res) {
-                header.innerText = res;
-                sc = res;
-                outp = { 'sc': res, 'st': [] }
-            })
-        })
-        }
-        let strokeArr = [];
-        function clearW() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            strokeArr = [];
-            lastX = 0; lastY = 0;
-        }
-        // Resize canvas to fill window
-        function resize() {
-            canvas.width = window.innerWidth * 10;
-            canvas.height = Math.floor(window.innerHeight / 2);
-        }
-        resize();
-        window.addEventListener('resize', resize);
-
-        ctx.lineWidth = 4;
-        ctx.lineCap = 'round';
-        ctx.strokeStyle = 'black';
-
-        let drawing = false;
-        let lastX = 0;
-        let lastY = 0;
-        let drawN = 0;
-        let outp;
-        let sc = ''
-        /* fetch("https://label-link2.vercel.app/pop/", {
-                method: 'GET',
-                headers: {
-                    'X-Username': usr,
-                    'X-Pass': pwd
-                }
-            }).then(function (rsp) {
-            rsp.text().then(function (res) {
-                header.innerText = res;
-                sc = res;
-                outp = { 'sc': res, 'st': [] }
-            })
-        }) */
-
-        function exportS() {
-            if (!authed){
-                alert("Please sign in.");
-                return;
+            // Resize canvas to fill window
+            function resize() {
+                canvas.width = window.innerWidth * 10;
+                canvas.height = Math.floor(window.innerHeight / 2);
             }
-            // 1. Create the file content
-            //const text = JSON.stringify(strokeArr, null, 2);
+            resize();
+            window.addEventListener('resize', resize);
 
-            /* // 2. Make a Blob (binary large object)
-            const blob = new Blob([text], { type: "application/json" });
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = 'black';
 
-            // 3. Create a temporary download link
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "strokes.json"; // suggested file name
-
-            // 4. Trigger the download
-            a.click();
-
-            // 5. Clean up
-            URL.revokeObjectURL(url); */
-            for (let i in strokeArr){
-                strokeArr[i][0]/=window.innerHeight;
-                strokeArr[i][1]/=window.innerHeight;
-            }
-            outp['st'].push(strokeArr)
-
-            if (drawN > 3) {
-                drawN = 0;
-                fetch('https://label-link2.vercel.app/push/', {
-                    method: 'POST', // Use POST method
-                    body: JSON.stringify(outp), // Convert JS object to JSON string
-                    headers: {
-                        'X-Username': usr,
-                        'X-Pass': pwd
-                    }
-                });
-                header.innerText = "Uploading...";
-                fetch("https://label-link2.vercel.app/pop/", {
+            let drawing = false;
+            let lastX = 0;
+            let lastY = 0;
+            let drawN = 0;
+            let outp;
+            let sc = ''
+            /* fetch("https://label-link2.vercel.app/pop/", {
                     method: 'GET',
                     headers: {
                         'X-Username': usr,
                         'X-Pass': pwd
                     }
                 }).then(function (rsp) {
-                    rsp.text().then(function (res) {
-                        header.innerText = res;
-                        sc = res;
-                        outp = { 'sc': res, 'st': [] }
+                rsp.text().then(function (res) {
+                    header.innerText = res;
+                    sc = res;
+                    outp = { 'sc': res, 'st': [] }
+                })
+            }) */
+
+            function exportS() {
+                if (!authed) {
+                    alert("Please sign in.");
+                    return;
+                }
+                // 1. Create the file content
+                //const text = JSON.stringify(strokeArr, null, 2);
+
+                /* // 2. Make a Blob (binary large object)
+                const blob = new Blob([text], { type: "application/json" });
+    
+                // 3. Create a temporary download link
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = "strokes.json"; // suggested file name
+    
+                // 4. Trigger the download
+                a.click();
+    
+                // 5. Clean up
+                URL.revokeObjectURL(url); */
+                for (let i in strokeArr) {
+                    strokeArr[i][0] /= window.innerHeight;
+                    strokeArr[i][1] /= window.innerHeight;
+                }
+                outp['st'].push(strokeArr)
+
+                if (drawN > 3) {
+                    drawN = 0;
+                    fetch('https://label-link2.vercel.app/push/', {
+                        method: 'POST', // Use POST method
+                        body: JSON.stringify(outp), // Convert JS object to JSON string
+                        headers: {
+                            'X-Username': usr,
+                            'X-Pass': pwd
+                        }
                     });
-                });
-                prog.innerText = 'Times copied: 5/5'
+                    header.innerText = "Uploading...";
+                    fetch("https://label-link2.vercel.app/pop/", {
+                        method: 'GET',
+                        headers: {
+                            'X-Username': usr,
+                            'X-Pass': pwd
+                        }
+                    }).then(function (rsp) {
+                        rsp.text().then(function (res) {
+                            header.innerText = res;
+                            sc = res;
+                            outp = { 'sc': res, 'st': [] }
+                        });
+                    });
+                    prog.innerText = 'Times copied: 5/5'
+                }
+                else {
+                    drawN += 1;
+                }
+                prog.innerText = 'Times copied: ' + drawN.toString() + '/5'
+                clearW()
             }
-            else {
-                drawN += 1;
+            function startTouch(e) {
+                e.preventDefault();
+                drawing = true;
+                const touch = e.touches[0];
+                strokeArr.push([touch.pageX - lastX, touch.pageY - lastY, false]);
+                lastX = touch.pageX;
+                lastY = touch.pageY;
             }
-            prog.innerText = 'Times copied: ' + drawN.toString() + '/5'
-            clearW()
-        }
-        function startTouch(e) {
-            e.preventDefault();
-            drawing = true;
-            const touch = e.touches[0];
-            strokeArr.push([touch.pageX - lastX, touch.pageY - lastY, false]);
-            lastX = touch.pageX;
-            lastY = touch.pageY;
-        }
 
-        function moveTouch(e) {
-            e.preventDefault();
-            if (!drawing) return;
-            const touch = e.touches[0];
-            const currentX = touch.pageX;
-            const currentY = touch.pageY;
-            strokeArr.push([currentX - lastX, currentY - lastY, true]);
-            ctx.beginPath();
-            ctx.moveTo(lastX, lastY);
-            ctx.lineTo(currentX, currentY);
-            ctx.stroke();
+            function moveTouch(e) {
+                e.preventDefault();
+                if (!drawing) return;
+                const touch = e.touches[0];
+                const currentX = touch.pageX;
+                const currentY = touch.pageY;
+                strokeArr.push([currentX - lastX, currentY - lastY, true]);
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(currentX, currentY);
+                ctx.stroke();
 
-            lastX = currentX;
-            lastY = currentY;
-        }
+                lastX = currentX;
+                lastY = currentY;
+            }
 
-        function endTouch(e) {
-            e.preventDefault();
-            drawing = false;
-        }
+            function endTouch(e) {
+                e.preventDefault();
+                drawing = false;
+            }
 
-        canvas.addEventListener('touchstart', startTouch);
-        canvas.addEventListener('touchmove', moveTouch);
-        canvas.addEventListener('touchend', endTouch);
-        canvas.addEventListener('touchcancel', endTouch);
-    </script>
+            canvas.addEventListener('touchstart', startTouch);
+            canvas.addEventListener('touchmove', moveTouch);
+            canvas.addEventListener('touchend', endTouch);
+            canvas.addEventListener('touchcancel', endTouch);
+        </script>
 </body>
 
 </html>
