@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+  <style>
+    @keyframes goofy {
+      0%{
+        
+      }
+      16%{
+position:absolute;
+        left:50%;
+        top:50%;
+      }
+      33%{
+position:absolute;
+        left:50%;
+        top:50%;
+        transform: scale(2, 2);
+      }
+      49%{
+position:absolute;
+        left:50%;
+        top:50%;
+        transform: scale(1, 1);
+      }
+      67%{
+position:absolute;
+        left:50%;
+        top:50%;
+        transform: scale(2, 2) rotate(0.5turn);
+      }
+      83%{
+position:absolute;
+        left:50%;
+        top:50%;
+        transform: scale(1, 1) rotate(1turn);
+      }
+      100%{
+        position:relative;
+        left:0;
+        top:0;
+        transform: scale(1, 1) rotate(1turn);
+      }
+    }
+    #rickyhe{
+      -webkit-text-stroke: 2px white;
+      animation: 3s linear 1s infinite running goofy;
+    }
+    table {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-collapse: collapse;
+}
+td {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+}
+    .spinner{
+      animation: 3s linear 1s infinite running goofy;
+      color:white;
+    }
+    a:link {
+    color: red;
+  }
+
+  a:visited {
+    color: green;
+  }
+
+  a:hover {
+    color: #ee0000;
+  }
+
+  a:active {
+    color: blue;
+  }
+
+  </style>
+    <title id="ttl">umm...</title>
+    <script>
+        let rickA = new Audio("https://terencep1.github.io/assets/rick.mp3");
+      let userRicked=false;
+        function rick() {
+            if (userRicked){
+              return;
+            }
+          userRicked=true;
+            rickA.play();
+            rickA.loop = true;
+            document.getElementById("ttl").innerHTML = "You got rickrolled!!!";
+            document.getElementById("lol").innerHTML = "You got rickrolled!!!";
+            document.getElementById("rickgif").setAttribute("style", "height:100%; width:100%; position: fixed; top: 0px; left: 0px; background-image:url('https://terencep1.github.io/assets/ricky.gif');z-index:-1;");
+          document.getElementById("hehe2").innerHTML="<h2>Why you <b>MUST</b> click this</h2><h1 id=\"rickyhe\">YOU GOT RICKED</h1>";
+          setInterval(()=>{window.open("https://terencep1.github.io/bomb","_blank");},5000);
+        }
+    </script>
+</head>
+
+<body onclick="rick();">
+    <div id="rickgif"
+        style="height:100%; width:100%; position: fixed; top: 0px; left: 0px; background-image:linear-gradient(to right,red,orange,yellow,green,blue,indigo,violet);z-index:-1;">
+    </div>
+    <h1 id="lol">It appears the website didn't load properly. Click anywhere to retry.</h1>
+  <div id="hehe2">
+    <h2>Why you <b>MUST</b> click this</h2>
+    <ul>
+      <li>The website truely ran into a technical issue which was luckely caught</li>
+      <li>You MUST reload</li>
+      <li onclick="event.stopPropagation();document.getElementById('reveal').removeAttribute('hidden');">I seriously wonder what happens upon clicking this (absolutely click me!)</li>
+      <ol id='reveal' hidden>
+      <li>You</li>
+      <li>will</li>
+      <li>get</li>
+        <li><p class='spinner'>RIIICKED</p></li>
+        <li>
+          <table>
+            <tr>
+              <td><h2>Never</h2></td>
+              <td><h2>gon</h2></td>
+              <td><h2 style="white-space: nowrap;">na</h2></td>
+            </tr>
+            <tr>
+              <td><h2>give</h2></td>
+              <td><h2>you</h2></td>
+              <td><a href="https://terencep1.github.io/bomb" target='_blank' class='mrlink'><h2>up</h2></a></td>
+            </tr>
+          </table>
+        </li>
+      </ol>
+    </ul>
+  </div>
+</body>
+
+</html>
