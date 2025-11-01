@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="notepad-style.css">
+    <meta charset="utf-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    <title>Notepad by Terence</title>
+  </head>
+  <body>
+    <div id="header">
+      <div id="fileName">
+        <b id="fileName2">Temporary file</b>
+      </div>
+      <div id="selector">
+        <div onclick="downloadFile();" class="btn" style="background-color:#eeeeee;height:5vh"><b>Download</b></div>
+        <div>
+    <b><select id="ddown" style="background-color:#eeeeee;width:100%;height:100%;text-align: center;border: none;font-size:5vh;font-family:'JetBrains Mono', 'Fira Code', 'Consolas', 'Courier New', monospace;height:5vh;" name="options">
+      <option value="tmp"><b>Temporary file</b></option>
+      <option value="newFle" onclick="newFle();"><b>New file</b></option>
+      </select></b></div>
+        <div onclick="deleteFile();" class="btn" style="background-color:#eeeeee;height:5vh;"><b>Delete</b></div>
+      </div>
+    </div>
+    <textarea id="mainEditor" autocorrect="off" spellcheck="false"></textarea>
+    <div hidden id="promptBg">
+      <div id="promptMenu">
+        <h1 id="promptTtl" ondblclick="subM();">
+          Prompt title here
+        </h1>
+        <textarea id="textInp" autocorrect="off" spellcheck="false"></textarea>
+        
+      </div>
+    </div>
+    <div onclick="rick();" id="free-robux" class="fullscreen-image"></div>
+    <script src="notepad.js"></script>
+    <a href="https://terencep1.github.io/crypto/rsa/ui" target="_blank"><img src="notepad.png" style="position:absolute;left:0;top:0;width:5vw;height:5vh;"></a>
+
+    <a href="https://terencep1.github.io/crypto/aes/ui" target="_blank"><img src="notepad.png" style="position:absolute;right:0;top:0;width:5vw;height:5vh;"></a>
+  </body>
+</html>
