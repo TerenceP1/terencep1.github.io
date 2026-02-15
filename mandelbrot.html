@@ -135,9 +135,10 @@ headers: {
 }).then(rsp => rsp.text()).then(function(rsp){if(rsp==="LOL NICE TRY HACKING HAHAHAHAHA"){alert("Incorrect password");}else{
                     alert("Done");}})
             }else {
-    alert("Incorrect password.");
+    alert("Incorrect password or internal server error. (maybe the Redis database is down)");
   }}
             function full(){document.getElementById("canvas").requestFullscreen();}
         </script>
     </body>
 </html>
+
