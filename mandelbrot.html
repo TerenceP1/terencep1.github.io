@@ -82,9 +82,12 @@
                 },
                 body: "11111"
             }).then(rsp => rsp.text()).then(function (rsp) {
-                if (rsp === "LOL NICE TRY HACKING HAHAHAHAHA") { email.innerText="Incorrect Password"; } else {
+                if (rsp === "LOL NICE TRY HACKING HAHAHAHAHA") { email.innerText="Incorrect Password"; lastEmail= email.innerText; } else {
                     //alert("Done");
+                    if (rsp!==lastEmail){
                     email.innerText= rsp;
+                    }
+                    lastEmail=rsp;
                 }
             })
         }
@@ -215,3 +218,4 @@
 </body>
 
 </html>
+
