@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+<key>PayloadContent</key>
+<array>
+<dict>
+<key>PayloadType</key>
+<string>com.apple.webClip.managed</string>
+<key>PayloadVersion</key>
+<integer>1</integer>
+<key>PayloadIdentifier</key>
+<string>com.myrebellion.webclip</string>
+<key>PayloadUUID</key>
+<string>7F3A2E91-9C5B-4F2E-9A7C-1E6D4B8A3F21</string>
+<key>PayloadDisplayName</key>
+<string>my rebellion</string>
+<key>Label</key>
+<string>my rebellion</string>
+<key>URL</key>
+<string>data:text/html;charset=utf-8;base64,PGh0bWwgbGFuZz0iZW4iPg0KICA8aGVhZD4NCiAgICA8c2NyaXB0Pg0KICAgICAgLy8gbWFpbiBsb2dpYw0KICAgICAgLy8gYnVzdCBzY3JlZW4gdGltZSB2aWEgdGhlIG9wZW4gc2l0ZSBpbiB3aW5kb3cgZXhwbG9pdA0KICAgICAgZnVuY3Rpb24gc2NyZWVuVGltZUJ1c3QoKXsNCiAgICAgICAgLy8gYXNzdW1lcyBnZXN0dXJlDQogICAgICAgIHdpbj13aW5kb3cub3BlbigiaHR0cHM6Ly9leGFtcGxlLmNvbSIsIl9ibGFuayIpOw0KICAgICAgICBzZXRUaW1lb3V0KGZ1bmN0aW9uKCl7d2luLmNsb3NlKCk7fSwzMDAwKTsNCiAgICAgIH0NCiAgICA8L3NjcmlwdD4NCiAgPC9oZWFkPg0KICA8Ym9keT4NCiAgICA8aDE+TVkgUkVCRUxMSU9OIEFHQUlOU1QgU0NSRUVOIFRJTUU8L2gxPg0KICAgIDxidXR0b24gb25jbGljaz0ic2NyZWVuVGltZUJ1c3QoKTsiPkJVU1QgU0NSRUVOIFRJTUUgKGRvIGZpcnN0KTwvYnV0dG9uPg0KICAgIDxoMj5MSU5LUyBBTkQgU1RVRkY8L2gyPg0KICAgIDxhIGhyZWY9Imh0dHBzOi8vZ29vZ2xlLmNvbSIgdGFyZ2V0PSJfYmxhbmsiPkdvb2dsZTwvYT4NCiAgICA8YnV0dG9uIG9uY2xpY2s9IndpbmRvdy5vcGVuKHByb21wdCgnWU9VUiBVUkwgKHN0YXJ0IHdpdGggaHR0cHMgb3IgaHR0cCBtYW5kYXRvcnknKSwnX2JsYW5rJykiPk9USEVSPC9idXR0b24+DQogIDwvYm9keT4NCjwvaHRtbD4=</string>
+<key>IsRemovable</key>
+<false/>
+<key>FullScreen</key>
+<true/>
+</dict>
+</array>
+<key>PayloadType</key>
+<string>Configuration</string>
+<key>PayloadVersion</key>
+<integer>2</integer>
+<key>PayloadIdentifier</key>
+<string>com.myrebellion.profile</string>
+<key>PayloadUUID</key>
+<string>2C9B6D44-5E8A-4B91-A7D3-6F8C1A0E9B55</string>
+<key>PayloadDisplayName</key>
+<string>my rebellion web clip</string>
+</dict>
+</plist>
