@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>A fully accurate USCF rating calculator</title>
+        <!-- I want this website to look better hopefully and not be a nightmare to navigate as well as FULLY FOLLOWING THE RULES-->
+        <style>
+            body{
+                font-family: Arial, sans-serif;
+                background-color:white;
+            }
+            #mainContainer{
+                width:calc(90vw-10px);
+                height:90vh;
+                min-height:80vh;
+                padding-left: 5vw;
+                padding-right:5vw;
+                border: 5px solid black;
+                box-sizing: border-box;
+            }
+            button {
+                padding:1%;
+                min-width:60%;
+                font-size:larger;
+                margin-bottom:20px;
+            }
+            .largeIn{
+                padding:1%;
+                margin:1%;
+                min-width:60%;
+                font-size:larger;
+
+            }
+        </style>
+        <meta name="description"
+            content="A user-friendly USCF rating calculator. Calculates ratings accurately based on official USCF formulas.">
+    </head>
+    <body>
+        <h1>USCF Rating Calculator</h1>
+        <strong>Note:</strong> This is <em>not</em> an estimator. See the bottom for more details.
+        <h2>Rating calculator</h2>
+        <!-- Rating calculator UI -->
+        <div id="mainContainer">
+            <p><strong>WELCOME</strong> to my USCF rating calculator, <em>not</em> estimator</p>
+            <p>The following fields will be highly critical to determining what to ask you and are thus <em>unchangable</em> after you press next. Please be sure to <strong>double check all fields</strong></p>
+            <button onclick="beginPre();">Click here to continue once you have acknowleged the above</button>
+        </div>
+        <script>
+            // this script uses async functions because it doesnt require constant state saves
+            function getE(x){
+                return document.getElementById(x);
+            }
+            let newE=(...args)=>document.createElement(...args);
+            let mainC=getE("mainContainer");
+            let tournDate;
+            document.addEventListener("DOMContentLoaded", () => {
+                // probably not needed but just in case
+            });
+                function callPromise(elem) { // promise which resolves upon a button click
+                    return new Promise((resolve) => {
+                        function onClick() {
+                            elem.removeEventListener("click", onClick); // remove listener
+                            resolve();
+                        }
+                        elem.addEventListener("click", onClick);
+                    });
+                }
+                function callPromise2(...elems) { // promise which resolves upon a button click
+                    return new Promise((resolve) => {
+                        function onClick(e) {
+                            for (let elem of elems) elem.removeEventListener("click", onClick); // remove listener
+                            resolve(parseInt(e.target.getAttribute("thistag")));
+                        }
+                        let i=0;
+                        for (let elem of elems){
+                            
+                            elem.setAttribute("thistag",i);
+                            elem.addEventListener("click", onClick);
+                            i++;
+                        }
+                    });
+                }
+
+            async function askOneField(prompt2,type,subm){
+                mainC.innerHTML="";
+                const title=newE("p");
+                title.style.fontSize="larger";
+                title.innerHTML="<strong></"+"strong>";
+                title.children[0].innerText=prompt2;
+                const input=newE("input");
+                input.type=type;
+                input.className="largeIn";
+                const button=newE("button");
+                button.innerText=subm;
+                mainC.append(title,input,button);
+                await callPromise(button);
+                const res=input.value;
+                mainC.innerHTML="";
+                return res;
+            }
+            async function message(msg,subm){
+                mainC.innerHTML = "";
+                const title = newE("p");
+                title.style.fontSize = "larger";
+                title.innerHTML = "<strong></" + "strong>";
+                title.children[0].innerHTML = msg;
+                const button = newE("button");
+                button.innerText = subm;
+                mainC.append(title, button);
+                await callPromise(button);
+            }
+            async function askRating(prompt2,lastRsp){ // returns [type,res]
+                // type 0: normal, type 1: fide, type 2: cfc, type 3: birthday
+                // ask for a normal rating first
+                mainC.innerHTML = "";
+                const title = newE("p");
+                title.style.fontSize = "larger";
+                title.innerHTML = "<strong></" + "strong>";
+                title.children[0].innerText = "Please enter "+prompt2+" USCF rating";
+                const input = newE("input");
+                input.type = "number";
+                input.className = "largeIn";
+                
+                const button = newE("button");
+                button.innerText = "Submit rating";
+                const button2 = newE("button");
+                button2.innerText = "Player is unrated";
+                mainC.append(title, input, button, button2);
+                let option=await callPromise2(button,button2);
+                console.log("rating asker for uscf",option)
+                if (option==0){
+                    const res=input.value;
+                    mainC.innerHTML="";
+                    return [0,parseFloat(res)];
+                }
+
+                // type 1: fide rating (conversion but not here because of game factor annoyance and the fact it may call for special rating system)
+
+                title.children[0].innerText = "Please enter " + prompt2 + " FIDE rating if exists";
+                button.innerText = "Submit FIDE rating";
+                button2.innerText = "No FIDE rating";
+
+                option = await callPromise2(button, button2);
+                if (option == 0) {
+                    const res = input.value;
+                    mainC.innerHTML = "";
+                    return [1, parseFloat(res)];
+                }
+
+                // type 2: cfc rating (conversion but not here because of game factor annoyance and the fact it may call for special rating system)
+
+                title.children[0].innerText = "Please enter " + prompt2 + " CFC rating if exists";
+                button.innerText = "Submit CFC rating";
+                button2.innerText = "No CFC rating";
+                option = await callPromise2(button, button2);
+                if (option == 0) {
+                    const res = input.value;
+                    mainC.innerHTML = "";
+                    return [2, parseFloat(res)];
+                }
+
+                // type 3: birthday (what a strange system they want your birthday (but it DOES impact a lot))
+
+                input.type="date";
+                title.children[0].innerText = "Please enter " + prompt2 + " birthday";
+                button.innerText = "Submit birthday";
+                button2.remove();
+                option = await callPromise(button);
+                const res = input.value;
+                mainC.innerHTML = "";
+                return [3, new Date(res)];
+
+
+            }
+            async function ratingCalc(){
+                // critical things
+                await message("Now for the editable stuff", "Next");
+                tournDate=new Date(await askOneField("What date was your tournament?","date","Submit date"));
+            }
+            function beginPre(){
+                ratingCalc();
+            }
+        </script>
+        <!-- Info -->
+         <h2>About this page</h2>
+         <h3>What is this?</h3>
+         <p>This is a simple USCF rating calculator I created as a fun hobby project</p>
+         <h3>How accurate is this?</h3>
+         <p>This calculator should be very accurate as it follows the official USCF rating calculation paper <a target="_blank" href="https://new.uschess.org/sites/default/files/media/documents/the-us-chess-rating-system-revised-september-2020.pdf">HERE</a>
+            The bonus factor will be updated to the best of my ability.
+         <h3>What info do I need?</h3>
+         <p>
+            You may need lots of info. If the player or you are unrated, you need to ask if they have FIDE then CFC then their exact birthday.
+            This is one of the few strange special cases. You also need the tounament clock settings and tournament date.
+            If the tournament is multi-day, speak with a tournament director or staff.
+
+         </p>
+        <p>This project started on March 23, 2026 (8th grade)</p>
+        <!-- Maybe add other info here -->
+    </body>
+</html>
