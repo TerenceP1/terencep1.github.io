@@ -29,10 +29,14 @@
         <div id="main" hidden>
             <h1>Welcome to my Mandelbrot set interactive zoomer</h1>
             <h2>Built with Emscripten</h2>
-          <h2>This is a preview as I'm not done please excuse any bugs and missing things</h2>
             <canvas id="cnv" width="400" height="400"></canvas>
+            <br>
+            <p><b>STATUS: </b><span id="status">Idle</span></p>
+            <p id="loc">Re: 0<br>Im:0<br>Zoom:0</p>
         </div>
         <script>
+            Decimal.set({ precision: 34 });
+            Decimal.precision=34;
             let makeRowDouble2;
             let makeRowFloat;
             let makeRowDouble;
@@ -78,6 +82,7 @@
                 if (batchId==batch){
                     if (rowsLeft.length>0){
                         let thRow=rowsLeft.pop();
+                        getE("status").innerText = `Working (${zoom < 1e13?"normal precision":"double-double precision"})... ${height-rowsLeft.length} rows out of ${height} done`;
                         workers[thid].postMessage({
                             type: 3,
                             re: re.toString(),
@@ -91,8 +96,12 @@
                         });
                         
                     }
+                    else{
+                        getE("status").innerText="Idle";
+                    }
                 }
             }
+            let startT2;
             function makeWorkers(){
             for (let i=0;i<16;i++){
                 // new worker
@@ -102,6 +111,7 @@
                     let dat=msg.data;
                     //console.log(dat,tsid);
                     if (dat.type==0){
+                        //console.log(`Loading took ${performance.now()-startT2}ms`)
                         inits++;
                         cWorker.postMessage({
                             type:4,
@@ -114,6 +124,7 @@
                     }
                     else if (dat.type==1){
                         if (batchId == dat.id) {
+                            //console.log(`Worker number ${tsid} took ${performance.now()-dat.ts}ms`)
                             for (let i=0;i<width;i++){
                                 img.data[dat.row2 * width * 4 + i * 4] = dat.row[3 * i + 2];
                                 img.data[dat.row2 * width * 4 + i * 4 + 1] = dat.row[3 * i + 1];
@@ -132,6 +143,7 @@
             // load default pelette
             (async function(){
                 palette=new Uint8Array(await (await fetch("palettes/neon-p.dat")).arrayBuffer()) ;
+                //startT2=performance.now();
                 makeWorkers();
                 inits++;
                 updStat();
@@ -165,6 +177,7 @@
                     }
             function generateImage(){
                 console.log("IMAGE");
+                getE("status").innerText = `Working (${zoom < 1e13 ? "normal precision" : "double-double precision"})... 0 rows out of ${height} done`;
                 if (firstTime){
                     firstTime=false;
                     getE("main").hidden=false;
@@ -172,6 +185,7 @@
                 }
                 img= new ImageData(width,height);
                 batchId=Math.random();
+                rowsLeft.length = 0;
                 for (let i=0;i<roundUpToPowerOfTwo(height);i++){
                     let num= reverseBits(i,Math.floor(Math.log2(height))+1);
                     if (num<height){
@@ -184,12 +198,13 @@
             }
             cnv.addEventListener("click", (e) => {
                     const rect = cnv.getBoundingClientRect();
-
+                let aspect=Math.min(width,height);
                     const x = e.clientX - rect.left-width/2;
                     const y = e.clientY - rect.top-height/2;
-                re.add(x * 4 / zoom / aspect);
-                im.add(y * 4 / zoom / aspect);
+                re=re.add(x * 4 / zoom / aspect);
+                im=im.add(-y * 4 / zoom / aspect);
                 zoom*=1.5;
+                getE("loc").innerText=`Re: ${re.toPrecision(34)}\nIm: ${im.toPrecision(34)}\nZoom: ${zoom}`;
 generateImage();
                     console.log("Canvas coords:", x, y);
                 });
