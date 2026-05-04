@@ -29,12 +29,19 @@
         <div id="main" hidden>
             <h1>Welcome to my Mandelbrot set interactive zoomer</h1>
             <h2>Built with Emscripten</h2>
-            <h2>This is a early release so it might be buggy and I have not added certain features yet (fun sneak peak)</h2>
             <canvas id="cnv" width="400" height="400"></canvas>
             <br>
             <p><b>STATUS: </b><span id="status">Idle</span></p>
             <p id="loc">Re: 0<br>Im:0<br>Zoom:0</p>
-            <textarea id="dbg"></textarea><button onclick="alert(eval(getE('dbg').value));">RUN THE CODE (debug thing and a placeholder don't touch if you don't know)</button>
+            <label>Max Iterations:</label>
+            <input id="maxitr" value="1000" type="number">
+            <button onclick="updMaxitr();">Update Max Iterations</button><br><label>Spectrum Length:</label>
+            <input id="speclen" value="100" type="number">
+            <button onclick="updSpeclen();">Update Spectrum Length</button><br><label>Threads (must be 1-16 integer):</label>
+            <input id="threads" value="16" type="number"  min="1" max="16" step="1">
+            <button onclick="updThreads();">Update Threads</button>
+            <br>
+
         </div>
         <script>
             Decimal.set({ precision: 34 });
@@ -80,6 +87,7 @@
             let batchId;
             let re=new Decimal(0),im=new Decimal(0),zoom=1;
             let maxitr=1000,speclen=100;
+            let threads=16;
             function nextRow(batch,thid){
                 if (batchId==batch){
                     if (rowsLeft.length>0){
@@ -194,7 +202,7 @@
 
                 rowsLeft.push(num);}
                 }
-                for (let i=0;i<16;i++){
+                for (let i=0;i<threads;i++){
                     nextRow(batchId,i);
                 }
             }
@@ -213,6 +221,17 @@ generateImage();
             function updStat(){
                 getE('loadStat').innerText="Load Status: "+(Math.round(inits/initsTtl*100)).toString()+"% done"
             }
+            function updMaxitr(){
+                maxitr=getE("maxitr").value;
+                generateImage();
+            }
+            function updSpeclen() {
+                speclen = getE("speclen").value;
+                generateImage();
+            }
+                function updThreads() {
+                    threads = getE("threads").value;
+                }
         </script>
     </body>
 </html>
