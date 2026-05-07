@@ -41,6 +41,8 @@
             <input id="threads" value="16" type="number"  min="1" max="16" step="1">
             <button onclick="updThreads();">Update Threads</button>
             <br>
+            <button onclick="reset();">RESET</button>
+            <br>
 
         </div>
         <script>
@@ -232,6 +234,11 @@ generateImage();
                 function updThreads() {
                     threads = getE("threads").value;
                 }
+            function reset() {
+                re=new Decimal(0);
+                im=new Decimal(0);
+                zoom=1;
+            }
         </script>
     </body>
 </html>
