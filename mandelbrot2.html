@@ -19,7 +19,7 @@
         
         <!-- <script src="mandelbrot.js" defer></script> -->
         <title>Mandelbrot set WASM explorer | Terence's random HTML projects</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
     </head>
     <body>
         <div id="loading">
@@ -35,14 +35,39 @@
             <p id="loc">Re: 0<br>Im:0<br>Zoom:0</p>
             <label>Max Iterations:</label>
             <input id="maxitr" value="1000" type="number">
-            <button onclick="updMaxitr();">Update Max Iterations</button><br><label>Spectrum Length:</label>
+            <button onclick="updMaxitr();">Update Max Iterations</button>
+            <br>
+            <label>Spectrum Length:</label>
             <input id="speclen" value="100" type="number">
-            <button onclick="updSpeclen();">Update Spectrum Length</button><br><label>Threads (must be 1-16 integer):</label>
+            <button onclick="updSpeclen();">Update Spectrum Length</button>
+            <br>
+            <label>Threads (must be 1-16 integer):</label>
             <input id="threads" value="16" type="number"  min="1" max="16" step="1">
             <button onclick="updThreads();">Update Threads</button>
             <br>
-            <button onclick="reset();">RESET</button>
+            <input id="width" value="16" type="number" min="1" max="16" step="1">
+            <input id="width" value="16" type="number" min="1" max="16" step="1">
+            <button onclick="updThreads();">Update Image Size</button>
             <br>
+            <button type="button" onclick="re=new Decimal(0),im=new Decimal(0),zoom=1,maxitr=1000,speclen=100;generateImage();">RESET</button>
+            <br>
+            <button onclick="upl();">UPLOAD</button>
+            <br>
+            <button onclick="full();">FULLSCREEN</button>
+            <br>
+            <h2>THE REDIS LINK MANAGER (danger zone possibly IDK)</h2>
+            <label>Password: </label>
+            <input type="password" id="pwd">
+            <br>
+            <b>THE LATEST EMAIL:</b>
+            <br>
+            <p id="email"></p>
+            <br>
+            <b>Button panel:</b>
+            <br><button onclick="restartMdl();">Restart Mandelbrot set program</button>
+            <button onclick="fetchOutput();">Fetch Mandelbrot set program output</button>
+            <button onclick="lastInt=setInterval(fetchOutput,20000);">Fetch Mandelbrot set program output on cycle</button>
+            <button onclick="clearInterval(lastInt);">End fetch cycle</button>
 
         </div>
         <script>
@@ -234,12 +259,80 @@ generateImage();
                 function updThreads() {
                     threads = getE("threads").value;
                 }
-            function reset() {
-                re=new Decimal(0);
-                im=new Decimal(0);
-                zoom=1;
-                generateImage();
-            }
+                let pwd2 = document.getElementById("pwd");
+                    let email = document.getElementById("email");
+                    function restartMdl() {
+                        fetch('https://mandelbrot-link.vercel.app/gen', {
+                            method: 'POST',
+                            headers: {
+                                "Authorization": "Bearer " + pwd2.value
+                            },
+                            body: "54321" // i picked hardcoded numbers bc it passes through the junk detector
+                        }).then(rsp => rsp.text()).then(function (rsp) {
+                            if (rsp === "LOL NICE TRY HACKING HAHAHAHAHA") { alert("Incorrect password"); } else {
+                                //alert("Done");
+                            }
+                        })
+                    }
+                    function fetchOutput() {
+                        fetch('https://mandelbrot-link.vercel.app/gen', {
+                            method: 'POST',
+                            headers: {
+                                "Authorization": "Bearer " + pwd2.value
+                            },
+                            body: "12345"
+                        }).then(rsp => rsp.text()).then(function (rsp) {
+                            if (rsp === "LOL NICE TRY HACKING HAHAHAHAHA") { alert("Incorrect password"); } else {
+                                //alert("Done");
+                            }
+                        })
+                    }
+                    let lastEmail = "";
+                    function emailPoll() {
+                        fetch('https://mandelbrot-link.vercel.app/gen', {
+                            method: 'POST',
+                            headers: {
+                                "Authorization": "Bearer " + pwd2.value
+                            },
+                            body: "11111"
+                        }).then(rsp => rsp.text()).then(function (rsp) {
+                            if (rsp === "LOL NICE TRY HACKING HAHAHAHAHA") { email.innerText = "Incorrect Password"; lastEmail = email.innerText; } else {
+                                //alert("Done");
+                                if (rsp !== lastEmail) {
+                                    email.innerText = rsp;
+                                }
+                                lastEmail = rsp;
+                            }
+                        })
+                    }
+                    setInterval(emailPoll, 5000);
+                    function upl() {
+                            if (pwd2.value === '') {
+                                pwd = prompt("Enter your password:");
+                            }
+                            else {
+                                pwd = pwd2.value;
+                            }
+                            if (pwd === "--redacted--" || true) {
+
+                                fetch('https://mandelbrot-link.vercel.app/gen', {
+                                    method: 'POST',
+                                    headers: {
+                                        "Authorization": "Bearer " + pwd
+                                    },
+                                    body: re.toString() + " " + im.toString() + " " + (zoom).toString() + " " + maxitr.toString() + " " + speclen.toString()
+                                }).then(rsp => rsp.text()).then(function (rsp) {
+                                    if (rsp === "LOL NICE TRY HACKING HAHAHAHAHA") { alert("Incorrect password"); } else {
+                                        alert("Done");
+                                    }
+                                })
+                            } else {
+                                alert("Incorrect password or internal server error. (maybe the Redis database is down)");
+                            }
+                        }
+                    function full(){
+                        cnv.requestFullscreen();
+                    }
         </script>
     </body>
 </html>
