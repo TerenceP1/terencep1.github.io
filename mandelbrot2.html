@@ -128,11 +128,11 @@
                 }
                 if (parseInt(getE("width").value)!=width){
                     switchCount=16;
+                    width=parseInt(getE("width").value);
+                    height=parseInt(getE("height").value);
                     for (let worker of workers){
                         worker.postMessage({type:2,width:width});
                     }
-                    width=parseInt(getE("width").value);
-                    height=parseInt(getE("height").value);
                     cnv.width=width;
                     cnv.height=height;
                 }
