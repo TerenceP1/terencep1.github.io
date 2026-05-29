@@ -45,11 +45,14 @@
             <input id="threads" value="16" type="number"  min="1" max="16" step="1">
             <button onclick="updThreads();">Update Threads</button>
             <br>
-            <input id="width" value="16" type="number" min="1" max="16" step="1">
-            <input id="width" value="16" type="number" min="1" max="16" step="1">
-            <button onclick="updThreads();">Update Image Size</button>
+            <input id="width" value="400" type="number" min="1" step="1">
+            x
+            <input id="height" value="400" type="number" min="1" step="1">
+            <button onclick="updImgSize();">Update Image Size</button>
             <br>
             <button type="button" onclick="re=new Decimal(0),im=new Decimal(0),zoom=1,maxitr=1000,speclen=100;generateImage();">RESET</button>
+            <br>
+            <button type="button" onclick="zoom/=1.5;generateImage();">Zoom out</button>
             <br>
             <button onclick="upl();">UPLOAD</button>
             <br>
@@ -115,6 +118,27 @@
             let re=new Decimal(0),im=new Decimal(0),zoom=1;
             let maxitr=1000,speclen=100;
             let threads=16;
+            let switchCount=0;
+            function updImgSize(){
+                if (!(parseInt(getE("width").value)>=1)){
+                    parseInt(getE(width).value=1;
+                }
+                if (!(parseInt(getE("height").value)>=1)){
+                    parseInt(getE("height").value=1;
+                }
+                if (parseInt(getE("width").value)!=width){
+                    switchCount=16;
+                    for (let worker of workers){
+                        worker.postMessage({type:2,width:width});
+                    }
+                    width=parseInt(getE("width").value);
+                    height=parseInt(getE("height").value);
+                }
+                else{
+                    height=parseInt(getE("height").value);
+                    generateImage();
+                }
+            }
             function nextRow(batch,thid){
                 if (batchId==batch){
                     if (rowsLeft.length>0){
@@ -170,6 +194,12 @@
                             }
                             ctx.putImageData(img,0,0);
                             nextRow(dat.id,tsid);
+                        }
+                    }
+                    else if (dat.type == 2){
+                        switchCount--;
+                        if (switchCount==0){ // doing == as it starts at 0 on startup so it wont trigger second generate on startup but will trigger when all have changed from change size
+                            generateImage();
                         }
                     }
                 });
@@ -333,6 +363,7 @@ generateImage();
                     function full(){
                         cnv.requestFullscreen();
                     }
+            
         </script>
     </body>
 </html>
