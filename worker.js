@@ -173,6 +173,7 @@ self.onmessage = function (event) {
         Module._free(buf);
       }
       buf = Module._malloc(width * 3);
+      this.postMessage({type:2});
       break;
     case 3: // make row
       //let startT = performance.now();
