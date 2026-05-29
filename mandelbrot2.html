@@ -133,9 +133,12 @@
                     }
                     width=parseInt(getE("width").value);
                     height=parseInt(getE("height").value);
+                    cnv.width=width;
+                    cnv.height=height;
                 }
                 else{
                     height=parseInt(getE("height").value);
+                    cnv.height=height;
                     generateImage();
                 }
             }
