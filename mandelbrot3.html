@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- <script>
+            var Module = {
+                onRuntimeInitialized: () => run()
+            };
+            
+        </script> -->
+        <script src="https://cdn.jsdelivr.net/npm/decimal.js@10.4.3/decimal.min.js"></script>
+        <style>
+            html{
+                font-family:'Courier New', Courier, monospace;
+            }
+            canvas{
+                border: black solid 5px;
+            }
+        </style>
+        
+        <!-- <script src="mandelbrot.js" defer></script> -->
+        <title>Mandelbrot set WASM explorer | Terence's random HTML projects</title>
+
+    </head>
+    <body>
+        <div id="loading">
+            <h1 id="loadh1">Loading</h1>
+            <h2 id="loadStat">Load status: 0% done</h2>
+        </div>
+        <div id="main" hidden>
+            <h1>Welcome to my Mandelbrot set interactive zoomer</h1>
+            <h2>Built with Emscripten</h2>
+            <canvas id="cnv" width="400" height="400"></canvas>
+            <br>
+            <p><b>STATUS: </b><span id="status">Idle</span></p>
+            <p id="loc">Re: 0<br>Im:0<br>Zoom:0</p>
+            <label>Max Iterations:</label>
+            <input id="maxitr" value="1000" type="number">
+            <button onclick="updMaxitr();">Update Max Iterations</button>
+            <br>
+            <label>Spectrum Length:</label>
+            <input id="speclen" value="100" type="number">
+            <button onclick="updSpeclen();">Update Spectrum Length</button>
+            <br>
+            <label>Threads (must be 1-16 integer):</label>
+            <input id="threads" value="16" type="number"  min="1" max="16" step="1">
+            <button onclick="updThreads();">Update Threads</button>
+            <br>
+            <input id="width" value="400" type="number" min="1" max="16" step="1">
+            <input id="height" value="400" type="number" min="1" max="16" step="1">
+            <button onclick="updImgSize();">Update Image Size</button>
+            <br>
+            <button type="button" onclick="re=new Decimal(0),im=new Decimal(0),zoom=1,maxitr=1000,speclen=100;generateImage();">RESET</button>
+            <br>
+            <button onclick="upl();">UPLOAD</button>
+            <br>
+            <button onclick="full();">FULLSCREEN</button>
+            <br>
+            <button onclick="zoom/=1.5;generateImage();">ZOOM OUT</button>
+            <br>
+            <!--IGNORE THIS THIS IS FOR MEEEEE (the creator (convienience tool))-->
+            <h2>THE REDIS LINK MANAGER (danger zone possibly IDK)</h2>
+            <label>Password: </label>
+            <input type="password" id="pwd">
+            <br>
+            <b>THE LATEST EMAIL:</b>
+            <br>
+            <p id="email"></p>
+            <br>
+            <b>Button panel:</b>
+            <br><button onclick="restartMdl();">Restart Mandelbrot set program</button>
+            <button onclick="fetchOutput();">Fetch Mandelbrot set program output</button>
+            <button onclick="lastInt=setInterval(fetchOutput,20000);">Fetch Mandelbrot set program output on cycle</button>
+            <button onclick="clearInterval(lastInt);">End fetch cycle</button>
+
+        </div>
+        <script>
+            Decimal.set({ precision: 34 });
+            Decimal.precision=34;
+            let makeRowDouble2;
+            let makeRowFloat;
+            let makeRowDouble;
+            let palette;
+            let inits=0;
+            let initsTtl=17;
+            let getE=(...a)=>document.getElementById(...a);
+            let cnv=getE("cnv");
+            let ctx=cnv.getContext("2d");
+            ctx.imageSmoothingEnabled=false;
+            // loader
+            let ld_st=0;
+            let ldtm=setInterval(()=>{
+                ld_st=(ld_st+1)%4;
+                getE("loadh1").innerText="Loading"+["",".","..","..."][ld_st];
+            },400);
+            // function run(){
+            //     const makeRowDouble2 = Module.cwrap('makeRowDouble2', null, [
+            //         "number", "number", "number", "number", "number", "number", "number", "number", "number", "number", "number",
+            //     ]);
+            //     const makeRowFloat = Module.cwrap('makeRowFloat', null, [
+            //         "number", "number", "number", "number", "number", "number", "number", "number",
+            //     ]);
+            //     const makeRowDouble = Module.cwrap('makeRowDouble', null, [
+            //         "number", "number", "number", "number", "number", "number", "number", "number",
+            //     ]);
+            //     inits++;
+            //     updStat();
+            //     if (inits>=initsTtl){
+            //         generateImage();
+            //     }
+            // }
+            let workers=[];
+            let firstTime=true;
+            // each worker has a MAth.random job id and if id changes it will silence itself
+            let rowsLeft=[];
+            let width=400;height=400;
+            let img= new ImageData(width, height);
+            let batchId;
+            let re=new Decimal(0),im=new Decimal(0),zoom=1;
+            let maxitr=1000,speclen=100;
+            let threads=16;
+            function nextRow(batch,thid){
+                if (batchId==batch){
+                    if (rowsLeft.length>0){
+                        let thRow=rowsLeft.pop();
+                        getE("status").innerText = `Working (${zoom < 1e13?"normal precision":"pertubation mode"})... ${height-rowsLeft.length} rows out of ${height} done`;
+                        workers[thid].postMessage({
+                            type: 3,
+                            re: re.toString(),
+                            im: im.toString(),
+                            zoom: zoom,
+                            speclen:speclen,
+                            maxitr:maxitr,
+                            row:thRow,
+                            height:height,
+                            id:batch
+                        });
+                        
+                    }
+                    else{
+                        getE("status").innerText="Idle";
+                    }
+                }
+            }
+            let startT2;
+            function makeWorkers(){
+            for (let i=0;i<16;i++){
+                // new worker
+                let cWorker=new Worker("worker2.js");
+                let tsid=i;
+                cWorker.addEventListener("message",function(msg){
+                    let dat=msg.data;
+                    //console.log(dat,tsid);
+                    if (dat.type==0){
+                        //console.log(`Loading took ${performance.now()-startT2}ms`)
+                        inits++;
+                        cWorker.postMessage({
+                            type:4,
+                            plt:palette
+                        })
+                        updStat();
+                        if (inits >= initsTtl) {
+                            generateImage();
+                        }
+                    }
+                    else if (dat.type==1){
+                        if (batchId == dat.id) {
+                            //console.log(`Worker number ${tsid} took ${performance.now()-dat.ts}ms`)
+                            for (let i=0;i<width;i++){
+                                img.data[dat.row2 * width * 4 + i * 4] = dat.row[3 * i + 2];
+                                img.data[dat.row2 * width * 4 + i * 4 + 1] = dat.row[3 * i + 1];
+                                img.data[dat.row2 * width * 4 + i * 4 + 2] = dat.row[3 * i];
+                                img.data[dat.row2 * width * 4 + i * 4 + 3] = 255;
+                            }
+                            ctx.putImageData(img,0,0);
+                            nextRow(dat.id,tsid);
+                        }
+                    }
+                    else if (dat.type == 2) {
+                        if (batchId == dat.id) {
+                            console.log("REFERENCE DONE"); // only one thread does this anyways
+                            for (let i = 0; i < threads; i++) {
+                                workers[i].postMessage({
+                                    type: 6, // set ref
+                                    re: dat.re,
+                                    im: dat.im
+                                })
+                                nextRow(batchId, i);
+                            }
+                        }
+                    }
+                    else if (dat.type == 4) {
+                        if (batchId == dat.id) {
+                            console.log("PROGRESS"); // only one thread does this anyways
+                            getE("status").innerText=dat.msg;
+                        }
+                    }
+                });
+                cWorker.postMessage({id:i,type:0});
+                workers.push(cWorker);
+            }
+        }
+            // load default pelette
+            (async function(){
+                palette=new Uint8Array(await (await fetch("palettes/neon-p.dat")).arrayBuffer()) ;
+                //startT2=performance.now();
+                makeWorkers();
+                inits++;
+                updStat();
+                if (inits >= initsTtl) {
+                    generateImage();
+                }
+            })();
+            function reverseBits(n, bits) { // a helper made by chatgpt
+                    let result = 0;
+
+                    for (let i = 0; i < bits; i++) {
+                        if (n & (1 << i)) {
+                            result |= 1 << (bits - 1 - i);
+                        }
+                    }
+
+                    return result;
+                }
+                function roundUpToPowerOfTwo(n) { // CHATGPT TOO
+                        if (n <= 1) return 1;
+
+                        // If already power of 2, return it
+                        if ((n & (n - 1)) === 0) return n;
+
+                        let power = 1;
+                        while (power < n) {
+                            power <<= 1; // multiply by 2
+                        }
+
+                        return power;
+                    }
+            function generateImage(){
+                console.log("IMAGE");
+                if (zoom < 1e13) getE("status").innerText = `Working (${zoom < 1e13 ? "normal precision" : "pertubation mode"})... 0 rows out of ${height} done`;
+                if (firstTime){
+                    firstTime=false;
+                    getE("main").hidden=false;
+                    getE("loading").hidden=true;
+                }
+                img= new ImageData(width,height);
+                batchId=Math.random();
+                rowsLeft.length = 0;
+                for (let i=0;i<roundUpToPowerOfTwo(height);i++){
+                    let num= reverseBits(i,Math.floor(Math.log2(height))+1);
+                    if (num<height){
+
+                rowsLeft.push(num);}
+                }
+                if (zoom>=1e13){
+                    ctx.clearRect(0, 0, width, height);
+                    ctx.font = "20px Arial";
+                    ctx.fillStyle = "black";
+
+                    ctx.textAlign = "center";
+                    ctx.fillText("Computing\nreference...", width/2, height/2);
+                    Decimal.set({
+                        precision: Math.ceil(Math.log10(zoom * Math.max(width, height))),
+                    });
+                    workers[0].postMessage(
+                        {
+                            type:5,
+                            re:re.toString(),
+                            im:im.toString(),
+                            zoom: zoom,
+                            maxitr: maxitr,
+                            id:batchId,
+                            height:height
+                        }
+                    )
+                    return;
+                }
+                for (let i=0;i<threads;i++){
+                    nextRow(batchId,i);
+                }
+            }
+            cnv.addEventListener("click", (e) => {
+                    const rect = cnv.getBoundingClientRect();
+                let aspect=Math.min(width,height);
+                    const x = e.clientX - rect.left-width/2;
+                    const y = e.clientY - rect.top-height/2;
+                re=re.add(x * 4 / zoom / aspect);
+                im=im.add(-y * 4 / zoom / aspect);
+                zoom*=1.5;
+                getE("loc").innerText=`Re: ${re.toString()}\nIm: ${im.toString()}\nZoom: ${zoom}`;
+generateImage();
+                    console.log("Canvas coords:", x, y);
+                });
+            function updStat(){
+                getE('loadStat').innerText="Load Status: "+(Math.round(inits/initsTtl*100)).toString()+"% done"
+            }
+            function updMaxitr(){
+                maxitr=getE("maxitr").value;
+                generateImage();
+            }
+            function updSpeclen() {
+                speclen = getE("speclen").value;
+                generateImage();
+            }
+                function updThreads() {
+                    threads = getE("threads").value;
+                }
+                let pwd2 = document.getElementById("pwd");
+                    let email = document.getElementById("email");
+                    function restartMdl() {
+                        fetch('https://mandelbrot-link.vercel.app/gen', {
+                            method: 'POST',
+                            headers: {
+                                "Authorization": "Bearer " + pwd2.value
+                            },
+                            body: "54321" // i picked hardcoded numbers bc it passes through the junk detector
+                        }).then(rsp => rsp.text()).then(function (rsp) {
+                            if (rsp === "LOL NICE TRY HACKING HAHAHAHAHA") { alert("Incorrect password"); } else {
+                                //alert("Done");
+                            }
+                        })
+                    }
+                    function fetchOutput() {
+                        fetch('https://mandelbrot-link.vercel.app/gen', {
+                            method: 'POST',
+                            headers: {
+                                "Authorization": "Bearer " + pwd2.value
+                            },
+                            body: "12345"
+                        }).then(rsp => rsp.text()).then(function (rsp) {
+                            if (rsp === "LOL NICE TRY HACKING HAHAHAHAHA") { alert("Incorrect password"); } else {
+                                //alert("Done");
+                            }
+                        })
+                    }
+                    let lastEmail = "";
+                    function emailPoll() {
+                        fetch('https://mandelbrot-link.vercel.app/gen', {
+                            method: 'POST',
+                            headers: {
+                                "Authorization": "Bearer " + pwd2.value
+                            },
+                            body: "11111"
+                        }).then(rsp => rsp.text()).then(function (rsp) {
+                            if (rsp === "LOL NICE TRY HACKING HAHAHAHAHA") { email.innerText = "Incorrect Password"; lastEmail = email.innerText; } else {
+                                //alert("Done");
+                                if (rsp !== lastEmail) {
+                                    email.innerText = rsp;
+                                }
+                                lastEmail = rsp;
+                            }
+                        })
+                    }
+                    setInterval(emailPoll, 5000);
+                    function upl() {
+                            if (pwd2.value === '') {
+                                pwd = prompt("Enter your password:");
+                            }
+                            else {
+                                pwd = pwd2.value;
+                            }
+                            if (pwd === "--redacted--" || true) {
+
+                                fetch('https://mandelbrot-link.vercel.app/gen', {
+                                    method: 'POST',
+                                    headers: {
+                                        "Authorization": "Bearer " + pwd
+                                    },
+                                    body: re.toString() + " " + im.toString() + " " + (zoom).toString() + " " + maxitr.toString() + " " + speclen.toString()
+                                }).then(rsp => rsp.text()).then(function (rsp) {
+                                    if (rsp === "LOL NICE TRY HACKING HAHAHAHAHA") { alert("Incorrect password"); } else {
+                                        alert("Done");
+                                    }
+                                })
+                            } else {
+                                alert("Incorrect password or internal server error. (maybe the Redis database is down)");
+                            }
+                        }
+                    function full(){
+                        cnv.requestFullscreen();
+                    }
+                    function updImgSize() {
+                            if (!(parseInt(getE("width").value) >= 1)) {
+                                getE("width").value = 1;
+                            }
+                            if (!(parseInt(getE("height").value) >= 1)) {
+                                getE("height").value = 1;
+                            }
+                            if (parseInt(getE("width").value) != width) {
+                                switchCount = 16;
+                                width = parseInt(getE("width").value);
+                                height = parseInt(getE("height").value);
+                                for (let worker of workers) {
+                                    worker.postMessage({ type: 2, width: width });
+                                }
+                                cnv.width = width;
+                                cnv.height = height;
+                            }
+                            else {
+                                height = parseInt(getE("height").value);
+                                cnv.height = height;
+                                generateImage();
+                            }
+                        }
+        </script>
+    </body>
+</html>
