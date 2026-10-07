@@ -101,8 +101,13 @@ function convert() {
             )
         );
 }
+    function reveal(){
+        document.getElementById('ai').removeAttribute('hidden');
+        document.getElementById('but').remove();
+    }
+    
 </script>
-<button onclick="reveal">ABOUT THE AI USAGE</button>
-  <p id="ai" hidden>Guys, I didn't make the code here, AI did. I will reveal that. However, don't call me sloppy because I have a life and have school. I have much less time now as a high school freshman. BE NICE!</p>
+<button onclick="reveal();" id="but">ABOUT THE AI USAGE</button>
+  <p id="ai" hidden>Guys, I didn't make the code here, AI did. However I wrote this part (and coded the reveal button). I will reveal that. However, don't call me sloppy because I have a life and have school. I have much less time now as a high school freshman. BE NICE!</p>
 </body>
 </html>
