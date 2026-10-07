@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<body>
+
+<textarea id="input" rows="15" cols="40"
+placeholder="One limb per line"></textarea>
+
+<br><br>
+
+<label>
+    Extra guard digits:
+    <input id="guard" type="number" value="10">
+</label>
+
+<br><br>
+
+<button onclick="convert()">Convert</button>
+
+<pre id="output"></pre>
+
+<script src="https://cdn.jsdelivr.net/npm/decimal.js@10.6.0/decimal.min.js"></script>
+
+<script>
+const BITS = 26;
+
+function convert() {
+
+    const lines = document
+        .getElementById("input")
+        .value
+        .trim()
+        .split(/\s+/);
+
+    if (!lines.length) return;
+
+    const n = lines.length;
+
+    // ~7.826 decimal digits per 26-bit limb.
+    const precision =
+        Math.ceil(n * 26 * Math.log10(2)) +
+        Number(document.getElementById("guard").value);
+
+    // IMPORTANT:
+    // Decimal.js precision is global to this Decimal constructor.
+    Decimal.set({
+        precision: precision,
+        rounding: Decimal.ROUND_DOWN
+    });
+
+    const BASE = new Decimal(2).pow(26);
+
+    /*
+     * Reconstruct the unsigned integer.
+     *
+     * Input convention:
+     *
+     *   limb[0] = integer
+     *   limb[1] = 2^-26
+     *   limb[2] = 2^-52
+     *   ...
+     *
+     * Therefore the input is effectively
+     *
+     *   (((L0) * B + L1) * B + L2 ...)
+     */
+    let value = new Decimal(0);
+
+    for (const line of lines) {
+        value = value
+            .times(BASE)
+            .plus(new Decimal(line));
+    }
+
+    /*
+     * Fixed-width 2^26 two's complement.
+     *
+     * The top limb contains the sign bit.
+     */
+    const top = Number(lines[0]);
+
+    if (top >= 2 ** 25) {
+
+        const modulus =
+            BASE.pow(n);
+
+        value = value.minus(modulus);
+    }
+
+    /*
+     * There are n-1 fractional limbs.
+     */
+    value = value.div(
+        BASE.pow(n - 1)
+    );
+
+    document.getElementById("output").textContent =
+        value.toFixed(
+            Math.max(
+                0,
+                precision - 5
+            )
+        );
+}
+</script>
+<button onclick="reveal">ABOUT THE AI USAGE</button>
+  <p id="ai" hidden>Guys, I didn't make the code here, AI did. I will reveal that. However, don't call me sloppy because I have a life and have school. I have much less time now as a high school freshman. BE NICE!</p>
+</body>
+</html>
