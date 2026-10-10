@@ -96,6 +96,7 @@ async function gotSignal(sig) {
           ) {
           } else {
             console.error(`FAILURE: ${pc.connectionState}`);
+    alert(`FAILURE: ${pc.connectionState}`);
             connected = false;
             rtcstat.innerText = "Waiting on signal";
           }
@@ -114,6 +115,7 @@ async function gotSignal(sig) {
   } catch (e) {
     // Code that handles the error
     console.error("An error occurred:", e.message);
+    alert(e.message);
     connected = false;
     rtcstat.innerText = "Waiting on signal";
   }
