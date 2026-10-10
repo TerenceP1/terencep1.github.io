@@ -11,6 +11,18 @@
                 padding:10px;
             }
         </style>
+        <script>window.onerror = function (message, source, lineno, colno, error) {
+  alert(
+    `⚠️ JavaScript Error!\n\n` +
+    `Message: ${message}\n` +
+    `File: ${source}\n` +
+    `Line: ${lineno} | Column: ${colno}\n` +
+    `Stack Trace: ${error ? error.stack : 'N/A'}`
+  );
+  
+  // Returning true prevents the error from bubbling up to the browser console
+  return true; 
+};</script>
     </head>
     <body>
         <div id="status">Signaling Status: <span id="signalstat">Connecting...</span><br>WebRTC Staus: <span id="rtcstat">No signaling</span></div>
