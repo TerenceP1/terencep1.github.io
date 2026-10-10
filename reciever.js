@@ -63,6 +63,17 @@ async function gotSignal(sig) {
         console.log("Computer sent", e.data);
       };
     };
+    pc.oniceconnectionstatechange = () => {
+  alert("ICE state: " + pc.iceConnectionState);
+};
+
+pc.onconnectionstatechange = () => {
+  alert("Peer state: " + pc.connectionState);
+};
+
+pc.onsignalingstatechange = () => {
+  alert("Signaling state: " + pc.signalingState);
+};
     pc.onicegatheringstatechange = () => {
       if (pc.iceGatheringState === "complete") {
         // 1. Grab your fully populated description from the connection object
