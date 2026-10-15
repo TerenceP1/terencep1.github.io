@@ -64,15 +64,15 @@ async function gotSignal(sig) {
       };
     };
     pc.oniceconnectionstatechange = () => {
-  alert("ICE state: " + pc.iceConnectionState);
+  //alert("ICE state: " + pc.iceConnectionState);
 };
 
 pc.onconnectionstatechange = () => {
-  alert("Peer state: " + pc.connectionState);
+  //alert("Peer state: " + pc.connectionState);
 };
 
 pc.onsignalingstatechange = () => {
-  alert("Signaling state: " + pc.signalingState);
+  //alert("Signaling state: " + pc.signalingState);
 };
     pc.onicegatheringstatechange = () => {
       if (pc.iceGatheringState === "complete") {
@@ -107,7 +107,7 @@ pc.onsignalingstatechange = () => {
           ) {
           } else {
             console.error(`FAILURE: ${pc.connectionState}`);
-    alert(`FAILURE: ${pc.connectionState}`);
+    //alert(`FAILURE: ${pc.connectionState}`);
             connected = false;
             rtcstat.innerText = "Waiting on signal";
           }
@@ -126,7 +126,7 @@ pc.onsignalingstatechange = () => {
   } catch (e) {
     // Code that handles the error
     console.error("An error occurred:", e.message);
-    alert(e.message);
+    //alert(e.message);
     connected = false;
     rtcstat.innerText = "Waiting on signal";
   }
