@@ -95,6 +95,15 @@ pc.onsignalingstatechange = () => {
         // Replace 'yourSocketInstance' with your actual socket, WebSocket, or socket.io variable
         sock.send(jsonText);
         rtcstat.innerText = "Connecting...";
+        pc.onicecandidate = (event) => {
+  if (event.candidate) {
+    console.log('📍 New candidate found:', event.candidate.candidate);
+    // Send this individual candidate to the remote peer right away
+    sock.send(JSON.stringify({'from':'phone-trickle','msg':event.candidate}));
+  } else {
+    console.log('✅ Done! End of candidates (Null candidate received).');
+  }
+};
         pc.onconnectionstatechange = () => {
           console.log("Connection State Changed:", pc.connectionState);
 
