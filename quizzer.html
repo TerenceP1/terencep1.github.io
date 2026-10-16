@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<!--     <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/p5.js"></script> -->
+<!--     <script src="https://cdn.jsdelivr.net/npm/p5@1.11.11/lib/addons/p5.sound.min.js"></script> -->
+    
+    
+    
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+
+  </head>
+  <body>
+    <main>
+    </main>
+        <div hidden id="promptBg">
+      <div id="promptMenu">
+        <h1 id="promptTtl" ondblclick="subM();">
+          Prompt title here
+        </h1>
+        <textarea id="textInp" autocorrect="off" spellcheck="false"></textarea>
+        
+      </div>
+    </div>
+    <div id="left">
+      <h1>YOU</h1>
+      
+    </div>
+    <div id="right">
+      <h1>ANSWER</h1>
+    </div>
+    <button onclick="right();">RIGHT</button>
+    <button onclick="wrong();">WRONG</button>
+    <button onclick="loadJsonFile();">LOAD JSON</button>
+    <button onclick="chatgpt=true;">CHATGPT FEEDBACK</button>
+    <script> // function setup() {
+//   createCanvas(400, 400);
+// }
+
+// function draw() {
+//   background(220);
+// }
+let chatgpt=false; // failure its terrible dont trust it
+let lastResolve=[];
+let promptMsgQueue=[];
+let defaults=[];
+function getE(a){return document.getElementById(a);}
+let popup=getE('promptBg');
+let val;
+function subM(){
+  //alert("submit prompt here");
+  popup.setAttribute("hidden",'');
+  let rs=lastResolve.shift();
+  let bc=false;
+  //(rs===undefined?()=>{console.log("UNKNOWN");bc=true;}:rs)(getE('textInp').value);
+  val2=getE('textInp').value;
+  if (chatgpt){
+    const xhr = new XMLHttpRequest();
+//xhr.open("GET", "http://localhost:8000", false); // false = synchronous
+    xhr.open("POST", "http://localhost:8000/evaluate", false); // sync
+    xhr.send(JSON.stringify({
+    correct: val2,
+    user: val
+  }));
+    
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.send(null);
+
+const data = JSON.parse(xhr.responseText);
+  }
+  rs2=confirm("Press OK for yes and CANCEL for no. Does it match:\n"+val+"\nyours:\n"+val2);
+  rs(rs2);
+  //if (bc){
+  getE('textInp').value='';
+  if (lastResolve.length==0){
+    promptMsgQueue.shift();
+    defaults.shift();
+    return;
+  }
+  //promptMsgQueue.shift();
+  //defaults.shift();
+  let next=promptMsgQueue.shift();
+  if (next!==undefined){
+    popup.removeAttribute("hidden");
+    getE("promptTtl").innerText=next;
+    val=defaults.shift();
+  }
+}
+function asyncPrompt(msg){
+  if (lastResolve.length==0){
+  getE("promptTtl").innerText=msg;
+  }
+  popup.removeAttribute("hidden");
+  return new Promise(function(resolve){lastResolve.push(resolve);/*promptMsgQueue.push(msg);defaults.push('');*/})
+}
+function asyncPrompt2(msg,defaultMsg){
+  if (lastResolve.length==0){
+  getE("promptTtl").innerText=msg;
+    val=defaultMsg;
+  }
+  popup.removeAttribute("hidden");
+  return new Promise(function(resolve){
+    if (lastResolve.length!=0){
+    promptMsgQueue.push(msg);defaults.push(defaultMsg);}
+    lastResolve.push(resolve);
+                                      })
+}
+function loadJsonFile2() {
+  return new Promise((resolve, reject) => {
+    // Create an input element dynamically
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'application/json';
+
+    // When a file is selected
+    input.onchange = () => {
+      const file = input.files[0];
+      if (!file) {
+        reject('No file selected');
+        return;
+      }
+
+      const reader = new FileReader();
+
+      // When file is read
+      reader.onload = (event) => {
+        try {
+          const json = JSON.parse(event.target.result);
+          resolve(json);
+        } catch (err) {
+          reject('Invalid JSON file');
+        }
+      };
+
+      reader.onerror = () => {
+        reject('Error reading file');
+      };
+
+      reader.readAsText(file);
+    };
+
+    // Trigger the file picker
+    input.click();
+  });
+};
+let json;
+function shuffle(array) {
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+}
+
+async function loadJsonFile(){
+  json=await loadJsonFile2();
+  //times=
+  shuffle(json);
+  for (let [k,v] of json){
+    multiPrompt(k,v);
+  }
+}
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+  async function multiPrompt(que,ans){
+    let tm=60000;
+    // noprotect
+    while (true){
+      let suc=await asyncPrompt2(que,ans);
+      if (suc){
+        tm*=2;
+      }
+      else{
+        tm=60000;
+      }
+        await sleep(tm);
+    }
+  }
+let times=[];
+</script>
+  </body>
+</html>
