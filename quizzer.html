@@ -89,7 +89,7 @@ button {
     </div> -->
     <!-- <button onclick="right();">RIGHT</button>
     <button onclick="wrong();">WRONG</button> -->
-    <button onclick="loadJsonFile();">LOAD JSON</button>
+    <button onclick="loadJsonFile();" id="ldbtn">LOAD JSON</button>
     <!-- <button onclick="chatgpt=true;">CHATGPT FEEDBACK</button> -->
     <script> // function setup() {
 //   createCanvas(400, 400);
@@ -222,6 +222,7 @@ async function loadJsonFile(){
   json=await loadJsonFile2();
   //times=
   shuffle(json);
+  document.getElementById("ldbtn").setAttribute("hidden","");
   for (let [k,v] of json){
     multiPrompt(k,v);
   }
