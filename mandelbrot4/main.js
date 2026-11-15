@@ -325,6 +325,10 @@ async function encryptGcm(msg) {
 
 async function askNewConn() {
   if (c_uuid) {
+    dcurl = " ";
+    setTimeout(() => {
+      if (dcurl !== " ") dcurl = "";
+    }, 0.5);
     await sigsock.send(
       JSON.stringify({
         type: "msg",
