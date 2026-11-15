@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>INTERNAL MANAGER IFRAME</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="passwordsec">
+            <h2>Enter the password</h2>
+            <label>Password: </label>
+            <input type="password" id="mainpwd">
+            <br>
+            <button onclick="checkpwd();">Check password</button>
+            <p id="pwdstat">No password</p>
+        </div>
+        <div id="mainstuff" hidden>
+            <h2>Connection status</h2>
+            <div class="boxed">
+                <!-- Just the status -->
+                 <b>Signaling status: </b><div id="signalconn">Connecting...</div>
+                 <br>
+                 <b>Auth state: </b><div id="authstat">Unauthorized</div>
+                 <br>
+                <b>Direct connection state: </b>
+                <div id="dcstat">Waiting on URL</div>
+            </div>
+            <h2>General info</h2>
+            <div class="boxed">
+                <b>Working status: </b>
+                <div id="wstat">Awaiting connection</div>
+                <br>
+                <b>Progress: </b>
+                <div id="gprog">Awaiting connection</div>
+                <br>
+                <b>Time taken: </b>
+                <div id="rtime">Awaiting connection</div>
+            </div>
+        </div>
+        <script src="main.js"></script>
+    </body>
+</html>
