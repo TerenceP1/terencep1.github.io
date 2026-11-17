@@ -467,10 +467,33 @@ function updMainInfo() {
   getE("rtime").innerText = mainInfo.timer;
 }
 
+let rid_map={};
+
 async function handle_txtmsg(msg) {
   if (msg.type === "overview") {
     mainInfo = msg;
     updMainInfo();
   }
+  else if (msg.type==="bin"){
+    rid_map[msg.rid]=msg.desc;
+  }
 }
-async function handle_binmsg(msg) {}
+
+function getFirstBytesAsHex(arrayBuffer, x) {
+  // Clamp x to the buffer's actual byte length to prevent RangeError
+  const length = Math.min(x, arrayBuffer.byteLength);
+  
+  // Create a view of just the first 'x' bytes
+  const bytes = new Uint8Array(arrayBuffer, 0, length);
+  
+  // Convert each byte to a 2-character hex string and join them
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function handle_binmsg(msg) {
+  let cdesc=getFirstBytesAsHex(msg,16);
+  let tbuf=new Uint8Array(msg,16);
+  let cblob=new Blob([tbuf], { type: 'image/png' });
+  let burl=URL.createObjectURL(cblob);
+  console.log(cdesc,burl);
+}
