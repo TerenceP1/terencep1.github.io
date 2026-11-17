@@ -496,4 +496,5 @@ async function handle_binmsg(msg) {
   let cblob=new Blob([tbuf], { type: 'image/png' });
   let burl=URL.createObjectURL(cblob);
   console.log(cdesc,burl);
+  getE("mimg").setAttribute("src",burl);
 }
