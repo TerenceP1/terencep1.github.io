@@ -323,12 +323,13 @@ async function encryptGcm(msg) {
   return arrayBufferToHex(iv) + arrayBufferToHex(ciphertext);
 }
 
+let lastDcTm = 0;
+
 async function askNewConn() {
   if (c_uuid) {
-    dcurl = " ";
-    setTimeout(() => {
-      if (dcurl === " ") dcurl = "";
-    }, 1000);
+    // setTimeout(() => {
+    //   if (dcurl !== " ") dcurl = "";
+    // }, 0.5);
     await sigsock.send(
       JSON.stringify({
         type: "msg",
@@ -344,7 +345,7 @@ async function askNewConn() {
 let dcurl = "";
 let dcsock;
 let e_dcstat = document.getElementById("dcstat");
-let dctry_ts;
+let dctry_ts = Date.now();
 let is_nonce_dc = true;
 
 async function dcmessagehandle(e) {
@@ -363,9 +364,10 @@ async function dcmessagehandle(e) {
     );
 
     const response = await crypto.subtle.sign("HMAC", hmacKey, e.data);
-    dcsock.send(response);
+    e.target.send(response);
     console.log("AUTHED");
     e_dcstat.innerText = "Connected";
+    lastDcTm = Date.now();
   } else {
     // message format: json
     // must have a type key with the info
@@ -379,27 +381,42 @@ async function dcmessagehandle(e) {
   }
 }
 
+let highestq = 0;
+
 function dcready(e) {
   e_dcstat.innerText = "Connected (Completing auth)";
+  highestq = 0;
 }
 
+/*
+A radical change!!!
+The reconnecting one will enter a rapid retry loop until it works. However, it will use a global url.
+Thus, if I get new URL, I can just swap it and any new retry attempts to it (because its more recent).
+However, if a URL arrives before successful connection, I can swap the  URL then close the connection so retry loop goes to new.
+
+NOTE: the server will stop listening to a url once dead for 10 minutes KEEP IN MIND
+
+*/
+
+let reconn_cltm = 0;
+let nconn = false;
+
 async function handleSockConn() {
-  if (Date.now() - dctry_ts > 10000) {
-    dcurl = "";
-    return;
-  }
   dcsock = new WebSocket(dcurl);
   dcsock.onmessage = dcmessagehandle;
   dcsock.onopen = dcready;
   dcsock.onclose = () => {
-    if (is_nonce_dc) {
-      handleSockConn();
-    } else {
-      dcurl = "";
+    if (!is_nonce_dc && Date.now() - reconn_cltm < 600 * 1000) {
+      handleSockConn(dcurl, false);
     }
+    reconn_cltm = Date.now();
   };
   dcsock.binaryType = "arraybuffer";
-  e_dcstat.innerText = "Connecting...";
+  e_dcstat.innerText = "Reconnecting...";
+  if (nconn) {
+    e_dcstat.innerText = "Connecting...";
+  }
+  nconn = false;
   is_nonce_dc = true;
 }
 
@@ -440,8 +457,22 @@ async function sigmsg(e) {
       let dmsg = new TextDecoder().decode(await decryptGcm(parsed.msg));
       if (dmsg.startsWith("wss://")) {
         console.log("GOT URL", dmsg);
-        dcurl = dmsg;
-        handleSockConn();
+        if ((dcsock && dcsock.readyState != 1) || !dcsock) {
+          dcurl = dmsg;
+          lastDcTm = Date.now();
+          if (!dcsock) {
+            reconn_cltm = Date.now();
+            is_nonce_dc = false;
+            nconn = true;
+            handleSockConn();
+          } else if (dcsock.readyState != 1) {
+            dcsock.close();
+            reconn_cltm = Date.now();
+            is_nonce_dc = false;
+            nconn = true;
+            handleSockConn();
+          }
+        }
       }
     }
   }
@@ -449,13 +480,15 @@ async function sigmsg(e) {
 
 setInterval(() => {
   // check for whether to direct connect
-  if (dcurl === "") {
-    if (sigsock && sigsock.readyState == 1) {
-      askNewConn();
-      dctry_ts = Date.now();
-    }
+  if (
+    sigsock.readyState == 1 &&
+    Date.now() - dctry_ts > 1500 &&
+    ((dcsock && dcsock.readyState != 1) || !dcsock)
+  ) {
+    askNewConn();
+    dctry_ts = Date.now();
   }
-}, 1000);
+}, 500);
 
 let getE = (...a) => document.getElementById(...a);
 
@@ -467,34 +500,61 @@ function updMainInfo() {
   getE("rtime").innerText = mainInfo.timer;
 }
 
-let rid_map={};
+let rid_map = {};
 
 async function handle_txtmsg(msg) {
   if (msg.type === "overview") {
     mainInfo = msg;
     updMainInfo();
+  } else if (msg.type === "bin") {
+    rid_map[msg.rid] = msg.desc;
   }
-  else if (msg.type==="bin"){
-    rid_map[msg.rid]=msg.desc;
-  }
-}
-
-function getFirstBytesAsHex(arrayBuffer, x) {
-  // Clamp x to the buffer's actual byte length to prevent RangeError
-  const length = Math.min(x, arrayBuffer.byteLength);
-  
-  // Create a view of just the first 'x' bytes
-  const bytes = new Uint8Array(arrayBuffer, 0, length);
-  
-  // Convert each byte to a 2-character hex string and join them
-  return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 async function handle_binmsg(msg) {
-  let cdesc=getFirstBytesAsHex(msg,16);
-  let tbuf=new Uint8Array(msg,16);
-  let cblob=new Blob([tbuf], { type: 'image/png' });
-  let burl=URL.createObjectURL(cblob);
-  console.log(cdesc,burl);
-  getE("mimg").setAttribute("src",burl);
+  let buf2 = new Uint8Array(msg);
+  const headerBytes = buf2.subarray(0, 16);
+  const rid = Array.from(headerBytes, (byte) =>
+    byte.toString(16).padStart(2, "0"),
+  ).join("");
+  let desc = rid_map[rid];
+  delete rid_map[rid];
+  const restBytes = buf2.subarray(16);
+  const blob = new Blob([restBytes], { type: "image/png" });
+  const blobUrl = URL.createObjectURL(blob);
+  console.log("BINARY BLOB!!!!!!", JSON.stringify(desc), blobUrl);
+  if (desc.type == "upngl") {
+    getE("imgs").setAttribute("src", blobUrl);
+    if (highestq == 0) {
+      getE("mimg").setAttribute("src", blobUrl);
+    }
+  } else if (desc.type == "upngm") {
+    getE("imgm").setAttribute("src", blobUrl);
+    if (highestq <= 1) {
+      getE("mimg").setAttribute("src", blobUrl);
+      highestq = 1;
+    }
+  } else if (desc.type == "upngh") {
+    getE("imgl").setAttribute("src", blobUrl);
+    if (highestq <= 2) {
+      getE("mimg").setAttribute("src", blobUrl);
+      highestq = 2;
+    }
+  }
+}
+
+let advImg = false;
+
+function shImage(btn) {
+  if (advImg) {
+    btn.innerText = "Show current image";
+    advImg = false;
+    getE("mimgw").setAttribute("hidden", "");
+    getE("advancedImg").removeAttribute("hidden");
+  } else {
+    btn.innerText = "Show other images";
+    advImg = true;
+    getE("mimgw").removeAttribute("hidden");
+    getE("advancedImg").setAttribute("hidden", "");
+  }
 }

@@ -36,9 +36,20 @@
                 <b>Time taken: </b>
                 <div id="rtime">Awaiting connection</div>
             </div>
-            <h2>IMAGES</h2>
-            <img id="mimg" alt="Mandelbrot image (why you looking at this alt text)"></img>
+            <h2>Image</h2>
+            <div class="boxed">
+                <button onclick="shImage(this);">Show other images</button>
+                <div id="mimgw"><img id="mimg" alt="Please wait..."></div>
+                <div hidden id="advancedImg">
+                    <h3>Large</h3>
+                    <img id="imgl" alt="Please wait...">
+                    <h3>Medium</h3>
+                    <img id="imgm" alt="Please wait...">
+                    <h3>Small</h3>
+                    <img id="imgs" alt="Please wait...">
+                </div>
+            </div>
         </div>
-        <script src="main.js?cachebust=2"></script>
+        <script src="main.js"></script>
     </body>
 </html>

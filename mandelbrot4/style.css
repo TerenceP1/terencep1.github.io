@@ -7,3 +7,24 @@ body {
     padding: 12px;
     width: fit-content;
 }
+
+.nice-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+img {
+    display: block;
+    aspect-ratio: 16 / 9;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    /* 50px = 16px top/bottom body margin + 10px border + 24px padding */
+    max-height: calc(100vh - 50px);
+    object-fit: contain;
+    /* Or use 'cover' if you want a non-16:9 image cropped to fill 16:9 */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
