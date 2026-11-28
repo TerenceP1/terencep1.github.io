@@ -50,15 +50,15 @@
             <button onclick="updImgSize();">Update Image Size</button>
             <br>
             <button type="button" onclick="re=new Decimal(0),im=new Decimal(0),zoom=1,maxitr=1000,speclen=100;generateImage();">RESET</button>
-            <br>
-            <button onclick="upl();">UPLOAD</button>
+            <!--<br>
+            <button onclick="upl();">UPLOAD</button>-->
             <br>
             <button onclick="full();">FULLSCREEN</button>
             <br>
             <button onclick="zoom/=1.5;generateImage();">ZOOM OUT</button>
             <br>
             <!--IGNORE THIS THIS IS FOR MEEEEE (the creator (convienience tool))-->
-            <h2>THE REDIS LINK MANAGER (danger zone possibly IDK)</h2>
+            <div hidden><h2>THE REDIS LINK MANAGER (danger zone possibly IDK)</h2>
             <label>Password: </label>
             <input type="password" id="pwd">
             <br>
@@ -70,7 +70,8 @@
             <br><button onclick="restartMdl();">Restart Mandelbrot set program</button>
             <button onclick="fetchOutput();">Fetch Mandelbrot set program output</button>
             <button onclick="lastInt=setInterval(fetchOutput,20000);">Fetch Mandelbrot set program output on cycle</button>
-            <button onclick="clearInterval(lastInt);">End fetch cycle</button>
+            <button onclick="clearInterval(lastInt);">End fetch cycle</button></div>
+            <a href="mandelbrot3.cpp" download>DOWNLOAD THE WASM SOURCE CODE</a>
 
         </div>
         <script>
